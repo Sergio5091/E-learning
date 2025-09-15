@@ -9,7 +9,9 @@
     <div class="bg-[#FAFAFBFF]">Couleur brand dark</div>
   </div>
 </template>
-
+<div>
+  azerty
+</div>
 
 
 <style scoped>
