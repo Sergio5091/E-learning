@@ -1,7 +1,7 @@
+<script>
+import MainLayout from '@/layouts/MainLayout.vue'
+</script>
+
 <template>
-    <h1>This is an about page</h1>
+    <MainLayout />
 </template>
-
-<style>
-
-</style>
