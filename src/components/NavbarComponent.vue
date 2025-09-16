@@ -17,7 +17,7 @@ function toggleInput() {
 </script>
 
 <template>
-  <nav class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 shadow-md">
+  <nav class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 shadow-md sticky top-0">
 
     <!-- logo -->
     <div class="flex items-center space-x-2">
@@ -29,14 +29,17 @@ function toggleInput() {
 
     <!-- navigation -->
     <div class="hidden md:flex space-x-6">
-      <RouterLink to="" class="hover:text-blue-500">
+      <RouterLink to="/" class="hover:text-blue-500">
         Accueil
       </RouterLink>
-      <RouterLink to="" class="hover:text-blue-500">
+      <RouterLink to="/cours" class="hover:text-blue-500">
         Cours
       </RouterLink>
-      <RouterLink to="" class="hover:text-blue-500">
+      <RouterLink to="/a-propos" class="hover:text-blue-500">
         À propos
+      </RouterLink>
+      <RouterLink to="/admin" class="hover:text-blue-500">
+        Admin
       </RouterLink>
     </div>
 

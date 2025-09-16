@@ -1,12 +1,14 @@
 <script setup>
-import NavbarComponent from '@/components/NavbarComponent.vue';
 import SidebarComponent from '@/components/SidebarComponent.vue';
+import CoursesComponent from '@/components/CoursesComponents/CoursesComponent.vue';
 
 
 </script>
 
 <template>
-    <NavbarComponent />
-    <SidebarComponent />
+    <div class="flex">
+        <SidebarComponent />
+        <CoursesComponent />
+    </div>
    
 </template>

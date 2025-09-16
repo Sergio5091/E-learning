@@ -1,11 +1,12 @@
 <script setup>
-import MainLayout from './layouts/MainLayout.vue';
-
+import NavbarComponent from './components/NavbarComponent.vue';
 
 </script>
 
 <template>
-  <MainLayout/>
+  <header> <NavbarComponent/> </header>
+  
+  <RouterView />
   
 </template>
 

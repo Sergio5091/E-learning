@@ -8,7 +8,7 @@ import { RouterLink } from 'vue-router';
     <div class="flex flex-col h-full py-6">
       <!-- Accueil -->
       <div class="px-4 py-2">
-        <RouterLink to="" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-700">
+        <RouterLink to="/" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-700">
           <i class="fas fa-home w-5 h-5 mr-3"></i>
           Accueil
         </RouterLink>
@@ -16,7 +16,7 @@ import { RouterLink } from 'vue-router';
 
       <!-- Cours -->
       <div class="px-4 py-2">
-        <RouterLink to="" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-700">
+        <RouterLink to="/cours" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-700">
           <i class="fas fa-book w-5 h-5 mr-3"></i>
           Cours
         </RouterLink>
@@ -59,5 +59,7 @@ import { RouterLink } from 'vue-router';
   .container {
     margin-top: 0.1rem;
     border-top: 1px solid rgba(128, 128, 128, 0.199);
+    /* position: sticky;
+    top: 80px; */
   }
 </style>
