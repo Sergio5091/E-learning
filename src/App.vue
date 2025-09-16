@@ -1,4 +1,6 @@
 <script setup>
+import CoursesComponent from './components/CoursesComponents/CoursesComponent.vue';
+
 </script>
 
 <template>
@@ -8,6 +10,8 @@
     <div class="bg-redColor text-black p-4">Couleur brand light</div>
     <div class="bg-[#FAFAFBFF]">Couleur brand dark</div>
   </div>
+
+  <CoursesComponent />
 </template>
 
 
