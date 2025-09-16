@@ -1,16 +1,9 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/NavbarComponent.vue'
+import NavbarComponent from '@/components/NavbarComponent.vue'
+import SidebarComponent from './components/SidebarComponent.vue';
 </script>
 
 <template>
-    <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
-
-
+  <NavbarComponent />
+  <SidebarComponent />
 </template>
-
-<style scoped>
-
-</style>

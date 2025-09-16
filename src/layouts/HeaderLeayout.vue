@@ -1,7 +1,9 @@
+<script>
+import NavbarComponent from '@/components/NavbarComponent.vue'
+</script>
+
 <template>
-    <h1>This is an about page</h1>
+    <!-- <NavbarComponent /> -->
 </template>
 
-<style>
 
-</style>
