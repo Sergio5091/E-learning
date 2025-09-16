@@ -31,9 +31,9 @@ const router = createRouter({
       component: LoginView,
     },
     {
-      path: '/product/:id',
-      name: 'product',
-      component: ProductDetailView,
+      path:'/product/:id',
+      name:'product',
+      component: () => import('@/views/ProductDetailView.vue')
     },
     {
       path: '/products',
@@ -45,6 +45,7 @@ const router = createRouter({
       name: 'profile',
       component: ProfileView,
     },
+    
   ],
 })
 
