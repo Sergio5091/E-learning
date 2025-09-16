@@ -70,3 +70,14 @@ function toggleInput() {
     </div>
   </nav>
 </template>
+<style scoped>
+  a.lien-actif{
+  /* border-bottom: 2px solid#2b7fff; */
+  background-color:  #e7eaf0c2;
+ }
+ a{
+  padding-inline: 10px;
+  padding-block: 5px;
+  /* border-radius: 5px 5px ; */
+ }
+</style>

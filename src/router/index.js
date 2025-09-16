@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '@/layouts/MainLayout.vue'
 import AdminView from '@/views/AdminView.vue'
+import DashboardComponent from '@/components/DashboardComponent.vue'
+
 import AboutUsView from '@/views/AboutUsView.vue'
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
+const routes= [
+  {
+    path: '/',
       name: 'Acceuil',
       component: MainLayout,
     },
@@ -27,11 +27,18 @@ const router = createRouter({
       component: AdminView,
     },
     {
-      path: '/',
-      name: '',
-      // component: () => import('../views/AboutView.vue'),
+      path: '/profil',
+      name: 'profil',
+      component: DashboardComponent,
     },
-  ],
-})
+  ]
+  
+  const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes,
+  linkActiveClass : "lien-actif", //spécifie la classe CSS a appliquer aux liens actifs dans la barre de navigation.Lorsqu’un lien est actif, il recevra cette classe CSS.
+  })
+  
+
 
 export default router
