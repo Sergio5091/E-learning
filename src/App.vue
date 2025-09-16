@@ -1,11 +1,12 @@
 <script setup>
-import NavbarComponent from '@/components/NavbarComponent.vue'
-import SidebarComponent from './components/SidebarComponent.vue';
+import MainLayout from './layouts/MainLayout.vue';
+
+
 </script>
 
 <template>
-  <NavbarComponent />
-  <SidebarComponent />
+  <MainLayout/>
+  
 </template>
 
 <style scoped>
