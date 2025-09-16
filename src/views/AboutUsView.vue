@@ -6,7 +6,7 @@ import AbtComponent from '../components/AbtComponent.vue';
 
 <template>
 
-<AbtComponent />
+<AbtComponent/>
 
 </template>
 

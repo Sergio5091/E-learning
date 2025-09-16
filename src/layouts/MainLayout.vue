@@ -1,7 +1,19 @@
+<script setup>
+import AboutUsView from '@/views/AboutUsView.vue';
+
+
+
+</script>
+
+
 <template>
-    <h1>This is an about page</h1>
+
+<AboutUsView/>
+
 </template>
 
-<style>
+
+<style scoped>
+
 
 </style>
