@@ -1,5 +1,10 @@
 <script setup>
 import GestionCoursComponent from '@/components/GestionCoursComponent.vue';
+import { courses } from '@/store';
+import { ref } from 'vue';
+const TabCourses = ref(courses)
+console.log(TabCourses.value);
+
 
 </script>
 
@@ -14,7 +19,7 @@ import GestionCoursComponent from '@/components/GestionCoursComponent.vue';
 </div>
 
     <div class="pb-[100px]">
-        <GestionCoursComponent />
+        <GestionCoursComponent :tabCourses="TabCourses"/>
     </div>
 </template>
   <style>

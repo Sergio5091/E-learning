@@ -9,6 +9,7 @@ import CoursesComponent from '@/components/CoursesComponents/CoursesComponent.vu
     <div class="flex">
         <SidebarComponent />
         <CoursesComponent />
+
     </div>
-   
+
 </template>

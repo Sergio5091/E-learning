@@ -1,15 +1,18 @@
 <script setup>
- import data from '@/newCourses.json'
+import data from '@/newCourses.json'
 import { ref } from 'vue';
 import CoursesListComponent from './CoursesListComponent.vue';
 import SideBarFilterComponent from './SideBarFilterComponent.vue';
 import { computed } from 'vue';
 const MainCourses = ref(data.courses)
+const coursesTable = ref([...MainCourses.value])
+
 const selectedCategory = ref('')
 
+
 const filteredCourses = computed(() => {
-    if(!selectedCategory.value) return MainCourses.value
-    return MainCourses.value.filter((el) => el.category === selectedCategory.value )
+    if (!selectedCategory.value) return coursesTable.value
+    return coursesTable.value.filter((el) => el.category === selectedCategory.value)
 })
 
 
@@ -22,16 +25,13 @@ const filteredCourses = computed(() => {
 
 
 <template>
-<div class="flex">
-    <SideBarFilterComponent :tabCourses="MainCourses" @update:category="selectedCategory =$event"  />
-    <CoursesListComponent :tabCourses="filteredCourses" />
-</div>
+    <div class="flex">
+        <SideBarFilterComponent :tabCourses="coursesTable" @update:category="selectedCategory = $event" />
+        <CoursesListComponent :tabCourses="filteredCourses" />
+    </div>
 
 
 </template>
 
 
-<style scoped>
-
-
-</style>
+<style scoped></style>

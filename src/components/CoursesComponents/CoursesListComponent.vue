@@ -1,5 +1,4 @@
 <script setup>
-
 const props = defineProps({
     tabCourses: Array
 })
@@ -10,7 +9,7 @@ const props = defineProps({
 
 <template>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4 md:grid-cols-2">
         <div v-for="cours in tabCourses" :key="cours.id"
             class=" rounded-lg shadow-sm hover:shadow-md transition w-[fit-content]  bg-white">
             <!-- Image -->
