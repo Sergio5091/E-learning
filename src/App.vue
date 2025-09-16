@@ -13,6 +13,10 @@ import AssistantIA from './components/AssistantIAComponent.vue';
  <AssistantIA />
 
 </template>
+<div>
+  azerty
+</div>
+
 
 <style scoped>
 
