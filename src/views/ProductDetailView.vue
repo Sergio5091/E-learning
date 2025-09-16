@@ -1,20 +1,25 @@
 <script setup>
-import { useRoute } from 'vue-router';
 import { ref, computed } from 'vue';
 import coursesData from '@/newCourses.json';
 
-const route = useRoute();
-const courseId = ref(route.params.id);
+const props = defineProps({
+  courseId: {
+    type: [String, Number],
+    required: true
+  }
+});
+
+const emit = defineEmits(['close-modal']);
 
 const course = computed(() => {
-  return coursesData.courses.find(c => c.id == courseId.value);
+  return coursesData.courses.find(c => c.id == props.courseId);
 });
 </script>
 
 <template>
   <div v-if="course" class="container mx-auto p-4">
     <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-      <img :src="course.thumbnail" :alt="course.title" class="w-full h-96 object-cover">
+      <img :src="course.thumbnail" :alt="course.title" class="w-full object-cover">
       <div class="p-6">
         <h1 class="text-4xl font-bold mb-2">{{ course.title }}</h1>
         <span class="inline-block bg-redColor text-white text-sm font-semibold px-3 py-1 rounded-full mb-4">
@@ -69,9 +74,9 @@ const course = computed(() => {
         </div>
 
         <div class="mt-8">
-          <button class="bg-blueColor text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 text-lg transition-colors">
+          <router-link :to="`/lessons/${course.id}`" @click="emit('close-modal')" class="bg-blueColor text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 text-lg transition-colors">
             Commencer la formation
-          </button>
+          </router-link>
         </div>
       </div>
     </div>
