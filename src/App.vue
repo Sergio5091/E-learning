@@ -1,6 +1,8 @@
 <script setup>
 import NavbarComponent from './components/NavbarComponent.vue';
 
+import AssistantIA from './components/AssistantIAComponent.vue';
+
 </script>
 
 <template>
@@ -8,6 +10,8 @@ import NavbarComponent from './components/NavbarComponent.vue';
   
   <RouterView />
   
+ <AssistantIA />
+
 </template>
 
 <style scoped>
