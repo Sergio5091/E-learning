@@ -7,8 +7,8 @@ const messages = ref(JSON.parse(localStorage.getItem('chat-history')) || [])
 const loading = ref(false)
 const error = ref('')
 
-const OPENROUTER_API_KEY =
-  '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' // Remplace par ta clé OpenRouter
+const OPENROUTERAPI =
+  "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"
 
 watch(
   messages,
@@ -31,31 +31,39 @@ async function send() {
   error.value = ''
 
   try {
-    // Appel à l'API OpenRouter (modèle GPT-3.5-turbo par défaut)
+    // Appel à l'API OpenRouter 
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+        "Authorization": `Bearer ${OPENROUTERAPI}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemma-7b-it',
-        messages: [
-          { role: 'user', content: "Bonjour, peux-tu m'aider ?" },
+        "model": 'google/gemma-7b-it',
+        "messages": [
+          { "role": 'user', "content": userMsg },
         ],
       }),
     })
-    if (!response.ok) throw new Error('Erreur API')
+    console.log( response.status)
+    if (!response.ok) {
+      const errMsg = await response.text()
+      console.error("Erreur API:", errMsg)
+      throw new Error('Erreur API: ' + errMsg)
+    }
     const data = await response.json()
+    console.log("Réponse API:", data)
     const reply = data.choices?.[0]?.message?.content || "Je n'ai pas compris votre question."
     messages.value.push({ role: 'ai', text: reply })
   } catch (err) {
-    error.value = "Erreur lors de la connexion à l'IA."
+    console.error("Erreur lors de la génération de la réponse:", err)
+    error.value = "Erreur lors de la connexion à l'IA ou génération de la réponse."
     messages.value.push({ role: 'ai', text: '❌ Erreur lors de la génération de la réponse.' })
   } finally {
     loading.value = false
   }
 }
+
 </script>
 
 <template>

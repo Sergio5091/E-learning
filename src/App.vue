@@ -1,5 +1,5 @@
 <script setup>
-import AssistantIA from './components/AssistantIA.vue';
+import AssistantIA from './components/AssistantIAComponent.vue';
 
 </script>
 
