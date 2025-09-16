@@ -25,11 +25,14 @@ function toggleChat() {
 async function send() {
   if (!input.value.trim()) return
   const userMsg = input.value.trim()
+
+  // Ajouter le message utilisateur dans l'historique
   messages.value.push({ role: 'user', text: userMsg })
   input.value = ''
   loading.value = true
   error.value = ''
 
+  // Préparer un résumé des cours
   const courseSummary = coursesData.courses.slice(0, 10).map((c) => ({
     titre: c.title,
     formateur: c.instructor,
@@ -39,6 +42,18 @@ async function send() {
   }))
 
   try {
+    // Construire le tableau messages pour l'API
+    const apiMessages = [
+      {
+        role: 'system',
+        content: `Voici un résumé de cours disponibles : ${JSON.stringify(courseSummary, null, 2)}`
+      },
+      ...messages.value.map((m) => ({
+        role: m.role === 'ai' ? 'assistant' : 'user',
+        content: m.text,
+      })),
+    ]
+
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -47,7 +62,7 @@ async function send() {
       },
       body: JSON.stringify({
         model: 'deepseek/deepseek-r1-0528-qwen3-8b:free',
-        messages: [{ role: 'user', content: userMsg }],
+        messages: apiMessages,
       }),
     })
 
@@ -57,11 +72,15 @@ async function send() {
     }
 
     const data = await response.json()
-    const reply = data.choices?.[0]?.message?.content || "Je n'ai pas compris votre question."
+    const reply =
+      data.choices?.[0]?.message?.content || "Je n'ai pas compris votre question."
     messages.value.push({ role: 'ai', text: reply })
   } catch (err) {
     error.value = "❌ Erreur lors de la connexion à l'IA."
-    messages.value.push({ role: 'ai', text: '❌ Erreur lors de la génération de la réponse.' })
+    messages.value.push({
+      role: 'ai',
+      text: '❌ Erreur lors de la génération de la réponse.',
+    })
   } finally {
     loading.value = false
   }
