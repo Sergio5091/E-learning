@@ -1,63 +1,62 @@
-
-
 <script setup>
-import { ref, onMounted, watch } from "vue"
-import { pipeline } from "@xenova/transformers"
+import { ref, watch } from 'vue'
 
 const isOpen = ref(false)
-const input = ref("")
-const messages = ref(JSON.parse(localStorage.getItem("chat-history")) || [])
+const input = ref('')
+const messages = ref(JSON.parse(localStorage.getItem('chat-history')) || [])
 const loading = ref(false)
+const error = ref('')
 
-let generator = null
+const OPENROUTER_API_KEY =
+  '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' // Remplace par ta clé OpenRouter
 
-// Charger le modèle Bloom
-onMounted(async () => {
-  try {
-    loading.value = true
-    generator = await pipeline("text-generation", "Xenova/distilgpt2")
-  } catch (err) {
-    console.error("Erreur de chargement du modèle :", err)
-    alert("Impossible de charger le modèle. Vérifie ta connexion ou l’URL.")
-  } finally {
-    loading.value = false
-  }
-})
-
-// Sauvegarde de l’historique
-watch(messages, (val) => {
-  localStorage.setItem("chat-history", JSON.stringify(val))
-}, { deep: true })
-
-// Envoyer message
-async function send() {
-  if (!input.value.trim() || !generator) return
-  const userMsg = input.value.trim()
-  messages.value.push({ role: "user", text: userMsg })
-  input.value = ""
-  loading.value = true
-
-  const prompt = messages.value
-    .map(m => `${m.role === "user" ? "Utilisateur" : "IA"}: ${m.text}`)
-    .join("\n") + "\nIA:"
-
-  const output = await generator(prompt, {
-    max_new_tokens: 60,
-    do_sample: true,
-    top_k: 50,
-    top_p: 0.95,
-  })
-
-  const reply = output[0].generated_text.split("IA:").pop().trim()
-  messages.value.push({ role: "ai", text: reply })
-  loading.value = false
-}
+watch(
+  messages,
+  (val) => {
+    localStorage.setItem('chat-history', JSON.stringify(val))
+  },
+  { deep: true },
+)
 
 function toggleChat() {
   isOpen.value = !isOpen.value
 }
-</script>
 
+async function send() {
+  if (!input.value.trim()) return
+  const userMsg = input.value.trim()
+  messages.value.push({ role: 'user', text: userMsg })
+  input.value = ''
+  loading.value = true
+  error.value = ''
+
+  try {
+    // Appel à l'API OpenRouter (modèle GPT-3.5-turbo par défaut)
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemma-7b-it',
+        messages: [
+          { role: 'user', content: "Bonjour, peux-tu m'aider ?" },
+        ],
+      }),
+    })
+    if (!response.ok) throw new Error('Erreur API')
+    const data = await response.json()
+    const reply = data.choices?.[0]?.message?.content || "Je n'ai pas compris votre question."
+    messages.value.push({ role: 'ai', text: reply })
+  } catch (err) {
+    error.value = "Erreur lors de la connexion à l'IA."
+    messages.value.push({ role: 'ai', text: '❌ Erreur lors de la génération de la réponse.' })
+  } finally {
+    loading.value = false
+  }
+}
+</script>
 
 <template>
   <div>
@@ -82,6 +81,7 @@ function toggleChat() {
 
       <!-- Messages -->
       <div class="flex-1 overflow-y-auto p-2 bg-gray-50">
+        <div v-if="error" class="text-red-600 text-sm mb-2">{{ error }}</div>
         <div v-for="(msg, i) in messages" :key="i" class="mb-2">
           <div v-if="msg.role === 'user'" class="text-right">
             <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-lg inline-block">
@@ -103,12 +103,9 @@ function toggleChat() {
           placeholder="Écrire..."
           class="flex-1 p-1 border rounded"
           @keyup.enter="send"
-        />
-        <button
-          @click="send"
-          class="px-2 bg-blue-600 text-white rounded"
           :disabled="loading"
-        >
+        />
+        <button @click="send" class="px-2 bg-blue-600 text-white rounded" :disabled="loading">
           ➤
         </button>
       </div>
@@ -118,7 +115,6 @@ function toggleChat() {
     </div>
   </div>
 </template>
-
 
 <style>
 /* Ajuster le z-index pour que la bulle soit toujours visible */
