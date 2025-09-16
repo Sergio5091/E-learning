@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from "vue";
+const code=ref('')
 
 </script>
 
@@ -10,22 +12,19 @@
     <div class="bg-[#FAFAFBFF]">Couleur brand dark</div>
   </div> -->
   <div class="flex justify-center h-screen w-full border-gray-200">
-    <div class="relative left-[160px] top-[10px] z-[2] rotate-[25deg]">
+    <div class="relative left-[120px] top-[-20px] z-[2] rotate-[25deg]">
       <img src="./assets/image/aunthentication/pocha-removebg-preview.png" alt="">
     </div>
   </div>
   <div class="para">
     <transition name="para">
-      <div class="min-w-[400px] justify-center rounded-4xl bg-[#eaeaeeaf]">
+      <div class="min-w-[400px] bg-[#eaeaeeaf] rounded-2xl p-[15px]">
       <div class="form">
-        <!-- <span class="material-symbols-outlined">
-lock
-</span> -->
 
 <!-- Formulaire d'inscription -->
         <transition name="slide-fade">
-            <div class="duration-[1s] flex ">
-              <h1 class="text-3xl text-gray-800  ">
+            <div class="duration-[1s]">
+              <h1 class="text-3xl text-gray-800 ">
                 **
                 Vous y êtes presque
               </h1>
@@ -36,10 +35,10 @@ lock
                 </p>
               </div>
               <div>
-                <input class="bg-bgColor " v-model="mdp2" name="mdp2" type="password"
+                <input class="bg-bgColor " v-model="code" type="password"
                   placeholder="Tapez le code ici..." required>
               </div>
-              <button class="bg-blueColor">Vérifier</button>
+              <button v-if="code!==''" class="bg-blueColor">Vérifier</button>
             </form>
           </div>
         </transition>
@@ -76,10 +75,13 @@ lock
   margin: 0;
 }
 
-/* .page{
-  height: 100vh;
-  width: 100vw;
-} */
+.page{
+ display: flex;
+ align-items: center;
+ flex-direction: column;
+ gap: 20px;
+ padding-bottom: 20px;
+}
 .page>div {
   display: flex;
   align-items: center;
@@ -105,15 +107,15 @@ lock
   box-shadow: 0 0 20px rgba(97, 81, 81, 0.541);
 }
 
-form {
-  margin-top: 20px;
+.form {
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 350px;
+  max-width: 400px;
 }
 h1{
-  padding-top: 30px;
+  padding-block: 30px;
 }
 
 form input {
@@ -123,6 +125,7 @@ form input {
   border-radius: 15px;
   padding: 12px;
   outline: none;
+  margin-block: 20px;
 }
 
 button {
