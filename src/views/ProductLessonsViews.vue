@@ -2,6 +2,7 @@
 import { useRoute } from 'vue-router';
 import { ref, computed } from 'vue';
 import coursesData from '@/newCourses.json';
+import CourseComments from '@/components/CourseComments.vue';
 
 const route = useRoute();
 const courseId = ref(route.params.id);
@@ -112,6 +113,13 @@ function selectLesson(index) {
           </li>
         </ul>
       </div>
+
+      <!-- Comments Section -->
+      <CourseComments
+        :comments="course.comments || []"
+        :course-id="course.id"
+        @update:comments="newComments => course.comments = newComments"
+      />
 
     </div>
   </div>
