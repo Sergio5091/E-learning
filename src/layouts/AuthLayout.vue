@@ -1,7 +1,8 @@
 <script setup>
 import { ref, computed, provide } from "vue";
+import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
-import * as emailjs from '@emailjs/browser';
+
 import bd from "../../Users.json";
 import mailConfirm from "../views/mailConfirmView.vue"
 
@@ -42,11 +43,7 @@ const mail=ref();
 const mdp1=ref();
 const mdp2=ref();
 
-// fonction qui génère le code de vérification
 
-function generateCode() {
-    return Math.random().toString(36).substring(2, 10).toUpperCase();
-  }
 
 function login() {
     localStorage.setItem('token', true)
@@ -62,25 +59,7 @@ function login() {
     }
 }
 
-// fonction d'envois de mail
-function sendVerificationMail() {
-  code.value= generateCode()
-    const templateParams = {
-      to_email: mail.value,            // remplit {{to_email}}
-      userName: pseudoI.value,             // remplit {{userName}}
-      confirmation_code: code.value     // remplit {{confirmation_code}}
-    };
 
-    emailjs.send("service_w6g1alp", "template_gjdh2dp", templateParams)
-      .then(function(response) {
-         alert("✅ Email envoyé à " + mail.value);
-         console.log("SUCCESS", response.status, response.text);
-      }, function(error) {
-         alert("❌ Erreur lors de l'envoi");
-         console.error("FAILED", error);
-      });
-  
-}
 //fonction d'inscription
 function inscription(){
         if ((pseudoI.value!=="") && (entireName.value!=="") && (mail.value!=="") && (mdp1.value!=="") && (mdp2.value!=="")) {
@@ -101,11 +80,11 @@ function inscription(){
                     baseDD.value.push(newUser);
                     localStorage.setItem("base", JSON.stringify(baseDD.value));
                     console.log("base après inscription :", JSON.parse(localStorage.getItem('base')));
-                    sendVerificationMail()
                     alert(`Inscription Réussie ${pseudoI.value}`)
                     // formState.value='connect'; ici on revient au formulaire de connexion si inscription réussie
                     route.push({
-                        name:'confirmMail'
+                        name:'confirmMail',
+                        params:{user:pseudoI.value}
                     })
                 }
                 
@@ -119,12 +98,30 @@ function inscription(){
 }
 
 
-//Provide
-const val=ref({
-  code,
-  updateCode: ()=>{code.value=''}
-})
-provide("val",val)
+// export const confirm = defineStore('val', () => {
+  
+//   const courses = ref([...data.courses])
+//   let idNew = 200;
+
+
+//   //Fonction pour ajouter un cours
+//   function addCourse(course){
+//     const courseToAdd = {...course , id:idNew++}
+//     courses.value.unshift(courseToAdd)
+//   }
+  
+//   //Fonction pour modifier un cours
+//   function updateCourse(course){
+//     courses.value = courses.value.map(c => c.id === course.id ? {...course} : c)
+//   }
+
+//   //Fonction  pour 
+//   function removeCourse(id) {
+//     courses.value = courses.value.filter(c => c.id !== id)
+//   }
+
+//   return { courses, addCourse, updateCourse, removeCourse }
+// })
 
 </script>
 

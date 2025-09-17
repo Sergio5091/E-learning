@@ -44,7 +44,7 @@ const router = createRouter({
       component: () => import('../layouts/AuthLayout.vue'),
     },
     {
-      path: '/ConfirmMail',
+      path: '/ConfirmMail/:user',
       name: 'confirmMail',
       component: () => import('../views/mailConfirmView.vue'),
     },

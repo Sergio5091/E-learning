@@ -1,12 +1,49 @@
 <script setup>
 import { ref, inject } from "vue";
-import { useRouter} from "vue-router"
-
-const val = inject("val")
+import { useRouter, useRoute} from "vue-router"
+import * as emailjs from '@emailjs/browser';
+emailjs.init("DVu2Au30trEgw5z2u");
 const code=ref('')
-const route=useRouter()
+const route=useRouter();
+const maRoute=useRoute();
+console.log(maRoute.params.user);
+console.log(JSON.parse(localStorage.getItem('base')));
+
+const baseDd=ref([]);
+baseDd.value=JSON.parse(localStorage.getItem('base'));
+
+const user=baseDd.value.find((e)=> e.name=== maRoute.params.user)
+console.log(user);
+
+
+const codege=ref(''); // cet variable va contenir le code générer et sera envoyer par props au composant de vérification
+// fonction qui génère le code de vérification
+function generateCode() {
+    return Math.random().toString(36).substring(2, 10).toUpperCase();
+  }
+
+// fonction d'envois de mail
+function sendVerificationMail() {
+  codege.value= generateCode()
+    const templateParams = {
+      to_email: user.email,            // remplit {{to_email}}
+      userName: user.name,             // remplit {{userName}}
+      confirmation_code: codege.value     // remplit {{confirmation_code}}
+    };
+
+    emailjs.send("service_w6g1alp", "template_gjdh2dp", templateParams)
+      .then(function(response) {
+         alert("✅ Email envoyé à " + user.email);
+         console.log("SUCCESS", response.status, response.text);
+      }, function(error) {
+         alert("❌ Erreur lors de l'envoi");
+         console.error("FAILED", error);
+      });
+  return codege
+}
+
 function verification() {
-    if (val.value.code===code.value) {
+    if (codege.value===code.value) {
         alert('cooooooool')
         route.push({
             name:'authentification'
@@ -15,7 +52,7 @@ function verification() {
         alert('Mauvais code')
     }
 }
-
+if (user) sendVerificationMail();
 </script>
 
 <template>
@@ -27,7 +64,7 @@ function verification() {
   </div> -->
   <div class="flex justify-center h-screen w-full border-gray-200">
     <div class="relative left-[120px] top-[-20px] z-[2] rotate-[25deg]">
-      <img src="./assets/image/aunthentication/pocha-removebg-preview.png" alt="">
+      <img src="../assets/image/aunthentication/pocha-removebg-preview.png" alt="">
     </div>
   </div>
   <div class="para">
