@@ -4,20 +4,23 @@ import AdminView from '@/views/AdminView.vue'
 import DashboardComponent from '@/components/DashboardComponent.vue'
 
 import AboutUsView from '@/views/AboutUsView.vue'
+import MailConfirmView from '@/views/mailConfirmView.vue'
+import AuthLayout from '@/layouts/AuthLayout.vue'
 
 const routes= [
   {
     path: '/',
       name: 'Acceuil',
       component: MainLayout,
+      user:'',
     },
      {
-      path: '/lessons/:id',
+      path: '/lessons/:user/:id',
       name: 'lessons',
       component: () => import('@/views/ProductLessonsViews.vue')
     },
     {
-     path:'/product/:id',
+     path:'/product/:user/:id',
       name:'product',
       component: () => import('@/views/ProductDetailView.vue')
     },
@@ -31,6 +34,21 @@ const routes= [
       name: 'Admin',
       component: AdminView,
     },
+    {
+      path: '/authentification',
+      name: 'authentification',
+      component: AuthLayout
+    },
+    {
+      path: '/ConfirmMail/:user',
+      name: 'confirmMail',
+      component: MailConfirmView
+    },
+    // {
+    //   path: '/',
+    //   name: '',
+    //   // component: () => import('../views/AboutView.vue'),
+    // },
     {
       path: '/profil',
       name: 'profil',
