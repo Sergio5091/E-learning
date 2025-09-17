@@ -1,8 +1,62 @@
 <script setup>
 import ImageDashboard from '@/assets/image/Dasboard/profil.jpg'
 import HistoryWatch from './HistoryWatch.vue';
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
+import allCourses from '@/newCourses.json';
+//image reactive avec une ilage par defaut
+const profileImag=ref("https://cdn-icons-png.flaticon.com/512/1946/1946429.png")
+
+const Apear =ref(false)
+const DisApear = ref(true)
+
+ function DisApeared() {
+    DisApear.value= false
+    Apear.value= true
+ }
+
+//Une functon pour choisir l'image pour mettre a jr le profilI avec URL
+const previewImage = (event)=>{
+    const file = event.target.files[0]
+    if (file) {
+        profileImag.value = URL.createObjectURL(file)
+    }
+}
 const gadgesDiv = ref("gadgesDiv")
+
+const courseHistory = ref([]);
+
+onMounted(() => {
+  const history = JSON.parse(localStorage.getItem('courseHistory') || '{}');
+  courseHistory.value = Object.values(history);
+});
+
+const completedCoursesCount = computed(() => {
+  return courseHistory.value.filter(c => c.statut === 'Terminé').length;
+});
+
+const totalLearningHours = computed(() => {
+    let totalMinutes = 0;
+    courseHistory.value.forEach(historyCourse => {
+        const courseDetails = allCourses.courses.find(c => c.id === historyCourse.id);
+        if (courseDetails && courseDetails.duration) {
+            const durationStr = courseDetails.duration;
+            let courseMinutes = 0;
+            if (durationStr.includes('h')) {
+                const parts = durationStr.split('h');
+                courseMinutes += parseInt(parts[0], 10) * 60;
+                if (parts[1] && parts[1].includes('min')) {
+                    courseMinutes += parseInt(parts[1].replace('min', '').trim(), 10);
+                }
+            } else if (durationStr.includes('min')) {
+                courseMinutes += parseInt(durationStr.replace('min', '').trim(), 10);
+            }
+            totalMinutes += courseMinutes;
+        }
+    });
+    return Math.floor(totalMinutes / 60);
+});
+
+
 </script>
 
 <template>
@@ -11,15 +65,45 @@ const gadgesDiv = ref("gadgesDiv")
         <div >
             <h1 class="font-bold text-[30px] pt-5 ">Mon profil</h1>
             <!-- <p class="font-bold text-[20px]" >Détails de l'utilisateur</p> -->
-            <div class="flex gap-6 items-center px-2 my-10 border-para1Color/opacity-20 py-2 shadow shadow-black/30 h-[152px] rounded-[20px]">
-                <div class=""><img class="w-22 h-22 rounded-[50px]" :src="ImageDashboard" alt="ImageDashboard"></div>
+            <div class=" px-10 my-10 border-para1Color/opacity-20 py-2 shadow   rounded-[20px]">
+                <div class="">
+                    <!-- <img class="w-22 h-22 rounded-[50px]" :src="ImageDashboard" alt="ImageDashboard"> -->
+                     <!-- flex gap-6 items-center -->
+                        <div class="w-28">
+                        <!-- input file caché -->
+                        <input id="upload" type="file" accept="image/*" class="hidden w-30"  @change="previewImage"/>
+
+                        <!-- image cliquable -->
+                            <label for="upload" class="cursor-pointer w-[10px]">
+                                <img :src="profileImag"
+                                    class="w-22 h-22 rounded-[50px]" />
+                            </label>
+                        </div>
+
+                </div>
                 <div>
                     <h2 class="font-bold text-[20px] mb-1">Alexandre Dubois</h2>
                     <div>
-                        <small class="text-para1Color">alexandre.dubois@edumaster.com</small>
+                        <small class="text-para1Color ">alexandre.dubois@edumaster.com</small>
                     </div>
-                    <button class="border-[1px] border-[#DEE1E6FF] font-medium text-[12px] px-[15px] py-[4px] rounded-[5px] mt-[10px]">Modifier le profil</button>
+                    <div class="border-b-[1px] border-para1Color/20 pt-1 pb-2"></div>
+                    <button class="border-[1px] border-[#DEE1E6FF] font-medium text-[12px] px-[15px] py-[8px] my-[5px] rounded-[5px] mt-[10px] cursor-pointer" v-if="DisApear" @click="DisApeared">Modifier le profil</button>
                 </div>
+                <form class="w-[325px] grid gap-5 my-[20px] relative pb-6" v-if="Apear" >
+                    <div class="flex justify-between items-center">
+                        <label for="name" class="font-medium">Nom:</label>
+                        <input class="border-[1px] w-[230px] outline-none rounded border-gray/10 px-[5px] py-[4px] border-para1Color/20" type="text" name="" id="name ">
+                    </div>
+                    <div class="flex justify-between">
+
+                        <label for="name" class="font-medium">Prenom:</label>
+                        <input class="border-[1px] w-[230px] border-para1Color/20 rounded outline-none px-[5px] py-[4px] items-center" type="text" name="" id="name">
+                    </div>
+                    <div class="w-[100px] text-center flex justify-center px-5 py-[3px] absolute bottom-[-20px] right-0 bg-blue-500/8 border-[1px] rounded-[10px] border-para1Color/10 shadow ">
+
+                        <input type="submit" class="text-center font-medium" value="Enregister">
+                    </div>
+                </form>
             </div>
             <div>
                 <!-- Statistiques -->
@@ -29,14 +113,14 @@ const gadgesDiv = ref("gadgesDiv")
                         <div class="flex justify-center items-center ">
                             <svg class="text-blueColor text-center" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" ><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q8 0 15 1.5t14 4.5l-74 74H200v560h560v-266l80-80v346q0 33-23.5 56.5T760-120H200Zm261-160L235-506l56-56 170 170 367-367 57 55-424 424Z"/></svg>
                         </div>
-                        <span class="text-blueColor">12</span><span class="text-para1Color text-[12px]">COURS TERMINER</span>
+                        <span class="text-blueColor">{{ completedCoursesCount }}</span><span class="text-para1Color text-[12px]">COURS TERMINÉS</span>
                     </div>
                     <div class=" px-[60px] rounded-[8px]  py-[15px] w-[320px] h-[152px] bg-[#FFFFFFFF] shadow shadow-black/35 h-[152px]">
                         <div class="flex justify-center items-center ">
     
                             <svg class="text-blueColor flex-col" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"  fill="currentColor"><path d="M320-160h320v-120q0-66-47-113t-113-47q-66 0-113 47t-47 113v120Zm160-360q66 0 113-47t47-113v-120H320v120q0 66 47 113t113 47ZM160-80v-80h80v-120q0-61 28.5-114.5T348-480q-51-32-79.5-85.5T240-680v-120h-80v-80h640v80h-80v120q0 61-28.5 114.5T612-480q51 32 79.5 85.5T720-280v120h80v80H160Z"/></svg>
                         </div>
-                        <span class="text-blueColor">156</span>
+                        <span class="text-blueColor">{{ totalLearningHours }}</span>
                         <span class="text-para1Color text-[12px]">Heures d'apprentissage</span>
                     </div>
                     <div class=" px-[60px] rounded-[8px] shadow shadow-black/35 h-[152px]  py-[15px] w-[320px] h-[152px] bg-[#FFFFFFFF]">
@@ -88,9 +172,11 @@ const gadgesDiv = ref("gadgesDiv")
 
 <style scoped>
 .gadgesDiv h2{
+   
     font-weight: 600;
-    
-    
+}
+.gadgesDiv{
+    flex-wrap: wrap;
 }
 .gadgesDiv p{
     color:#565D6DFF ;
@@ -102,5 +188,8 @@ span:first-of-type{
     font-size: 35px;
     display: block;
 }
+.inputImg{
+    position: absolute;
 
+}
 </style>
