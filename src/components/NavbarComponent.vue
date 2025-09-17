@@ -5,7 +5,6 @@ let showInput = ref(false)
 
 function toggleInput() {
   showInput.value = !showInput.value
-  console.log("gvju")
 }
 
 
