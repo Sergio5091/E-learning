@@ -12,9 +12,9 @@ onMounted(() => {
 </script>
 
 <template>
-<div class="my-[60px]">
+<div class="my-[60px] w-full ">
 
-    <table v-if="cours.length > 0" class="w-[100%] border-1 border-collapse border-para1Color/20 rounded-[100px]">
+    <table v-if="cours.length> 0" class="w-full overflow-scroll border-1 border-collapse border-para1Color/20 rounded-[100px]">
       <thead class="text-left text-[#171A1FFF] font-medium">
           <th class="py-5 pl-5 text-[#171A1FFF] font-medium">Titre du cours </th>
           <th class="text-[#171A1FFF] font-medium">Formateur </th>

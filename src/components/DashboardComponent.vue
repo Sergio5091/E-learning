@@ -16,14 +16,32 @@ function DisApeared() {
 }
 
 
-//Une functon pour choisir l'image pour mettre a jr le profilI avec URL
+// Une functon pour choisir l'image pour mettre a jr le profilI avec URL
+// const previewImage = (event) => {
+//   const file = event.target.files[0];
+//   if (file) {
+//     const imageUrl = URL.createObjectURL(file);
+//     profileImag.value = imageUrl;
+ // image choisie dans le local
+//     localStorage.setItem("image", imageUrl);
+//   }
+// };
+
+// Fonction pour choisir l'image et l'enregistrer de façon permanente
 const previewImage = (event) => {
   const file = event.target.files[0];
-  if (file) {
-    const imageUrl = URL.createObjectURL(file);
-    profileImag.value = imageUrl;
- // image choisie dans le local
-    localStorage.setItem("image", imageUrl);
+  console.log(file);
+  /**restreindre le fichier selectioner */
+  if (file && (file.type==="image/png" || file.type==="image/jpg" || file.type==="image/jpeg" || file.type==="image/gif" || file.type==="image/webp" || file.type==="image/svg" || file.type==="image/tiff")) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      profileImag.value = e.target.result;
+    //    Base64 de l'image
+      localStorage.setItem("image", e.target.result); 
+    //   Sauvegarde permanente
+    };
+    reader.readAsDataURL(file); 
+    // Conversion du fichier en base64
   }
 };
 
@@ -33,7 +51,16 @@ onMounted(() => {
   if (savedImage) {
     profileImag.value = savedImage;
   }
+  
 });
+
+
+// onMounted(() => {
+//   const savedImage = localStorage.getItem("image");
+//   if (savedImage) {
+//     profileImag.value = savedImage;
+//   }
+// });
 
 const gadgesDiv = ref("gadgesDiv")
 
@@ -138,18 +165,18 @@ const totalLearningHours = computed(() => {
 </script>
 
 <template>
-    <div class="m-20 px-10">
+    <div class="mb-20 mt-5 px-10">
 
         <div>
             <h1 class="font-bold text-[30px] pt-5 ">Mon profil</h1>
             <!-- <p class="font-bold text-[20px]" >Détails de l'utilisateur</p> -->
-            <div class=" px-10 my-10 border-para1Color/opacity-20 py-2 shadow   rounded-[20px]">
-                <div class="">
+            <div class="flex gap-6 items-center px-10 my-10 border-para1Color/opacity-20 py-2 shadow   rounded-[20px]">
+                <div class="flex gap-6 items-center">
                     <!-- <img class="w-22 h-22 rounded-[50px]" :src="ImageDashboard" alt="ImageDashboard"> -->
-                    <!-- flex gap-6 items-center -->
-                    <div class="w-28">
+                    
+                    <div class="w-28 ">
                         <!-- input file caché -->
-                        <input id="upload" type="file" accept="image/*" class="hidden w-30" @change="previewImage" />
+                        <input id="upload" type="file" accept="image/jpg,image/jpeg,image/png" class="hidden w-30" @change="previewImage" />
 
                         <!-- image cliquable -->
                         <label for="upload" class="cursor-pointer w-[10px]">
@@ -163,7 +190,7 @@ const totalLearningHours = computed(() => {
                     <div>
                         <small class="text-para1Color ">alexandre.dubois@edumaster.com</small>
                     </div>
-                    <div class="border-b-[1px] border-para1Color/20 pt-1 pb-2"></div>
+                    <!-- <div class="border-b-[1px] border-para1Color/20 pt-1 pb-2"></div> -->
                     <button
                         class="border-[1px] border-[#DEE1E6FF] font-medium text-[12px] px-[15px] py-[8px] my-[5px] rounded-[5px] mt-[10px] cursor-pointer"
                         v-if="DisApear" @click="DisApeared">Modifier le profil</button>
@@ -193,7 +220,7 @@ const totalLearningHours = computed(() => {
             <div>
                 <!-- Statistiques -->
                 <h2 class="font-bold text-[20px] my-5">Statistiques d'apprentissage</h2>
-                <div class="flex   text-center items-center gap-5 ">
+                <div class="flex-wrap   flex   text-center items-center gap-5 ">
                     <div
                         class=" px-[60px] rounded-[8px] border-para1Color py-[15px] w-[320px] bg-[#FFFFFFFF] shadow shadow-black/35 h-[152px]">
                         <div class="flex justify-center items-center ">
@@ -207,7 +234,7 @@ const totalLearningHours = computed(() => {
                             class="text-para1Color text-[12px]">COURS TERMINÉS</span>
                     </div>
                     <div
-                        class=" px-[60px] rounded-[8px]  py-[15px] w-[320px] h-[152px] bg-[#FFFFFFFF] shadow shadow-black/35 h-[152px]">
+                        class=" px-[60px] rounded-[8px]  py-[15px] w-[320px] h-[152px] bg-[#FFFFFFFF] shadow shadow-black/35 ">
                         <div class="flex justify-center items-center ">
 
                             <svg class="text-blueColor flex-col" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -220,7 +247,7 @@ const totalLearningHours = computed(() => {
                         <span class="text-para1Color text-[12px]">Heures d'apprentissage</span>
                     </div>
                     <div
-                        class=" px-[60px] rounded-[8px] shadow shadow-black/35 h-[152px]  py-[15px] w-[320px] h-[152px] bg-[#FFFFFFFF]">
+                        class=" px-[60px] rounded-[8px] shadow shadow-black/35 py-[15px] w-[320px] h-[152px] bg-[#FFFFFFFF]">
                         <div class="flex justify-center items-center ">
 
                             <svg class="text-blueColor" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -237,9 +264,7 @@ const totalLearningHours = computed(() => {
 
             <!-- Bade -->
             <BadgesComponent :earned-badges="earnedBadges" />
-        </div>
-        <div>
-            <HistoryWatch />
+                <HistoryWatch />
         </div>
     </div>
 </template>
