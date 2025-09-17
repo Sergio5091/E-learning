@@ -1,7 +1,7 @@
 <script setup>
 import ImageDashboard from '@/assets/image/Dasboard/profil.jpg'
 import HistoryWatch from './HistoryWatch.vue';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 //image reactive avec une ilage par defaut
 const profileImag=ref("https://cdn-icons-png.flaticon.com/512/1946/1946429.png")
 
@@ -13,13 +13,19 @@ const DisApear = ref(true)
     Apear.value= true
  }
 
+
 //Une functon pour choisir l'image pour mettre a jr le profilI avec URL
 const previewImage = (event)=>{
     const file = event.target.files[0]
     if (file) {
         profileImag.value = URL.createObjectURL(file)
     }
+    localStorage.setItem("image",previewImage)
 }
+
+onMounted(()=>{
+    localStorage.getItem("image")
+})
 const gadgesDiv = ref("gadgesDiv")
 </script>
 
@@ -68,6 +74,7 @@ const gadgesDiv = ref("gadgesDiv")
                         <input type="submit" class="text-center font-medium" value="Enregister">
                     </div>
                 </form>
+                
             </div>
             <div>
                 <!-- Statistiques -->
