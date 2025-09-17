@@ -1,22 +1,29 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 import data from '@/newCourses.json'
-import { ref } from "vue";
+import { ref } from 'vue'
+export const useAlertesStore = defineStore('courses', () => {
+  
+  const courses = ref([...data.courses])
+  let idNew = 200;
 
-export const courses = ref([...data.courses])
-export const usesCoursesStore = defineStore('courses' , () => {
 
-    function addCourse(course){
-        courses.value.push(course)
-    }
-    
-    function removeCourses(id){
-        courses.value = courses.value.filter( c => c.id !== id)
-    }
+  //Fonction pour ajouter un cours
+  function addCourse(course){
+    const courseToAdd = {...course , id:idNew++}
+    courses.value.unshift(courseToAdd)
+  }
+  
+  //Fonction pour modifier un cours
+  function updateCourse(course){
+    courses.value = courses.value.map(c => c.id === course.id ? {...course} : c)
+  }
 
-    const filterByCategory = (category) =>  {
-        if(!category) return courses.value
-        return courses.value.filter( c => c.category === category)
-    }
+  //Fonction  pour 
+  function removeCourse(id) {
+    courses.value = courses.value.filter(c => c.id !== id)
+  }
 
-    return {courses , addCourse,removeCourses,filterByCategory}
+  return { courses, addCourse, updateCourse, removeCourse }
 })
+
+

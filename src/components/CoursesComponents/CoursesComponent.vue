@@ -4,15 +4,17 @@ import { ref } from 'vue';
 import CoursesListComponent from './CoursesListComponent.vue';
 import SideBarFilterComponent from './SideBarFilterComponent.vue';
 import { computed } from 'vue';
+import { useAlertesStore } from '@/store';
 const MainCourses = ref(data.courses)
-const coursesTable = ref([...MainCourses.value])
+const { courses } = useAlertesStore()
+// const coursesTable = ref([...MainCourses.value])
 
 const selectedCategory = ref('')
 
 
 const filteredCourses = computed(() => {
-    if (!selectedCategory.value) return coursesTable.value
-    return coursesTable.value.filter((el) => el.category === selectedCategory.value)
+    if (!selectedCategory.value) return courses
+    return courses.filter((el) => el.category === selectedCategory.value)
 })
 
 
@@ -26,7 +28,7 @@ const filteredCourses = computed(() => {
 
 <template>
     <div class="flex">
-        <SideBarFilterComponent :tabCourses="coursesTable" @update:category="selectedCategory = $event" />
+        <SideBarFilterComponent :tabCourses="courses" @update:category="selectedCategory = $event" />
         <CoursesListComponent :tabCourses="filteredCourses" />
     </div>
 
