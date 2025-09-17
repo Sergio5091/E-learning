@@ -88,9 +88,9 @@ watch(progress, (newProgress) => {
 
 function nextLesson() {
   // Marque la leçon actuelle comme terminée
-//   if (course.value && course.value.lessons[currentLessonIndex.value]) {
-//     course.value.lessons[currentLessonIndex.value].completed = true;
-//   }
+  //   if (course.value && course.value.lessons[currentLessonIndex.value]) {
+  //     course.value.lessons[currentLessonIndex.value].completed = true;
+  //   }
   if (currentLessonIndex.value < course.value.lessons.length - 1) {
     currentLessonIndex.value++;
   }
@@ -116,8 +116,13 @@ function selectLesson(index) {
   <div v-if="course" class="container mx-auto p-4 sm:p-6 lg:p-8 bg-gray-50">
     <!-- Notification de badge -->
     <Transition name="slide-fade">
-      <div v-if="showBadgeNotification" class="fixed top-20 right-5 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center">
-        <svg class="w-8 h-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.33 14.414l-3.535-3.536 1.414-1.414L10.67 13.586l5.657-5.657 1.414 1.414-7.07 7.071z"></path></svg>
+      <div v-if="showBadgeNotification"
+        class="fixed top-20 right-5 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center">
+        <svg class="w-8 h-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.33 14.414l-3.535-3.536 1.414-1.414L10.67 13.586l5.657-5.657 1.414 1.414-7.07 7.071z">
+          </path>
+        </svg>
         <div>
           <p class="font-bold">Félicitations !</p>
           <p>Vous avez obtenu le badge de réussite pour ce cours !</p>
@@ -125,8 +130,8 @@ function selectLesson(index) {
       </div>
     </Transition>
     <div class="max-w-4xl mx-auto">
-      
- 
+
+
       <div class="mb-6">
         <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">{{ course.title }}</h1>
         <div class="mt-2">
@@ -145,22 +150,30 @@ function selectLesson(index) {
           <h2 class="text-lg font-semibold text-gray-700">Vidéo de la Leçon: {{ currentLesson.title }}</h2>
         </div>
         <div class="aspect-w-16 aspect-h-9 bg-black">
-          <iframe v-if="currentLesson" :src="currentLesson.videoUrl" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+          <iframe v-if="currentLesson" :src="currentLesson.videoUrl" frameborder="0"
+            allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
         </div>
       </div>
 
       <div class="flex justify-between items-center mb-8">
-        <button @click="previousLesson" :disabled="currentLessonIndex === 0" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">Précédent</button>
-        <span class="text-sm font-medium text-gray-600">Leçon {{ currentLessonIndex + 1 }} sur {{ course.lessons.length }}</span>
-        <button @click="nextLesson" :disabled="currentLessonIndex === course.lessons.length - 1" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">Suivant </button>
+        <button @click="previousLesson" :disabled="currentLessonIndex === 0"
+          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">Précédent</button>
+        <span class="text-sm font-medium text-gray-600">Leçon {{ currentLessonIndex + 1 }} sur {{ course.lessons.length
+          }}</span>
+        <button @click="nextLesson" :disabled="currentLessonIndex === course.lessons.length - 1"
+          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">Suivant
+        </button>
       </div>
 
       <!-- Lessons List -->
       <div class="bg-white shadow-md rounded-lg">
         <h3 class="text-xl font-semibold text-gray-800 p-4 border-b">Liste des leçons</h3>
         <ul>
-          <li v-for="(lesson, index) in course.lessons" :key="lesson.id" class="border-b hover:bg-red-50 transition-colors duration-500 cursor-pointer border-gray-200 last:border-b-0 last:pb-4 ">
-            <div @click="selectLesson(index)" class="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-100" :class="{'bg-gray-100': currentLessonIndex === index}">
+          <li v-for="(lesson, index) in course.lessons" :key="lesson.id"
+            class="border-b hover:bg-red-50 transition-colors duration-500 cursor-pointer border-gray-200 last:border-b-0 last:pb-4 ">
+            <div @click="selectLesson(index)"
+              class="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-100"
+              :class="{ 'bg-gray-100': currentLessonIndex === index }">
               <div class="flex items-center">
                 <span class="text-blue-600 font-semibold mr-3">{{ index + 1 }}.</span>
                 <span class="font-medium text-gray-800">{{ lesson.title }}</span>
@@ -168,15 +181,21 @@ function selectLesson(index) {
               <div class="flex items-center">
                 <span class="text-sm text-gray-500 mr-4">{{ lesson.duration }}</span>
                 <button @click.stop="toggleLesson(lesson.id)" class="focus:outline-none">
-                  <svg class="w-5 h-5 text-gray-500 transform transition-transform" :class="{'rotate-180': openedLessonId === lesson.id}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                  <svg class="w-5 h-5 text-gray-500 transform transition-transform"
+                    :class="{ 'rotate-180': openedLessonId === lesson.id }" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
                 </button>
               </div>
             </div>
             <div v-if="openedLessonId === lesson.id" class="p-4 bg-gray-50 border-t">
               <p class="text-sm text-gray-600 mb-4">{{ lesson.description }}</p>
               <div class="flex items-center">
-                <input type="checkbox" :id="'lesson-' + lesson.id" v-model="lesson.completed" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                <label :for="'lesson-' + lesson.id" class="ml-2 block text-sm text-gray-900">Marquer comme terminé</label>
+                <input type="checkbox" :id="'lesson-' + lesson.id" v-model="lesson.completed"
+                  class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <label :for="'lesson-' + lesson.id" class="ml-2 block text-sm text-gray-900">Marquer comme
+                  terminé</label>
               </div>
             </div>
           </li>
@@ -184,11 +203,8 @@ function selectLesson(index) {
       </div>
 
       <!-- Comments Section -->
-      <CourseComments
-        :comments="course.comments || []"
-        :course-id="course.id"
-        @update:comments="newComments => course.comments = newComments"
-      />
+      <CourseComments :comments="course.comments || []" :course-id="course.id"
+        @update:comments="newComments => course.comments = newComments" />
 
     </div>
   </div>
@@ -198,7 +214,6 @@ function selectLesson(index) {
 </template>
 
 <style scoped>
-
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;
 }
@@ -215,10 +230,10 @@ function selectLesson(index) {
 
 .aspect-w-16 {
   position: relative;
-  padding-bottom: 56.25%; 
+  padding-bottom: 56.25%;
 }
 
-.aspect-w-16 > iframe {
+.aspect-w-16>iframe {
   position: absolute;
   width: 100%;
   height: 100%;
