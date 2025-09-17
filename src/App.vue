@@ -7,6 +7,7 @@ import MainLayout from './layouts/MainLayout.vue';
 <template>
  <AssistantIA />
  <MainLayout/>
+
 </template>
 
 
