@@ -10,7 +10,7 @@ import mailConfirm from "../views/mailConfirmView.vue"
 // initialise EmailJS avec ta clé publique
 emailjs.init("DVu2Au30trEgw5z2u");
 
-console.log(JSON.parse(localStorage.getItem('base'))); 
+// console.log(JSON.parse(localStorage.getItem('base'))); 
 
 // console.log(localStorage.removeItem('base'));
 const stored = localStorage.getItem('base');
@@ -42,20 +42,27 @@ const entireName=ref();
 const mail=ref();
 const mdp1=ref();
 const mdp2=ref();
-
+//variable de notification
+const showBadgeNotification=ref('oui')
 
 
 function login() {
     localStorage.setItem('token', true)
     const index=baseDD.value.findIndex((e)=>e.name===pseudo.value && e.mot===mdp.value);
     if (index<=-1) {
-        alert('Compte inexistant!! inscrivez-vous ou vérifiez vos informations')
+        showBadgeNotification.value='j'
+        let set=setTimeout(() => {
+          showBadgeNotification.value='oui'
+        },3000);
     } else {
-        alert("connexion réussi")
-        route.push({
-            name:'home',
-            params:{id:index}
-        })
+        showBadgeNotification.value='r'
+        let set=setTimeout(() => {
+          showBadgeNotification.value='oui'
+          route.push({
+              name:'Acceuil',
+              params:{user:pseudo.value}
+          })
+        },3000);
     }
 }
 
@@ -67,9 +74,15 @@ function inscription(){
                 const existingPseudo=baseDD.value.findIndex((e)=>e.name===pseudoI.value);
                 const existingMail=baseDD.value.findIndex((e)=>e.email===mail.value);
                 if (existingPseudo!== -1) {
-                    alert("Nom d'utilisateur déjà prit")
+                    showBadgeNotification.value='p'
+                    let set=setTimeout(() => {
+                      showBadgeNotification.value='oui'
+                    },3000);
                 }else if(existingMail!== -1){
-                    alert("Mail déjà utilisé")
+                  showBadgeNotification.value='mail'
+                  let set=setTimeout(() => {
+                    showBadgeNotification.value='oui'
+                  },3000);
                 }else{ 
                     const newUser={
                         name:pseudoI.value,
@@ -80,19 +93,29 @@ function inscription(){
                     baseDD.value.push(newUser);
                     localStorage.setItem("base", JSON.stringify(baseDD.value));
                     console.log("base après inscription :", JSON.parse(localStorage.getItem('base')));
-                    alert(`Inscription Réussie ${pseudoI.value}`)
+                    
                     // formState.value='connect'; ici on revient au formulaire de connexion si inscription réussie
-                    route.push({
-                        name:'confirmMail',
-                        params:{user:pseudoI.value}
-                    })
+                    showBadgeNotification.value='ir'
+                    let set=setTimeout(() => {
+                      showBadgeNotification.value='oui'
+                      route.push({
+                          name:'confirmMail',
+                          params:{user:pseudoI.value}
+                      })
+                    },3000);
                 }
                 
             } else {
-              alert('Mot de passe non conforme')  
+                  showBadgeNotification.value='ie'
+                  let set=setTimeout(() => {
+                    showBadgeNotification.value='oui'
+                  },3000);
             }
         } else {
-            alert('Veuillez remplir tout les champs')
+            showBadgeNotification.value='ch'
+                  let set=setTimeout(() => {
+                    showBadgeNotification.value='oui'
+                  },3000);
         }
     const newUser={}
 }
@@ -126,12 +149,131 @@ function inscription(){
 </script>
 
 <template>
-  <!-- <div class="p-4">
-    <h1 class="bg-blueColor">Salut</h1>
-    <div class="bg-bgColor text-white p-4">Couleur brand</div>
-    <div class="bg-redColor text-blueColor p-4">Couleur brand light</div>
-    <div class="bg-[#FAFAFBFF]">Couleur brand dark</div>
-  </div> -->
+
+
+<!-- Notification -->
+  <Transition name="slide-fade">
+      <div v-if="showBadgeNotification==='r'"
+        class="fixed top-20 right-5 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center">
+        <svg class="w-8 h-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.33 14.414l-3.535-3.536 1.414-1.414L10.67 13.586l5.657-5.657 1.414 1.414-7.07 7.071z">
+          </path>
+        </svg>
+        <div>
+          <p class="font-bold">🤩Félicitations !</p>
+          <p>Connexion réussi</p>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- Notification élément existant -->
+  <Transition name="slide-fade">
+      <div v-if="showBadgeNotification==='j'"
+        class="fixed top-20 right-5 bg-yellow-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center">
+        <svg class="w-8 h-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.33 14.414l-3.535-3.536 1.414-1.414L10.67 13.586l5.657-5.657 1.414 1.414-7.07 7.071z">
+          </path>
+        </svg>
+        <div>
+          <p class="font-bold">Aie Aie😓😓 !</p>
+          <p>Compte inexistant!! inscrivez-vous ou vérifiez vos informations</p>
+        </div>
+      </div>
+    </Transition>
+
+
+
+
+
+    <!-- Notification Pseudo déjà prit -->
+  <Transition name="slide-fade">
+      <div v-if="showBadgeNotification==='p'"
+        class="fixed top-20 right-5 bg-blue-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center">
+        <svg class="w-8 h-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.33 14.414l-3.535-3.536 1.414-1.414L10.67 13.586l5.657-5.657 1.414 1.414-7.07 7.071z">
+          </path>
+        </svg>
+        <div>
+          <p class="font-bold">Désolé😓 !</p>
+          <p>Nom d'utilisateur déjà prit</p>
+        </div>
+      </div>
+    </Transition>
+
+
+    <!-- Notification Mail déjà prit-->
+  <Transition name="slide-fade">
+      <div v-if="showBadgeNotification==='mail'"
+        class="fixed top-20 right-5 bg-blue-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center">
+        <svg class="w-8 h-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.33 14.414l-3.535-3.536 1.414-1.414L10.67 13.586l5.657-5.657 1.414 1.414-7.07 7.071z">
+          </path>
+        </svg>
+        <div>
+          <p class="font-bold">Désolé😓 !</p>
+          <p>Mail déjà utilisé</p>
+        </div>
+      </div>
+    </Transition>
+
+
+
+  <!-- Notification inscription réussi -->
+  <Transition name="slide-fade">
+      <div v-if="showBadgeNotification==='ir'"
+        class="fixed top-20 right-5 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center">
+        <svg class="w-8 h-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.33 14.414l-3.535-3.536 1.414-1.414L10.67 13.586l5.657-5.657 1.414 1.414-7.07 7.071z">
+          </path>
+        </svg>
+        <div>
+          <p class="font-bold">Bravo 😎‼</p>
+          <p>Inscription Réussie {{pseudoI.value}}</p>
+        </div>
+      </div>
+    </Transition>
+
+
+  <!-- Notification inscription Echoué -->
+  <Transition name="slide-fade">
+      <div v-if="showBadgeNotification==='ie'"
+        class="fixed top-20 right-5 bg-orange-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center">
+        <svg class="w-8 h-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.33 14.414l-3.535-3.536 1.414-1.414L10.67 13.586l5.657-5.657 1.414 1.414-7.07 7.071z">
+          </path>
+        </svg>
+        <div>
+          <p class="font-bold">Ewoo boss 😎‼</p>
+          <p>Mot de passe non conforme</p>
+        </div>
+      </div>
+    </Transition>
+
+
+  <!-- Notification inscription Echoué -->
+  <Transition name="slide-fade">
+      <div v-if="showBadgeNotification==='ch'"
+        class="fixed top-20 right-5 bg-orange-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center">
+        <svg class="w-8 h-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.33 14.414l-3.535-3.536 1.414-1.414L10.67 13.586l5.657-5.657 1.414 1.414-7.07 7.071z">
+          </path>
+        </svg>
+        <div>
+          <p class="font-bold">Pardon Boss 😥‼</p>
+          <p>Faut remplir tout les champs</p>
+        </div>
+      </div>
+    </Transition>
+
+
+
   <div class="flex justify-center h-screen w-full border-gray-200 page">
     <div>
       <div>
@@ -152,7 +294,7 @@ function inscription(){
 <!-- Formulaire de connexion -->
         <transition name="slide-fadeI">
               <div class="duration-[1s]" v-if="formState === 'connect'">
-              <form>
+              <form  @submit.prevent="login">
                 <div>
                   <input class="bg-bgColor " v-model="pseudo" name="pseudo" type="text" placeholder="Nom d'utilisateur"
                     required>
@@ -164,7 +306,7 @@ function inscription(){
                   <p><a>Mot de passe oublié</a></p>
                   <div @click="formState = 'disconnect'" class="text-[#1717eeee]">S'inscrire?</div>
                 </div>
-                <button @click.prevent="login" class="bg-blueColor">Se connecter</button>
+                <button type="submit" class="bg-blueColor">Se connecter</button>
               </form>
             </div>
         </transition>
@@ -173,7 +315,7 @@ function inscription(){
 <!-- Formulaire d'inscription -->
         <transition name="slide-fade">
             <div class="duration-[1s]" v-if="formState === 'disconnect'">
-            <form>
+            <form @submit.prevent="inscription">
               <div>
                 <input class="bg-bgColor " v-model="pseudoI" name="pseudo" type="text" placeholder="Nom d'utilisateur"
                   required>
@@ -183,7 +325,7 @@ function inscription(){
                   required>
               </div>
               <div>
-                <input class="bg-bgColor " v-model="mail" name="mdp" type="mail" placeholder="Mail" required>
+                <input class="bg-bgColor " v-model="mail" name="mdp" type="email" placeholder="Mail" required>
               </div>
               <div>
                 <input class="bg-bgColor " v-model="mdp1" name="mdp" type="password" placeholder="Mot de passe" required>
@@ -193,7 +335,7 @@ function inscription(){
                   placeholder="Confirmez le mot de passe" required>
               </div>
               <div @click="formState = 'connect'" class="self-end mr-[50px] text-[#1717eeee]" :id="Insid">Connexion</div>
-              <button @click.prevent="inscription" class="bg-blueColor">Inscription</button>
+              <button type="submit"  class="bg-blueColor">Inscription</button>
             </form>
           </div>
         </transition>
