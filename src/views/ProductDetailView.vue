@@ -43,10 +43,10 @@ const course = computed(() => {
             <p><span class="font-semibold">Certificat:</span> {{ course.certificate ? 'Oui' : 'Non' }}</p>
           </div>
           <div>
-            <div class="flex items-baseline">
+            <!-- <div class="flex items-baseline">
                 <p class="text-4xl font-bold text-green-700">{{ course.price === 0 ? 'Gratuit' : course.price + ' €' }}</p>
                 <p v-if="course.price !== 0 && course.originalPrice" class="ml-2 text-gray-500 line-through">{{ course.originalPrice }} €</p>
-            </div>
+            </div> -->
             <p class="text-sm text-gray-500">Créé le: {{ course.createdDate }}</p>
             <p class="text-sm text-gray-500">Mis à jour le: {{ course.updatedDate }}</p>
           </div>
