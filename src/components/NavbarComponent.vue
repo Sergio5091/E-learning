@@ -1,18 +1,44 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue'
 
-let showInput = ref(false)
+let isOpen = ref(false)
+let isDark = ref(false)
 
-function toggleInput() {
-  showInput.value = !showInput.value
+// Charger le thème initial depuis localStorage
+onMounted(() => {
+  if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.classList.add("dark")
+    isDark.value = true
+  }
+})
+
+function toggleDarkMode() {
+  const html = document.documentElement
+  isDark.value = !isDark.value
+
+  if (isDark.value) {
+    html.classList.add("dark")
+    localStorage.setItem("theme", "dark")
+  } else {
+    html.classList.remove("dark")
+    localStorage.setItem("theme", "light")
+  }
 }
 
+// Raccourci clavier Ctrl+K
+function search(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+    e.preventDefault()
+    isOpen.value = !isOpen.value
+  }
+}
 
-// function toggleDarkMode() {
-//   const html = document.documentElement;
-//   html.classList.toggle('dark');
-// }
-
+onMounted(() => {
+  window.addEventListener("keydown", search)
+})
+onUnmounted(() => {
+  window.removeEventListener("keydown", search)
+})
 </script>
 
 <template>
@@ -28,40 +54,41 @@ function toggleInput() {
 
     <!-- navigation -->
     <div class="hidden md:flex space-x-6">
-      <RouterLink to="/" class="hover:text-blue-500">
-        Accueil
-      </RouterLink>
-      <RouterLink to="/lessons/:id" class="hover:text-blue-500">
-        Cours
-      </RouterLink>
-      <RouterLink to="/a-propos" class="hover:text-blue-500">
-        À propos
-      </RouterLink>
-      <RouterLink to="/admin" class="hover:text-blue-500">
-        Admin
-      </RouterLink>
+      <RouterLink to="/" class="hover:text-blue-500">Accueil</RouterLink>
+      <RouterLink to="/lessons/:id" class="hover:text-blue-500">Cours</RouterLink>
+      <RouterLink to="/a-propos" class="hover:text-blue-500">À propos</RouterLink>
+      <RouterLink to="/admin" class="hover:text-blue-500">Admin</RouterLink>
     </div>
 
     <!-- recherche/profil/mode dark&light -->
-    <div class="flex items-center space-x-4">
-      <!-- Mode dark/light -->
-      <button class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
->
-        <i class="fas fa-moon dark:hidden"></i>
-        <!-- <i class="fas fa-sun hidden dark:inline"></i> -->
-      </button>
+    <div class="flex items-center justify-end space-x-4 w-[400px]">
 
       <!-- Recherche -->
-      <div class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-        <input v-if="showInput === true" type="text" class="border"> 
-        <button class="hover:text-blue-500" @click="toggleInput">
-          <i class="fas fa-search"></i>
+      <div class="flex items-center relative">
+        <div v-if="isOpen" class="flex items-center bg-gray-100 dark:bg-gray-700 rounded-full px-3 py-1 transition-[0.3s]">
+          <input
+            type="text"
+            placeholder="Rechercher..."
+            class="bg-transparent outline-none text-sm text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 w-32 transition-[0.3s]"
+          >
+        </div>
+        <button class="ml-2 text-gray-500 hover:text-blue-500" @click="isOpen = !isOpen">
+          <i class="fas fa-search transition-[0.3s]"></i>
         </button>
       </div>
 
+      <!-- Mode dark/light -->
+      <button @click="toggleDarkMode"
+        class="cursor-pointer w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+        <!-- Soleil si mode clair -->
+        <i v-if="!isDark" class="fas fa-sun"></i>
+        <!-- Lune si mode sombre -->
+        <i v-else class="fas fa-moon"></i>
+      </button>
+
       <!-- Profil -->
-      <div class="w-18 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-        <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-medium">
+      <div class="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+        <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
           <i class="fas fa-user"></i>
         </div>
         <span class="text-gray-700 dark:text-gray-300 text-sm">Profil</span>
@@ -69,14 +96,3 @@ function toggleInput() {
     </div>
   </nav>
 </template>
-<style scoped>
-  a.lien-actif{
-  /* border-bottom: 2px solid#2b7fff; */
-  background-color:  #e7eaf0c2;
- }
- a{
-  padding-inline: 10px;
-  padding-block: 5px;
-  /* border-radius: 5px 5px ; */
- }
-</style>

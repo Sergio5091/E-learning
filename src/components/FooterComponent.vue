@@ -7,7 +7,7 @@
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-6">
       <!-- Menu -->
       <nav class="flex space-x-6 mb-4 md:mb-0">
-        <RouterLink to="" class="text-gray-700 hover:text-blue-600">Apprendre</RouterLink>
+        <RouterLink to="/" class="text-gray-700 hover:text-blue-600">Apprendre</RouterLink>
         <RouterLink to="" class="text-gray-700 hover:text-blue-600">Entreprise</RouterLink>
         <RouterLink to="" class="text-gray-700 hover:text-blue-600">Ressources</RouterLink>
       </nav>

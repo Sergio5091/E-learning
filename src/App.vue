@@ -7,18 +7,19 @@ import FooterComponent from './components/FooterComponent.vue';
 </script>
 
 <template>
-  <header> <NavbarComponent/> </header>
-  
-  <div>
-    <RouterView />
+  <div class="min-h-screen">
+    <header> <NavbarComponent/> </header>
     
-     <AssistantIA />
-  </div>
-  <ProductsView />
+    <div>
+      <RouterView />
+    
+       <AssistantIA />
+    </div>
 
-  <footer>
-    <FooterComponent />
-  </footer>
+    <footer>
+      <FooterComponent />
+    </footer>
+  </div>
 
 </template>
 
