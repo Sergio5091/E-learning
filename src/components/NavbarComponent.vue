@@ -76,8 +76,8 @@ function toggleInput() {
   background-color:  #2b80ff81;
  }
  a{
-  padding-inline: 10px;
-  padding-block: 5px;
+  padding-inline: 15px;
+  padding-block: 3px;
   border-radius: 5px 5px 0 0;
  }
 </style>

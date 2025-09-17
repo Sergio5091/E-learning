@@ -2,6 +2,24 @@
 import ImageDashboard from '@/assets/image/Dasboard/profil.jpg'
 import HistoryWatch from './HistoryWatch.vue';
 import { ref } from 'vue';
+//image reactive avec une ilage par defaut
+const profileImag=ref("https://cdn-icons-png.flaticon.com/512/1946/1946429.png")
+
+const Apear =ref(false)
+const DisApear = ref(true)
+
+ function DisApeared() {
+    DisApear.value= false
+    Apear.value= true
+ }
+
+//Une functon pour choisir l'image pour mettre a jr le profilI avec URL
+const previewImage = (event)=>{
+    const file = event.target.files[0]
+    if (file) {
+        profileImag.value = URL.createObjectURL(file)
+    }
+}
 const gadgesDiv = ref("gadgesDiv")
 </script>
 
@@ -11,15 +29,45 @@ const gadgesDiv = ref("gadgesDiv")
         <div >
             <h1 class="font-bold text-[30px] pt-5 ">Mon profil</h1>
             <!-- <p class="font-bold text-[20px]" >Détails de l'utilisateur</p> -->
-            <div class="flex gap-6 items-center px-2 my-10 border-para1Color/opacity-20 py-2 shadow shadow-black/30 h-[152px] rounded-[20px]">
-                <div class=""><img class="w-22 h-22 rounded-[50px]" :src="ImageDashboard" alt="ImageDashboard"></div>
+            <div class=" px-10 my-10 border-para1Color/opacity-20 py-2 shadow   rounded-[20px]">
+                <div class="">
+                    <!-- <img class="w-22 h-22 rounded-[50px]" :src="ImageDashboard" alt="ImageDashboard"> -->
+                     <!-- flex gap-6 items-center -->
+                        <div class="w-28">
+                        <!-- input file caché -->
+                        <input id="upload" type="file" accept="image/*" class="hidden w-30"  @change="previewImage"/>
+
+                        <!-- image cliquable -->
+                            <label for="upload" class="cursor-pointer w-[10px]">
+                                <img :src="profileImag"
+                                    class="w-22 h-22 rounded-[50px]" />
+                            </label>
+                        </div>
+
+                </div>
                 <div>
                     <h2 class="font-bold text-[20px] mb-1">Alexandre Dubois</h2>
                     <div>
-                        <small class="text-para1Color">alexandre.dubois@edumaster.com</small>
+                        <small class="text-para1Color ">alexandre.dubois@edumaster.com</small>
                     </div>
-                    <button class="border-[1px] border-[#DEE1E6FF] font-medium text-[12px] px-[15px] py-[4px] rounded-[5px] mt-[10px]">Modifier le profil</button>
+                    <div class="border-b-[1px] border-para1Color/20 pt-1 pb-2"></div>
+                    <button class="border-[1px] border-[#DEE1E6FF] font-medium text-[12px] px-[15px] py-[8px] my-[5px] rounded-[5px] mt-[10px] cursor-pointer" v-if="DisApear" @click="DisApeared">Modifier le profil</button>
                 </div>
+                <form class="w-[325px] grid gap-5 my-[20px] relative pb-6" v-if="Apear" >
+                    <div class="flex justify-between items-center">
+                        <label for="name" class="font-medium">Nom:</label>
+                        <input class="border-[1px] w-[230px] outline-none rounded border-gray/10 px-[5px] py-[4px] border-para1Color/20" type="text" name="" id="name ">
+                    </div>
+                    <div class="flex justify-between">
+
+                        <label for="name" class="font-medium">Prenom:</label>
+                        <input class="border-[1px] w-[230px] border-para1Color/20 rounded outline-none px-[5px] py-[4px] items-center" type="text" name="" id="name">
+                    </div>
+                    <div class="w-[100px] text-center flex justify-center px-5 py-[3px] absolute bottom-[-20px] right-0 bg-blue-500/8 border-[1px] rounded-[10px] border-para1Color/10 shadow ">
+
+                        <input type="submit" class="text-center font-medium" value="Enregister">
+                    </div>
+                </form>
             </div>
             <div>
                 <!-- Statistiques -->
@@ -88,9 +136,11 @@ const gadgesDiv = ref("gadgesDiv")
 
 <style scoped>
 .gadgesDiv h2{
+   
     font-weight: 600;
-    
-    
+}
+.gadgesDiv{
+    flex-wrap: wrap;
 }
 .gadgesDiv p{
     color:#565D6DFF ;
@@ -102,5 +152,8 @@ span:first-of-type{
     font-size: 35px;
     display: block;
 }
+.inputImg{
+    position: absolute;
 
+}
 </style>
