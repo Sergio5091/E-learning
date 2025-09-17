@@ -15,13 +15,27 @@ function DisApeared() {
     Apear.value = true
 }
 
+
 //Une functon pour choisir l'image pour mettre a jr le profilI avec URL
 const previewImage = (event) => {
-    const file = event.target.files[0]
-    if (file) {
-        profileImag.value = URL.createObjectURL(file)
-    }
-}
+  const file = event.target.files[0];
+  if (file) {
+    const imageUrl = URL.createObjectURL(file);
+    profileImag.value = imageUrl;
+ // image choisie dans le local
+    localStorage.setItem("image", imageUrl);
+  }
+};
+ 
+ 
+onMounted(() => {
+  const savedImage = localStorage.getItem("image");
+  if (savedImage) {
+    profileImag.value = savedImage;
+  }
+});
+ 
+ 
 const gadgesDiv = ref("gadgesDiv")
 
 const courseHistory = ref([]);
@@ -122,7 +136,6 @@ const totalLearningHours = computed(() => {
     return Math.floor(totalMinutes / 60);
 });
 
-
 </script>
 
 <template>
@@ -176,6 +189,7 @@ const totalLearningHours = computed(() => {
                         <input type="submit" class="text-center font-medium" value="Enregister">
                     </div>
                 </form>
+                
             </div>
             <div>
                 <!-- Statistiques -->
