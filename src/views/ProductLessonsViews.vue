@@ -159,7 +159,7 @@ function selectLesson(index) {
       <div class="bg-white shadow-md rounded-lg">
         <h3 class="text-xl font-semibold text-gray-800 p-4 border-b">Liste des leçons</h3>
         <ul>
-          <li v-for="(lesson, index) in course.lessons" :key="lesson.id" class="border-b last:border-b-0">
+          <li v-for="(lesson, index) in course.lessons" :key="lesson.id" class="border-b hover:bg-red-50 transition-colors duration-500 cursor-pointer border-gray-200 last:border-b-0 last:pb-4 ">
             <div @click="selectLesson(index)" class="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-100" :class="{'bg-gray-100': currentLessonIndex === index}">
               <div class="flex items-center">
                 <span class="text-blue-600 font-semibold mr-3">{{ index + 1 }}.</span>

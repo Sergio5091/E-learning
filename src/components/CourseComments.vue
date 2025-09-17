@@ -48,8 +48,8 @@ const deleteComment = (commentId) => {
 </script>
 
 <template>
-  <div class="bg-white shadow-md rounded-lg mt-8">
-    <h3 class="text-xl font-semibold text-gray-800 p-4 border-b">Commentaires</h3>
+  <div class="bg-white shadow-md rounded-lg mt-8 px-[5px]">
+    <h3 class="text-xl font-semibold text-gray-800 p-4 border-b border-gray-300">Commentaires</h3>
 
     <!-- Add Comment Form -->
     <div class="p-4 border-b">
