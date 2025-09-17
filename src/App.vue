@@ -7,7 +7,7 @@ import FooterComponent from './components/FooterComponent.vue';
 </script>
 
 <template>
-  <header> <NavbarComponent/> </header>
+  <header class="sticky top-0 z-[100000000]"> <NavbarComponent/> </header>
   
   <div>
     <RouterView />

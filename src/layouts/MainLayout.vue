@@ -9,5 +9,5 @@ import ProductsView from '@/views/ProductsView.vue';
         <SidebarComponent />
         <ProductsView />
     </div>
-   
+
 </template>
