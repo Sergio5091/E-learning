@@ -5,7 +5,6 @@ let showInput = ref(false)
 
 function toggleInput() {
   showInput.value = !showInput.value
-  console.log("gvju")
 }
 
 
@@ -32,7 +31,7 @@ function toggleInput() {
       <RouterLink to="/" class="hover:text-blue-500">
         Accueil
       </RouterLink>
-      <RouterLink to="/cours" class="hover:text-blue-500">
+      <RouterLink to="/lessons/:id" class="hover:text-blue-500">
         Cours
       </RouterLink>
       <RouterLink to="/a-propos" class="hover:text-blue-500">
@@ -72,12 +71,12 @@ function toggleInput() {
 </template>
 <style scoped>
   a.lien-actif{
-  border-bottom: 2px solid#2b7fff;
-  background-color:  #2b80ff81;
+  /* border-bottom: 2px solid#2b7fff; */
+  background-color:  #e7eaf0c2;
  }
  a{
-  padding-inline: 15px;
-  padding-block: 3px;
-  border-radius: 5px 5px 0 0;
+  padding-inline: 10px;
+  padding-block: 5px;
+  /* border-radius: 5px 5px ; */
  }
 </style>

@@ -3,6 +3,7 @@ import MainLayout from '@/layouts/MainLayout.vue'
 import AdminView from '@/views/AdminView.vue'
 import DashboardComponent from '@/components/DashboardComponent.vue'
 
+import AboutUsView from '@/views/AboutUsView.vue'
 
 const routes= [
   {
@@ -10,15 +11,20 @@ const routes= [
       name: 'Acceuil',
       component: MainLayout,
     },
+     {
+      path: '/lessons/:id',
+      name: 'lessons',
+      component: () => import('@/views/ProductLessonsViews.vue')
+    },
     {
-      path: '/cours',
-      name: 'Cours',
-      // component: () => import('../views/AboutView.vue'),
+     path:'/product/:id',
+      name:'product',
+      component: () => import('@/views/ProductDetailView.vue')
     },
     {
       path: '/a-propos',
       name: 'About',
-      // component: () => import('@/'),
+      component: AboutUsView,
     },
     {
       path: '/admin',

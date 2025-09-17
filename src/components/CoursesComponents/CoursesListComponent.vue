@@ -4,12 +4,13 @@ const props = defineProps({
     tabCourses: Array
 })
 
+const emit = defineEmits(['show-details'])
+
 
 </script>
 
 
 <template>
-
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
         <div v-for="cours in tabCourses" :key="cours.id"
             class=" rounded-lg shadow-sm hover:shadow-md transition w-[fit-content]  bg-white">
@@ -37,19 +38,24 @@ const props = defineProps({
 
                 <!-- Bouton détails -->
                 <div class="flex gap-5">
-                    <button type="button"
+                    <button @click="emit('show-details', cours.id)" type="button"
                         class="mt-3  text-center border border-blueColor text-indigo-600 rounded-md p-2 text-sm font-medium hover:bg-redColor hover:border-redColor hover:text-white transition">
                         Détails du cours
                     </button>
-                    <button type="button"
-                        class="mt-3  text-center border border-indigo-600 text-indigo-600 rounded-md p-2 text-sm font-medium hover:bg-blueColor hover:text-white transition">
+                    <router-link :to="`/lessons/${cours.id}`"
+                        class="mt-3 text-center border border-indigo-600 text-indigo-600 rounded-md p-2 text-sm font-medium hover:bg-blueColor hover:text-white transition">
                         Commencer
-                    </button>
+                    </router-link>
 
                 </div>
             </div>
         </div>
     </div>
+    
+    
+    
+
+
 </template>
 
 
