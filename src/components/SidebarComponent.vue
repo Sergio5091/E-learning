@@ -62,5 +62,6 @@ import { RouterLink } from 'vue-router';
     /* position: sticky;
     top: 80px; */
   }
+  
 
 </style>

@@ -43,9 +43,10 @@ const emit = defineEmits(['show-details'])
                         Détails du cours
                     </button>
                     <router-link :to="`/lessons/${cours.id}`"
-                        class="mt-3 text-center border border-indigo-600 text-indigo-600 rounded-md p-2 text-sm font-medium hover:bg-blueColor hover:text-white transition">
+                        class=" mt-3 text-center border border-indigo-600 text-indigo-600 rounded-md p-2 text-sm font-medium hover:bg-blueColor hover:text-white transition">
                         Commencer
                     </router-link>
+
 
                 </div>
             </div>
@@ -59,4 +60,14 @@ const emit = defineEmits(['show-details'])
 </template>
 
 
-<style scoped></style>
+<style scoped>
+a.lien-actif{
+  /* border-bottom: 2px solid#2b7fff; */
+  background-color:  #e7eaf0c2;
+ }
+ a{
+  padding-inline: 10px;
+  padding-block: 5px;
+  /* border-radius: 5px 5px ; */
+ }
+</style>

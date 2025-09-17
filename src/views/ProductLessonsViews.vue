@@ -30,12 +30,47 @@ const progress = computed(() => {
 const badgeEarned = ref(false);
 const showBadgeNotification = ref(false);
 
+function updateCourseHistory(currentProgress) {
+  if (!course.value) return;
+
+  const history = JSON.parse(localStorage.getItem('courseHistory') || '{}');
+  const today = new Date().toISOString().split('T')[0];
+  const status = currentProgress === 100 ? 'Terminé' : 'En cours';
+
+  history[course.value.id] = {
+    id: course.value.id,
+    titre: course.value.title,
+    formateur: course.value.instructor,
+    progression: currentProgress,
+    date: today,
+    statut: status,
+    lessons: course.value.lessons, // Sauvegarde l'état des leçons
+  };
+
+  localStorage.setItem('courseHistory', JSON.stringify(history));
+}
+
 // Vérifie si le badge a déjà été gagné au chargement du composant
 onMounted(() => {
   const earnedBadges = JSON.parse(localStorage.getItem('earnedBadges') || '{}');
   if (earnedBadges[courseId.value]) {
     badgeEarned.value = true;
   }
+
+  const history = JSON.parse(localStorage.getItem('courseHistory') || '{}');
+  if (history[courseId.value] && course.value) {
+    const savedLessons = history[courseId.value].lessons;
+    if (savedLessons) {
+      course.value.lessons.forEach((lesson) => {
+        const savedLesson = savedLessons.find(l => l.id === lesson.id);
+        if (savedLesson) {
+          lesson.completed = savedLesson.completed;
+        }
+      });
+    }
+  }
+
+  updateCourseHistory(progress.value);
 });
 
 // Surveille la progression pour attribuer le badge
@@ -48,6 +83,7 @@ watch(progress, (newProgress) => {
     localStorage.setItem('earnedBadges', JSON.stringify(earnedBadges));
     setTimeout(() => { showBadgeNotification.value = false; }, 5000); // Cache la notif après 5s
   }
+  updateCourseHistory(newProgress);
 });
 
 function nextLesson() {
@@ -157,7 +193,7 @@ function selectLesson(index) {
     </div>
   </div>
   <div v-else class="text-center p-10">
-    <p class="text-xl">Chargement du cours...</p>
+    <p class="text-xl">Veuillez choisir le cours que vous souhaitez suivre s'il vous plaît !</p>
   </div>
 </template>
 
