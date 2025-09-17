@@ -1,15 +1,13 @@
 <script setup>
 import SidebarComponent from '@/components/SidebarComponent.vue';
-import CoursesComponent from '@/components/CoursesComponents/CoursesComponent.vue';
-
+import ProductsView from '@/views/ProductsView.vue';
 
 </script>
 
 <template>
     <div class="flex">
         <SidebarComponent />
-        <CoursesComponent />
-
+        <ProductsView />
     </div>
 
 </template>

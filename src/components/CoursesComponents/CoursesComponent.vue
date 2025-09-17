@@ -6,6 +6,8 @@ import SideBarFilterComponent from './SideBarFilterComponent.vue';
 import { computed } from 'vue';
 import { useAlertesStore } from '@/store';
 const MainCourses = ref(data.courses)
+const emit = defineEmits(['show-details'])
+
 const { courses } = useAlertesStore()
 // const coursesTable = ref([...MainCourses.value])
 
@@ -17,19 +19,13 @@ const filteredCourses = computed(() => {
     return courses.filter((el) => el.category === selectedCategory.value)
 })
 
-
-
-
-
-
-
 </script>
 
 
 <template>
     <div class="flex">
         <SideBarFilterComponent :tabCourses="courses" @update:category="selectedCategory = $event" />
-        <CoursesListComponent :tabCourses="filteredCourses" />
+        <CoursesListComponent :tabCourses="filteredCourses" @show-details="emit('show-details', $event)"/>
     </div>
 
 

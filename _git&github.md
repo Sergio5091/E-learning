@@ -1,7 +1,7 @@
 # 📝 Commandes Git essentielles en équipe
 
 ### Cloner un projet GitHub (quand quelqu’un a déjà créé le repo)
-## git clone URL_DU_REPO
+ git clone URL_DU_REPO
 
 ### Créer une nouvelle branche
  git branch nom-de-branche
@@ -27,7 +27,7 @@
 ### Récupérer et appliquer (le plus courant)
  git pull
 
-### nvoyer une branche sur GitHub
+###  Envoyer une branche sur GitHub
  git push -u origin nom-de-branche
 
 ### Envoyer la branche principale

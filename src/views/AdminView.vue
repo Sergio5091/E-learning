@@ -10,7 +10,7 @@ const { courses } = useAlertesStore()
 
 <template>
     <!-- <pre>{{   courses  }}</pre> -->
-    <button @click="addCours()">addJs</button>
+    
 <div class="bg-adminBg rounded-[10px] pb-[50px] pt-4 px-4">
     <h1 class="font-archivo text-[30px] font-extrabold py-[2]">
         Bienvenue, Administrateur!
