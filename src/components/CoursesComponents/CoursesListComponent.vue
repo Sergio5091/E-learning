@@ -13,7 +13,7 @@ const props = defineProps({
         <div v-for="cours in tabCourses" :key="cours.id"
             class=" rounded-lg shadow-sm hover:shadow-md transition w-[fit-content]  bg-white">
             <!-- Image -->
-            <img :src="cours.thumbnail" alt="Image cours" class=" rounded-lg object-cover" />
+            <img :src="cours.thumbnail" alt="Image cours" class=" rounded-lg object-cover max-w-[300px] max-h-[500px]" />
 
             <div class="p-4 space-y-2">
                 <!-- Badge catégorie -->
@@ -30,9 +30,6 @@ const props = defineProps({
 
                 <!-- Auteur -->
                 <p class="text-sm text-gray-500"><span class="font-semibold ">Auteur :</span> {{ cours.instructor }}</p>
-
-                <p v-if="cours.price === 0" class="text-green-600 text-xl font-semibold">Gratuit</p>
-                <p v-else class="text-green-700 text-2xl font-medium">{{ cours.price }} €</p>
 
                 <!-- Bouton détails -->
                 <div class="flex gap-5">

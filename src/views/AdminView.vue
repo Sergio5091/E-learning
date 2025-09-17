@@ -1,14 +1,16 @@
 <script setup>
 import GestionCoursComponent from '@/components/GestionCoursComponent.vue';
-import { courses } from '@/store';
+import { useAlertesStore } from '@/store';
 import { ref } from 'vue';
-const TabCourses = ref(courses)
-console.log(TabCourses.value);
-
+// const TabCourses = courses.value
+// console.log(TabCourses.value);
+const { courses } = useAlertesStore()
 
 </script>
 
 <template>
+    <!-- <pre>{{   courses  }}</pre> -->
+    <button @click="addCours()">addJs</button>
 <div class="bg-adminBg rounded-[10px] pb-[50px] pt-4 px-4">
     <h1 class="font-archivo text-[30px] font-extrabold py-[2]">
         Bienvenue, Administrateur!
@@ -19,7 +21,7 @@ console.log(TabCourses.value);
 </div>
 
     <div class="pb-[100px]">
-        <GestionCoursComponent :tabCourses="TabCourses"/>
+        <GestionCoursComponent :tabCourses="courses"/>
     </div>
 </template>
   <style>
@@ -40,3 +42,5 @@ console.log(TabCourses.value);
         }
     </style>
 
+e>
+gi
