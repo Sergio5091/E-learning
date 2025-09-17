@@ -14,9 +14,9 @@ const props = defineProps({
 
 const emit = defineEmits(['update:comments']);
 
-// Simulating a logged-in user
+
 const currentUser = ref({
-  id: 1, // Let's say Alice is the current user
+  id: 1, // Test avec Alice
   name: 'Alice',
   avatar: 'https://i.pravatar.cc/150?u=alice'
 });

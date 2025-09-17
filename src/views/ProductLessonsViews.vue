@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router';
-import { ref, computed } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import coursesData from '@/newCourses.json';
 import CourseComments from '@/components/CourseComments.vue';
 
@@ -25,6 +25,29 @@ const progress = computed(() => {
   if (!course.value) return 0;
   const completedLessons = course.value.lessons.filter(l => l.completed).length;
   return Math.round((completedLessons / course.value.lessons.length) * 100);
+});
+
+const badgeEarned = ref(false);
+const showBadgeNotification = ref(false);
+
+// Vérifie si le badge a déjà été gagné au chargement du composant
+onMounted(() => {
+  const earnedBadges = JSON.parse(localStorage.getItem('earnedBadges') || '{}');
+  if (earnedBadges[courseId.value]) {
+    badgeEarned.value = true;
+  }
+});
+
+// Surveille la progression pour attribuer le badge
+watch(progress, (newProgress) => {
+  if (newProgress === 100 && !badgeEarned.value) {
+    badgeEarned.value = true;
+    showBadgeNotification.value = true;
+    const earnedBadges = JSON.parse(localStorage.getItem('earnedBadges') || '{}');
+    earnedBadges[courseId.value] = true;
+    localStorage.setItem('earnedBadges', JSON.stringify(earnedBadges));
+    setTimeout(() => { showBadgeNotification.value = false; }, 5000); // Cache la notif après 5s
+  }
 });
 
 function nextLesson() {
@@ -55,6 +78,16 @@ function selectLesson(index) {
 
 <template>
   <div v-if="course" class="container mx-auto p-4 sm:p-6 lg:p-8 bg-gray-50">
+    <!-- Notification de badge -->
+    <Transition name="slide-fade">
+      <div v-if="showBadgeNotification" class="fixed top-20 right-5 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center">
+        <svg class="w-8 h-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.33 14.414l-3.535-3.536 1.414-1.414L10.67 13.586l5.657-5.657 1.414 1.414-7.07 7.071z"></path></svg>
+        <div>
+          <p class="font-bold">Félicitations !</p>
+          <p>Vous avez obtenu le badge de réussite pour ce cours !</p>
+        </div>
+      </div>
+    </Transition>
     <div class="max-w-4xl mx-auto">
       
  
@@ -129,6 +162,20 @@ function selectLesson(index) {
 </template>
 
 <style scoped>
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
 
 .aspect-w-16 {
   position: relative;
