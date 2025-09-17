@@ -25,10 +25,14 @@ function toggleChat() {
 async function send() {
   if (!input.value.trim()) return
   const userMsg = input.value.trim()
+
+  // Ajouter le message utilisateur dans l'historique
   messages.value.push({ role: 'user', text: userMsg })
   input.value = ''
   loading.value = true
   error.value = ''
+
+  // Préparer un résumé des cours
   const courseSummary = coursesData.courses.slice(0, 10).map((c) => ({
     titre: c.title,
     formateur: c.instructor,
@@ -36,7 +40,20 @@ async function send() {
     durée: c.duration,
     nbLeçons: c.lessons?.length || 0,
   }))
+
   try {
+    // Construire le tableau messages pour l'API
+    const apiMessages = [
+      {
+        role: 'system',
+        content: `Voici un résumé de cours disponibles : ${JSON.stringify(courseSummary, null, 2)}`
+      },
+      ...messages.value.map((m) => ({
+        role: m.role === 'ai' ? 'assistant' : 'user',
+        content: m.text,
+      })),
+    ]
+
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -45,7 +62,7 @@ async function send() {
       },
       body: JSON.stringify({
         model: 'deepseek/deepseek-r1-0528-qwen3-8b:free',
-        messages: [{ role: 'user', content: userMsg }],
+        messages: apiMessages,
       }),
     })
 
@@ -55,11 +72,15 @@ async function send() {
     }
 
     const data = await response.json()
-    const reply = data.choices?.[0]?.message?.content || "Je n'ai pas compris votre question."
+    const reply =
+      data.choices?.[0]?.message?.content || "Je n'ai pas compris votre question."
     messages.value.push({ role: 'ai', text: reply })
   } catch (err) {
     error.value = "❌ Erreur lors de la connexion à l'IA."
-    messages.value.push({ role: 'ai', text: '❌ Erreur lors de la génération de la réponse.' })
+    messages.value.push({
+      role: 'ai',
+      text: '❌ Erreur lors de la génération de la réponse.',
+    })
   } finally {
     loading.value = false
   }
@@ -75,17 +96,17 @@ function newChat() {
   <div>
     <!-- Bouton flottant -->
     <button
-      class="fixed bottom-6 right-6 w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-100 via-blue-300 to-blue-700 shadow-2xl hover:bg-neutral-500 transition-colors duration-200 z-50"
+      class="fixed bottom-6 right-6 w-16 h-16 sm:w-14 sm:h-14 xs:w-12 xs:h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-100 via-blue-300 to-blue-700 shadow-2xl hover:bg-neutral-500 transition-colors duration-200 z-50"
       @click="toggleChat"
-      aria-label="Ouvrir l'assistant IA"
     >
-      <img src="/chatbot_14263197.png" alt="" />
+      <img src="/chatbot_14263197.png" alt="" class="w-10 h-10 sm:w-8 sm:h-8 xs:w-7 xs:h-7" />
     </button>
 
     <!-- Fenêtre de chat -->
     <div
       v-if="isOpen"
-      class="fixed bottom-28 right-6 w-[370px] max-w-[95vw] h-[520px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 border border-neutral-200"
+      class="fixed bottom-28 right-6 w-[370px] max-w-[500px] h-[520px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 border border-neutral-200
+      md:w-[340px] md:h-[480px] sm:w-[95vw] sm:right-2 sm:bottom-20 sm:h-[70vh] xs:w-[98vw] xs:right-1 xs:bottom-16 xs:h-[65vh]"
     >
       <!-- Header -->
       <div
