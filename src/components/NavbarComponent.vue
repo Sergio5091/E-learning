@@ -31,7 +31,7 @@ function toggleInput() {
       <RouterLink to="/" class="hover:text-blue-500">
         Accueil
       </RouterLink>
-      <RouterLink to="/cours" class="hover:text-blue-500">
+      <RouterLink to="/lessons/:id" class="hover:text-blue-500">
         Cours
       </RouterLink>
       <RouterLink to="/a-propos" class="hover:text-blue-500">

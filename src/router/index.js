@@ -11,10 +11,15 @@ const routes= [
       name: 'Acceuil',
       component: MainLayout,
     },
+     {
+      path: '/lessons/:id',
+      name: 'lessons',
+      component: () => import('@/views/ProductLessonsViews.vue')
+    },
     {
-      path: '/cours',
-      name: 'Cours',
-      // component: () => import('../views/AboutView.vue'),
+     path:'/product/:id',
+      name:'product',
+      component: () => import('@/views/ProductDetailView.vue')
     },
     {
       path: '/a-propos',

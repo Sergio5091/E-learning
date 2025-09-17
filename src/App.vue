@@ -14,6 +14,7 @@ import FooterComponent from './components/FooterComponent.vue';
     
      <AssistantIA />
   </div>
+  <ProductsView />
 
   <footer>
     <FooterComponent />

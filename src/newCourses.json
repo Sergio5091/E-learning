@@ -62,6 +62,24 @@
           "description": "Créer votre première page web complète",
           "completed": false
         }
+      ],
+      "comments": [
+        {
+          "id": 101,
+          "authorId": 1,
+          "author": "Alice",
+          "avatar": "https://i.pravatar.cc/150?u=alice",
+          "date": "2024-09-01",
+          "text": "Super cours, très clair pour les débutants !"
+        },
+        {
+          "id": 102,
+          "authorId": 2,
+          "author": "Bob",
+          "avatar": "https://i.pravatar.cc/150?u=bob",
+          "date": "2024-09-02",
+          "text": "J'ai beaucoup appris, merci Marie."
+        }
       ]
     },
     {
