@@ -65,9 +65,7 @@ onMounted(() => {
 table{
     border-radius:100px ;
 }
-th{
-    /* color: #171A1FFF; */
-}
+
 
 tr{
     border-radius: 100px;
