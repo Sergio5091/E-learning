@@ -1,7 +1,8 @@
 <script setup>
 import ImageDashboard from '@/assets/image/Dasboard/profil.jpg'
 import HistoryWatch from './HistoryWatch.vue';
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
+import allCourses from '@/newCourses.json';
 //image reactive avec une ilage par defaut
 const profileImag=ref("https://cdn-icons-png.flaticon.com/512/1946/1946429.png")
 
@@ -21,6 +22,41 @@ const previewImage = (event)=>{
     }
 }
 const gadgesDiv = ref("gadgesDiv")
+
+const courseHistory = ref([]);
+
+onMounted(() => {
+  const history = JSON.parse(localStorage.getItem('courseHistory') || '{}');
+  courseHistory.value = Object.values(history);
+});
+
+const completedCoursesCount = computed(() => {
+  return courseHistory.value.filter(c => c.statut === 'Terminé').length;
+});
+
+const totalLearningHours = computed(() => {
+    let totalMinutes = 0;
+    courseHistory.value.forEach(historyCourse => {
+        const courseDetails = allCourses.courses.find(c => c.id === historyCourse.id);
+        if (courseDetails && courseDetails.duration) {
+            const durationStr = courseDetails.duration;
+            let courseMinutes = 0;
+            if (durationStr.includes('h')) {
+                const parts = durationStr.split('h');
+                courseMinutes += parseInt(parts[0], 10) * 60;
+                if (parts[1] && parts[1].includes('min')) {
+                    courseMinutes += parseInt(parts[1].replace('min', '').trim(), 10);
+                }
+            } else if (durationStr.includes('min')) {
+                courseMinutes += parseInt(durationStr.replace('min', '').trim(), 10);
+            }
+            totalMinutes += courseMinutes;
+        }
+    });
+    return Math.floor(totalMinutes / 60);
+});
+
+
 </script>
 
 <template>
@@ -77,14 +113,14 @@ const gadgesDiv = ref("gadgesDiv")
                         <div class="flex justify-center items-center ">
                             <svg class="text-blueColor text-center" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" ><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q8 0 15 1.5t14 4.5l-74 74H200v560h560v-266l80-80v346q0 33-23.5 56.5T760-120H200Zm261-160L235-506l56-56 170 170 367-367 57 55-424 424Z"/></svg>
                         </div>
-                        <span class="text-blueColor">12</span><span class="text-para1Color text-[12px]">COURS TERMINER</span>
+                        <span class="text-blueColor">{{ completedCoursesCount }}</span><span class="text-para1Color text-[12px]">COURS TERMINÉS</span>
                     </div>
                     <div class=" px-[60px] rounded-[8px]  py-[15px] w-[320px] h-[152px] bg-[#FFFFFFFF] shadow shadow-black/35 h-[152px]">
                         <div class="flex justify-center items-center ">
     
                             <svg class="text-blueColor flex-col" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"  fill="currentColor"><path d="M320-160h320v-120q0-66-47-113t-113-47q-66 0-113 47t-47 113v120Zm160-360q66 0 113-47t47-113v-120H320v120q0 66 47 113t113 47ZM160-80v-80h80v-120q0-61 28.5-114.5T348-480q-51-32-79.5-85.5T240-680v-120h-80v-80h640v80h-80v120q0 61-28.5 114.5T612-480q51 32 79.5 85.5T720-280v120h80v80H160Z"/></svg>
                         </div>
-                        <span class="text-blueColor">156</span>
+                        <span class="text-blueColor">{{ totalLearningHours }}</span>
                         <span class="text-para1Color text-[12px]">Heures d'apprentissage</span>
                     </div>
                     <div class=" px-[60px] rounded-[8px] shadow shadow-black/35 h-[152px]  py-[15px] w-[320px] h-[152px] bg-[#FFFFFFFF]">

@@ -2,9 +2,7 @@
 const props = defineProps({
     tabCourses: Array
 })
-
 const emit = defineEmits(['show-details'])
-
 
 </script>
 

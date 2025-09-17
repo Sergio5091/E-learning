@@ -30,12 +30,47 @@ const progress = computed(() => {
 const badgeEarned = ref(false);
 const showBadgeNotification = ref(false);
 
+function updateCourseHistory(currentProgress) {
+  if (!course.value) return;
+
+  const history = JSON.parse(localStorage.getItem('courseHistory') || '{}');
+  const today = new Date().toISOString().split('T')[0];
+  const status = currentProgress === 100 ? 'Terminé' : 'En cours';
+
+  history[course.value.id] = {
+    id: course.value.id,
+    titre: course.value.title,
+    formateur: course.value.instructor,
+    progression: currentProgress,
+    date: today,
+    statut: status,
+    lessons: course.value.lessons, // Sauvegarde l'état des leçons
+  };
+
+  localStorage.setItem('courseHistory', JSON.stringify(history));
+}
+
 // Vérifie si le badge a déjà été gagné au chargement du composant
 onMounted(() => {
   const earnedBadges = JSON.parse(localStorage.getItem('earnedBadges') || '{}');
   if (earnedBadges[courseId.value]) {
     badgeEarned.value = true;
   }
+
+  const history = JSON.parse(localStorage.getItem('courseHistory') || '{}');
+  if (history[courseId.value] && course.value) {
+    const savedLessons = history[courseId.value].lessons;
+    if (savedLessons) {
+      course.value.lessons.forEach((lesson) => {
+        const savedLesson = savedLessons.find(l => l.id === lesson.id);
+        if (savedLesson) {
+          lesson.completed = savedLesson.completed;
+        }
+      });
+    }
+  }
+
+  updateCourseHistory(progress.value);
 });
 
 // Surveille la progression pour attribuer le badge
@@ -48,6 +83,7 @@ watch(progress, (newProgress) => {
     localStorage.setItem('earnedBadges', JSON.stringify(earnedBadges));
     setTimeout(() => { showBadgeNotification.value = false; }, 5000); // Cache la notif après 5s
   }
+  updateCourseHistory(newProgress);
 });
 
 function nextLesson() {
@@ -123,7 +159,7 @@ function selectLesson(index) {
       <div class="bg-white shadow-md rounded-lg">
         <h3 class="text-xl font-semibold text-gray-800 p-4 border-b">Liste des leçons</h3>
         <ul>
-          <li v-for="(lesson, index) in course.lessons" :key="lesson.id" class="border-b last:border-b-0">
+          <li v-for="(lesson, index) in course.lessons" :key="lesson.id" class="border-b hover:bg-red-50 transition-colors duration-500 cursor-pointer border-gray-200 last:border-b-0 last:pb-4 ">
             <div @click="selectLesson(index)" class="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-100" :class="{'bg-gray-100': currentLessonIndex === index}">
               <div class="flex items-center">
                 <span class="text-blue-600 font-semibold mr-3">{{ index + 1 }}.</span>
@@ -157,7 +193,7 @@ function selectLesson(index) {
     </div>
   </div>
   <div v-else class="text-center p-10">
-    <p class="text-xl">Chargement du cours...</p>
+    <p class="text-xl">Veuillez choisir le cours que vous souhaitez suivre s'il vous plaît !</p>
   </div>
 </template>
 

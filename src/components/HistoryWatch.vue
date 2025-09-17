@@ -1,22 +1,27 @@
 <script setup>
-const cours = [
-  { titre: "Développement Web Avancé", formateur: "Sophie Martin", progression: 85, date: "2024-07-20", statut: "En cours" },
-  { titre: "Design UI/UX pour Débutants", formateur: "Pierre Dupont", progression: 100, date: "2024-06-15", statut: "Terminé" },
-  { titre: "Introduction à la Science des Données", formateur: "Marie Leblanc", progression: 60, date: "2024-07-22", statut: "En cours" },
-]
+import { ref, onMounted } from 'vue';
+
+const cours = ref([]);
+
+
+
+onMounted(() => {
+  const history = JSON.parse(localStorage.getItem('courseHistory') || '{}');
+  cours.value = Object.values(history);
+});
 </script>
 
 <template>
 <div class="my-[60px]">
 
-    <table class="w-[100%] border-1 border-collapse border-para1Color/20 rounded-[100px]">
+    <table v-if="cours.length > 0" class="w-[100%] border-1 border-collapse border-para1Color/20 rounded-[100px]">
       <thead class="text-left text-[#171A1FFF] font-medium">
           <th class="py-5 pl-5 text-[#171A1FFF] font-medium">Titre du cours </th>
           <th class="text-[#171A1FFF] font-medium">Formateur </th>
           <th class="text-[#171A1FFF] font-medium">Progression </th>
           <th class="text-[#171A1FFF] font-medium">Dernier accès</th>
           <th class="text-[#171A1FFF] font-medium">Statut</th>
-          <th class="text-[#171A1FFF] font-medium">Actions</th>
+          <!-- <th class="text-[#171A1FFF] font-medium">Actions</th> -->
       </thead>
       <tbody>
         <tr v-for="c in cours" :key="c.titre" class="border-1 border-para1Color/20">
@@ -39,15 +44,20 @@ const cours = [
             </span>
           </td>
           <td >
-            <div>
+            <!-- <div>
                 <button class="bg-sidebarColor border-1 border-para1Color/10 cursor-pointer bg-para1Color/90 text-para1Color px-4 py-1 rounded-md">
-                  Voir le cours
+                  <router-link :to="`/lessons/${course.id}`" class="bg-blueColor text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 text-lg transition-colors">
+            Voir le cours
+          </router-link>
                 </button>
-            </div>
+            </div> -->
           </td>
         </tr>
       </tbody>
     </table>
+    <div v-else class="text-center p-10 text-gray-500">
+      Vous n'avez pas encore commencé de cours.
+    </div>
 </div>
 </template>
 <style scoped>
