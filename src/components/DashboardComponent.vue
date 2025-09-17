@@ -18,16 +18,23 @@ function DisApeared() {
 
 //Une functon pour choisir l'image pour mettre a jr le profilI avec URL
 const previewImage = (event) => {
-    const file = event.target.files[0]
-    if (file) {
-        profileImag.value = URL.createObjectURL(file)
-    }
-    localStorage.setItem("image",previewImage)
-}
+  const file = event.target.files[0];
+  if (file) {
+    const imageUrl = URL.createObjectURL(file);
+    profileImag.value = imageUrl;
+ // image choisie dans le local
+    localStorage.setItem("image", imageUrl);
+  }
+};
 
-onMounted(()=>{
-    localStorage.getItem("image")
-})
+
+onMounted(() => {
+  const savedImage = localStorage.getItem("image");
+  if (savedImage) {
+    profileImag.value = savedImage;
+  }
+});
+
 const gadgesDiv = ref("gadgesDiv")
 
 const courseHistory = ref([]);
