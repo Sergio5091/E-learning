@@ -2,12 +2,15 @@
 import { ref, inject } from "vue";
 import { useRouter} from "vue-router"
 
-const val = inject('val')
+const val = inject("val")
 const code=ref('')
 const route=useRouter()
 function verification() {
-    if (val.code===code.value) {
-        route.push('/auth')
+    if (val.value.code===code.value) {
+        alert('cooooooool')
+        route.push({
+            name:'authentification'
+        })
     } else {
         alert('Mauvais code')
     }
@@ -49,7 +52,7 @@ function verification() {
                 <input v-model="code" class="bg-bgColor "  type="text"
                   placeholder="Tapez le code ici..." required>
               </div>
-              <button @click="verification" class="bg-blueColor">Vérifier</button>
+              <button @click.prevent="verification" class="bg-blueColor">Vérifier</button>
             </form>
           </div>
         </transition>

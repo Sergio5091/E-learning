@@ -1,7 +1,15 @@
+<script setup>
+import SidebarComponent from '@/components/SidebarComponent.vue';
+import CoursesComponent from '@/components/CoursesComponents/CoursesComponent.vue';
+
+
+</script>
+
 <template>
-    <h1>This is an about page</h1>
+    <div class="flex">
+        <SidebarComponent />
+        <CoursesComponent />
+
+    </div>
+
 </template>
-
-<style>
-
-</style>

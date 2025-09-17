@@ -64,12 +64,11 @@ function login() {
 
 // fonction d'envois de mail
 function sendVerificationMail() {
-    const code = generateCode();
-
+  code.value= generateCode()
     const templateParams = {
       to_email: mail.value,            // remplit {{to_email}}
       userName: pseudoI.value,             // remplit {{userName}}
-      confirmation_code: code     // remplit {{confirmation_code}}
+      confirmation_code: code.value     // remplit {{confirmation_code}}
     };
 
     emailjs.send("service_w6g1alp", "template_gjdh2dp", templateParams)
@@ -106,7 +105,7 @@ function inscription(){
                     alert(`Inscription Réussie ${pseudoI.value}`)
                     // formState.value='connect'; ici on revient au formulaire de connexion si inscription réussie
                     route.push({
-                        name:'/ConfirmMail'
+                        name:'confirmMail'
                     })
                 }
                 
@@ -121,10 +120,11 @@ function inscription(){
 
 
 //Provide
-provide('val',{
-  code:code.value,
+const val=ref({
+  code,
   updateCode: ()=>{code.value=''}
 })
+provide("val",val)
 
 </script>
 
