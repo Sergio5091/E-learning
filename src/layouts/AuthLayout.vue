@@ -1,17 +1,33 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, provide } from "vue";
 import { useRouter } from 'vue-router';
-import bd from "../Users.json";
-let baseDD=computed(()=>{
-    if(localStorage.getItem('base')){
-        const stored=localStorage.getItem('base');
-       return JSON.parse(stored); 
-    } else{
-        return bd.Users
+import * as emailjs from '@emailjs/browser';
+import bd from "../../Users.json";
+import mailConfirm from "../views/mailConfirmView.vue"
+
+
+// initialise EmailJS avec ta clé publique
+emailjs.init("DVu2Au30trEgw5z2u");
+
+console.log(JSON.parse(localStorage.getItem('base'))); 
+
+// console.log(localStorage.removeItem('base'));
+const stored = localStorage.getItem('base');
+let baseDD = ref([])
+if (stored) {
+    try {
+      baseDD.value=JSON.parse(stored);
+    } catch (e) {
+      console.error("❌ Erreur JSON.parse :", e);
+      // réinitialise si jamais c’est corrompu
+      localStorage.removeItem('base');
+      baseDD.value= bd.Users;
     }
-})
+  } else {
+    baseDD.value= bd.Users;
+  }
 
-
+const code=ref(''); // cet variable va contenir le code générer et sera envoyer par props au composant de vérification
 const route=useRouter();
 const pseudo=ref();
 const mdp=ref();
@@ -29,8 +45,7 @@ const mdp2=ref();
 // fonction qui génère le code de vérification
 
 function generateCode() {
-    code= Math.random().toString(36).substring(2, 10).toUpperCase();
-    return code
+    return Math.random().toString(36).substring(2, 10).toUpperCase();
   }
 
 function login() {
@@ -57,9 +72,9 @@ function sendVerificationMail() {
       confirmation_code: code     // remplit {{confirmation_code}}
     };
 
-    emailjs.send("TON_SERVICE_ID", "TON_TEMPLATE_ID", templateParams)
+    emailjs.send("service_w6g1alp", "template_gjdh2dp", templateParams)
       .then(function(response) {
-         alert("✅ Email envoyé à " + email);
+         alert("✅ Email envoyé à " + mail.value);
          console.log("SUCCESS", response.status, response.text);
       }, function(error) {
          alert("❌ Erreur lors de l'envoi");
@@ -86,8 +101,13 @@ function inscription(){
                     }
                     baseDD.value.push(newUser);
                     localStorage.setItem("base", JSON.stringify(baseDD.value));
+                    console.log("base après inscription :", JSON.parse(localStorage.getItem('base')));
+                    sendVerificationMail()
                     alert(`Inscription Réussie ${pseudoI.value}`)
                     // formState.value='connect'; ici on revient au formulaire de connexion si inscription réussie
+                    route.push({
+                        name:'/ConfirmMail'
+                    })
                 }
                 
             } else {
@@ -100,6 +120,12 @@ function inscription(){
 }
 
 
+//Provide
+provide('val',{
+  code:code.value,
+  updateCode: ()=>{code.value=''}
+})
+
 </script>
 
 <template>
@@ -110,16 +136,76 @@ function inscription(){
     <div class="bg-[#FAFAFBFF]">Couleur brand dark</div>
   </div> -->
   <div class="flex justify-center h-screen w-full border-gray-200 page">
-    <div class="auto">
+    <div>
       <div>
-        <img src="./assets/image/aunthentication/st1removebg-preview.png" alt="">
+        <img src="../assets/image/aunthentication/st1removebg-preview.png" alt="">
       </div>
       <div>
-        <img src="./assets/image/aunthentication/st2removebg-preview.png" alt="">
+        <img src="../assets/image/aunthentication/st2removebg-preview.png" alt="">
       </div>
     </div>
   </div>
-  
+  <div class="para">
+    <transition name="para">
+      <div class="min-w-[400px] flex justify-center rounded-4xl bg-[#eaeaeeaf]">
+      <div class="form">
+        <div
+          class="flex h-[50px] w-[50px] text-center text-2xl p-[60px] bg-blueColor text-white rounded-b-3xl shadow-[1px_5px_50px_rgba(0,0,0,0.25)]">
+        </div>
+<!-- Formulaire de connexion -->
+        <transition name="slide-fadeI">
+              <div class="duration-[1s]" v-if="formState === 'connect'">
+              <form>
+                <div>
+                  <input class="bg-bgColor " v-model="pseudo" name="pseudo" type="text" placeholder="Nom d'utilisateur"
+                    required>
+                </div>
+                <div>
+                  <input class="bg-bgColor " v-model="mdp" name="mdp" type="password" placeholder="Mot de passe" required>
+                </div>
+                <div style="display:flex; justify-content: space-between;">
+                  <p><a>Mot de passe oublié</a></p>
+                  <div @click="formState = 'disconnect'" class="text-[#1717eeee]">S'inscrire?</div>
+                </div>
+                <button @click.prevent="login" class="bg-blueColor">Se connecter</button>
+              </form>
+            </div>
+        </transition>
+<!--fin Formulaire de connexion -->
+
+<!-- Formulaire d'inscription -->
+        <transition name="slide-fade">
+            <div class="duration-[1s]" v-if="formState === 'disconnect'">
+            <form>
+              <div>
+                <input class="bg-bgColor " v-model="pseudoI" name="pseudo" type="text" placeholder="Nom d'utilisateur"
+                  required>
+              </div>
+              <div>
+                <input class="bg-bgColor " v-model="entireName" name="name" type="text" placeholder="Nom complet"
+                  required>
+              </div>
+              <div>
+                <input class="bg-bgColor " v-model="mail" name="mdp" type="mail" placeholder="Mail" required>
+              </div>
+              <div>
+                <input class="bg-bgColor " v-model="mdp1" name="mdp" type="password" placeholder="Mot de passe" required>
+              </div>
+              <div>
+                <input class="bg-bgColor " v-model="mdp2" name="mdp2" type="password"
+                  placeholder="Confirmez le mot de passe" required>
+              </div>
+              <div @click="formState = 'connect'" class="self-end mr-[50px] text-[#1717eeee]" :id="Insid">Connexion</div>
+              <button @click.prevent="inscription" class="bg-blueColor">Inscription</button>
+            </form>
+          </div>
+        </transition>
+<!--fin Formulaire d'inscription -->
+
+      </div>
+    </div>
+    </transition>
+  </div>
 </template>
 
 
@@ -230,8 +316,5 @@ button {
   border-bottom-left-radius: 250px;
   border-bottom-right-radius: 250px;
   box-shadow: inset 0 -10px 20px 1px rgba(97, 81, 81, 0.541);
-}
-.auto{
-  margin:auto;
 }
 </style>

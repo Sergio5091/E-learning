@@ -5,7 +5,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/:id',
+      // path: '/:id',
       name: 'home',
       component: HomeView,
       id:'',
@@ -25,7 +25,7 @@ const router = createRouter({
       component: () => import('../views/mailConfirmView.vue'),
     },
     {
-      path: '/auth',
+      path: '/',
       name: 'authentification',
       component: () => import('../layouts/AuthLayout.vue'),
     },
