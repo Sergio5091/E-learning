@@ -98,7 +98,7 @@ function newChat() {
   <div>
     <!-- Bouton flottant -->
     <button
-      class="fixed bottom-6 right-6 w-16 h-16 sm:w-14 sm:h-14 xs:w-12 xs:h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-neutral-100 via-blue-100 to-blue-300 shadow-2xl hover:bg-neutral-500 transition-colors duration-200 z-50"
+      class="fixed bottom-20 right-6 w-16 h-16 sm:w-14 sm:h-14 xs:w-12 xs:h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-neutral-100 via-blue-100 to-blue-300 shadow-2xl hover:bg-neutral-500 transition-colors duration-200 z-50"
       @click="toggleChat"
     >
       <img src="/chatbot_14263197.png" alt="" width="60"/>

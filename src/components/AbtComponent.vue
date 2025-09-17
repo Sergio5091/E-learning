@@ -42,30 +42,30 @@ const sidebarImages = [
 
 <template>
   <div
-    class="relative min-h-screen bg-white dark:bg-neutral-800 transition-colors duration-300 overflow-x-hidden"
+    class="relative min-h-screen bg-[#f7f8fa] dark:bg-[#23272f] transition-colors duration-300 overflow-x-hidden"
   >
     <!-- Sidebars défilantes -->
-    <div class="hidden lg:block fixed left-0 top-0 h-full w-16 z-20">
+  <div class="hidden lg:block fixed left-0 top-0 h-full w-16 z-20">
       <div class="h-full flex flex-col justify-center items-center overflow-hidden">
         <div class="animate-slide-vertical1 space-y-8">
           <img
             v-for="(img, i) in sidebarImages"
             :key="'left' + i"
             :src="img"
-            class="rounded-xl shadow-lg w-16 h-16 object-cover mb-4 border-2 border-blue-100 dark:border-white"
+            class="rounded-xl shadow-lg w-16 h-16 object-cover mb-4 border-2 border-blue-100 dark:border-[#3a4152] bg-[#f7f8fa]"
           />
         </div>
       </div>
     </div>
 
-    <div class="hidden lg:block fixed right-0 top-0 h-full w-16 z-20">
+  <div class="hidden lg:block fixed right-0 top-0 h-full w-16 z-20">
       <div class="h-full flex flex-col justify-center items-center overflow-hidden">
         <div class="animate-slide-vertical2 space-y-8">
           <img
             v-for="(img, i) in sidebarImages"
             :key="'right' + i"
             :src="img"
-            class="rounded-xl shadow-lg w-16 h-16 object-cover mb-4 border-2 border-blue-100 dark:border-white"
+            class="rounded-xl shadow-lg w-16 h-16 object-cover mb-4 border-2 border-blue-100 dark:border-[#3a4152] bg-[#f7f8fa]"
           />
         </div>
       </div>
@@ -77,15 +77,15 @@ const sidebarImages = [
     >
       <div class="flex-1 z-10">
         <h1
-          class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-blue-500 dark:text-white mb-4 drop-shadow-lg"
+          class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-blue-500 dark:text-blue-200 mb-4 drop-shadow-lg"
         >
           Plateforme E-Learning Moderne
         </h1>
-        <p class="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-200 mb-6 max-w-xl">
+  <p class="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-6 max-w-xl">
           {{ objectif }}
         </p>
         <span
-          class="inline-block px-3 py-2 bg-blue-500 dark:bg-blue-400 text-white rounded-full font-semibold shadow-lg animate-bounce text-sm sm:text-base"
+          class="inline-block px-3 py-2 bg-blue-500 dark:bg-blue-700 text-white rounded-full font-semibold shadow-lg animate-bounce text-sm sm:text-base"
         >
           🖥🖥 Rejoignez-nous dès aujourd'hui !
         </span>
@@ -93,7 +93,7 @@ const sidebarImages = [
       <!-- Slider d'images -->
       <div class="flex-1 flex items-center justify-center mt-6 md:mt-0">
         <div
-          class="relative w-56 h-40 sm:w-64 sm:h-44 md:w-72 md:h-56 overflow-hidden rounded-2xl shadow-2xl border-4 border-blue-100 dark:border-gray-400 bg-white dark:bg-black"
+          class="relative w-56 h-40 sm:w-64 sm:h-44 md:w-72 md:h-56 overflow-hidden rounded-2xl shadow-2xl border-4 border-blue-100 dark:border-[#3a4152] bg-[#f7f8fa] dark:bg-[#23272f]"
         >
           <div class="absolute inset-0 flex animate-slide-horizontal">
             <img
@@ -108,21 +108,21 @@ const sidebarImages = [
     </section>
 
     <!-- Section Formateurs -->
-    <section class="max-w-7xl mx-auto px-2 sm:px-4 py-6 sm:py-10">
+  <section class="max-w-7xl mx-auto px-2 sm:px-4 py-6 sm:py-10">
       <h2
-        class="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-blue-600 dark:text-white text-center tracking-tight"
+        class="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-blue-600 dark:text-blue-200 text-center tracking-tight"
       >
         Nos Formateurs
       </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
         <div
           v-for="instructor in instructors"
           :key="instructor.name"
-          class="bg-neutral-100/30 dark:bg-neutral-900 rounded-2xl shadow-xl p-4 sm:p-6 border-t-4 border-blue-200 dark:border-white hover:scale-105 transition-transform duration-300"
+          class="bg-[#f7f8fa] dark:bg-[#2c3140] rounded-2xl shadow-xl p-4 sm:p-6 border-t-4 border-blue-100 dark:border-[#3a4152] hover:scale-105 transition-transform duration-300"
         >
           <div class="flex items-center mb-3">
             <div
-              class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-blue-100 dark:bg-white flex items-center justify-center text-xl sm:text-2xl font-bold text-blue-700 dark:text-blue-500 mr-3 sm:mr-4 shadow-lg"
+              class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-blue-100 dark:bg-[#3a4152] flex items-center justify-center text-xl sm:text-2xl font-bold text-blue-700 dark:text-blue-200 mr-3 sm:mr-4 shadow-lg border border-blue-100"
             >
               {{
                 instructor.name
@@ -132,7 +132,7 @@ const sidebarImages = [
               }}
             </div>
             <div>
-              <div class="font-bold text-base sm:text-lg text-gray-900 dark:text-white">
+              <div class="font-bold text-base sm:text-lg text-[#222e3a] dark:text-blue-100">
                 {{ instructor.name }}
               </div>
               <div class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
@@ -141,16 +141,16 @@ const sidebarImages = [
             </div>
           </div>
           <div class="mb-2">
-            <span class="font-semibold text-gray-700 dark:text-gray-100">Cours :</span>
-            <ul class="list-disc ml-4 sm:ml-5 text-gray-600 dark:text-gray-300 text-xs sm:text-sm">
+            <span class="font-semibold text-[#222e3a] dark:text-blue-100">Cours :</span>
+            <ul class="list-disc ml-4 sm:ml-5 text-[#3a4152] dark:text-gray-300 text-xs sm:text-sm">
               <li v-for="course in instructor.courses" :key="course">{{ course }}</li>
             </ul>
           </div>
-          <div class="text-xs sm:text-sm text-gray-600 dark:text-gray-200">
+          <div class="text-xs sm:text-sm text-[#3a4152] dark:text-gray-300">
             <span class="font-semibold">Contact :</span>
             <a
               :href="`mailto:${instructor.contact}`"
-              class="text-blue-600 dark:text-gray-200 hover:underline break-all"
+              class="text-blue-600 dark:text-blue-300 hover:underline break-all"
               >{{ instructor.contact }}</a
             >
           </div>
@@ -160,11 +160,11 @@ const sidebarImages = [
 
     <!-- Section Promos -->
     <section
-      class="max-w-5xl mx-auto px-2 sm:px-4 py-8 sm:py-12 mt-6 sm:mt-10 rounded-2xl sm:rounded-3xl bg-neutral-100/30 dark:bg-neutral-300 shadow-2xl flex flex-col items-center justify-center relative overflow-hidden border border-blue-100 dark:border-blue"
+      class="max-w-5xl mx-auto px-2 sm:px-4 py-8 sm:py-12 mt-6 sm:mt-10 rounded-2xl sm:rounded-3xl bg-[#f7f8fa] dark:bg-[#2c3140] shadow-2xl flex flex-col items-center justify-center relative overflow-hidden border border-blue-100 dark:border-[#3a4152]"
     >
      
       <h3
-        class="text-lg sm:text-2xl md:text-3xl font-extrabold text-blue-500/90 dark:text-neutral-800 mb-3 sm:mb-4 drop-shadow-lg flex items-center gap-3 justify-center"
+        class="text-lg sm:text-2xl md:text-3xl font-extrabold text-blue-500/80 dark:text-blue-200 mb-3 sm:mb-4 drop-shadow-lg flex items-center gap-3 justify-center"
       >
        <span 
         ><img src="/discount-tag_4957382.png" alt="" width="150"
@@ -172,14 +172,14 @@ const sidebarImages = [
         <span>Promotions & Réductions à venir !</span>
       </h3>
       <p
-        class="text-base sm:text-lg text-gray-700 dark:text-neutral-600 mb-4 sm:mb-6 text-center max-w-2xl"
+        class="text-base sm:text-lg text-[#3a4152] dark:text-gray-300 mb-4 sm:mb-6 text-center max-w-2xl"
       >
         Profitez bientôt de nos offres exceptionnelles sur de nombreux cours : jusqu'à
         <span class="font-bold text-pink-600 dark:text-pink-500">-80%</span> sur les nouveautés, des
         packs exclusifs, et des badges bonus pour les premiers inscrits ! Restez connectés 🚨
       </p>
       <span
-        class="inline-block px-4 py-2 bg-blue-400 dark:bg-blue-400 text-white font-bold rounded-full shadow-lg animate-pulse text-sm sm:text-base"
+        class="inline-block px-4 py-2 bg-blue-100 text-blue-700 dark:bg-blue-700 dark:text-white font-bold rounded-full shadow-lg animate-pulse text-sm sm:text-base"
       >
         Bientôt disponible !
       </span>

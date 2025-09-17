@@ -28,23 +28,27 @@ onMounted(() => {
 
 function toggleDarkMode() {
 
-  const html = document.documentElement
+  
 
   isDark.value = !isDark.value
 
   if (isDark.value) {
 
-    html.classList.add("dark")
+   
 
     localStorage.setItem("theme", "dark")
 
   } else {
 
-    html.classList.remove("dark")
+   
 
     localStorage.setItem("theme", "light")
 
   }
+  document.documentElement.classList.toggle(
+  "dark",
+  localStorage.theme === "dark" ||
+    (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),);
 
 }
 
@@ -76,7 +80,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <nav class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 shadow-md sticky top-0">
+  <nav class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 shadow-md sticky top-0 z-[100]">
     <!-- Logo -->
     <div class="flex items-center space-x-2">
       <i class="fas fa-graduation-cap text-blue-500 text-2xl"></i>
