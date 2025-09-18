@@ -7,6 +7,8 @@ export const useAlertesStore = defineStore('courses', () => {
 
   const isOpen = ref(false)
 
+  const searchTerm = ref('')
+
   //Fonction pour ouvrir et fermer le menu
   function toggleMenu() {
     isOpen.value = !isOpen.value
@@ -27,6 +29,11 @@ export const useAlertesStore = defineStore('courses', () => {
   function removeCourse(id) {
     courses.value = courses.value.filter((c) => c.id !== id)
   }
+  //Fonction pour filtrer automatiquement les cours 
+  function setSearchTerm(term){
+    searchTerm.value = term
+  }
 
-  return { courses, addCourse, updateCourse, removeCourse, isOpen, toggleMenu }
+
+  return { courses, addCourse, updateCourse, removeCourse, isOpen, toggleMenu,searchTerm,setSearchTerm }
 })

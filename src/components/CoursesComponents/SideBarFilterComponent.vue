@@ -43,7 +43,7 @@ function selectCategory(cour) {
           selectedCategory === cat
             ? 'bg-blue-600 text-white border-blue-600 dark:bg-blue-700 dark:border-blue-700'
             : 'bg-white dark:bg-[#2c3140] text-gray-700 dark:text-blue-100 border-blue-100 dark:border-[#3a4152] hover:bg-blue-100 dark:hover:bg-[#23272f]'
-        ]">
+        ]" class="flex justify-center items-center">
           {{ cat }}
         </button>
       </div>

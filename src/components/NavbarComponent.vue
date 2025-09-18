@@ -8,6 +8,7 @@ import { RouterLink } from 'vue-router'
 
 const store = useAlertesStore()
 
+
 const isDark = ref(false)
 
 const isOpenSearch = ref(false) // pour la recherche
@@ -124,9 +125,9 @@ onUnmounted(() => {
       <!-- Recherche -->
       <div class="flex items-center relative">
         <div v-if="isOpenSearch"
-          class="flex items-center bg-blue-100 dark:bg-[#2c3140] rounded-full px-3 py-1 transition-colors duration-300">
-          <input type="text" placeholder="Rechercher..."
-            class="bg-transparent outline-none text-sm text-gray-700 dark:text-blue-100 placeholder-gray-400 dark:placeholder-gray-400 w-32 transition-colors duration-300" />
+          class="flex items-center bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-1 transition-colors duration-300">
+          <input type="text" placeholder="Rechercher..." v-model="store.searchTerm"
+            class="bg-transparent outline-none text-sm text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 w-32 transition-colors duration-300" />
         </div>
         <button class="ml-2 text-gray-500 dark:text-blue-100 hover:text-blue-500 dark:hover:text-blue-300"
           @click="isOpenSearch = !isOpenSearch">
