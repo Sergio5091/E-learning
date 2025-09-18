@@ -1,21 +1,26 @@
 <script setup>
-import CoursesComponent from './components/CoursesComponents/CoursesComponent.vue';
+import NavbarComponent from './components/NavbarComponent.vue';
+
+import AssistantIA from './components/AssistantIAComponent.vue';
+import FooterComponent from './components/FooterComponent.vue';
 
 </script>
 
-<template>
-  <div class="p-4">
-    <h1 class="bg-blueColor">Salut</h1>
-    <div class="bg-bgColor text-white p-4">Couleur brand</div>
-    <div class="bg-redColor text-black p-4">Couleur brand light</div>
-    <div class="bg-[#FAFAFBFF]">Couleur brand dark</div>
-  </div>
 
-  <CoursesComponent />
+
+<template>
+  <div class="flex flex-col min-h-screen">
+    <header class="sticky top-0 z-[100000000]">
+      <NavbarComponent />
+    </header>
+    <main class="flex-1">
+      <RouterView />
+      <AssistantIA />
+    </main>
+    <footer class="sticky bottom-0 z-[100000000]">
+      <FooterComponent />
+    </footer>
+  </div>
 </template>
 
-
-
-<style scoped>
-
-</style>
+<style scoped></style>

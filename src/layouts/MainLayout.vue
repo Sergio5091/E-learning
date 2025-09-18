@@ -1,7 +1,13 @@
+<script setup>
+import SidebarComponent from '@/components/SidebarComponent.vue';
+import ProductsView from '@/views/ProductsView.vue';
+
+</script>
+
 <template>
-    <h1>This is an about page</h1>
+    <div class="flex">
+        <SidebarComponent />
+        <ProductsView />
+    </div>
+
 </template>
-
-<style>
-
-</style>
