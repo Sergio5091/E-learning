@@ -45,9 +45,8 @@ const mdp2=ref();
 //variable de notification
 const showBadgeNotification=ref('oui')
 
-
+// localStorage.removeItem('token', true)
 function login() {
-    localStorage.setItem('token', true)
     const index=baseDD.value.findIndex((e)=>e.name===pseudo.value && e.mot===mdp.value);
     if (index<=-1) {
         showBadgeNotification.value='j'
@@ -57,7 +56,11 @@ function login() {
     } else {
         showBadgeNotification.value='r'
         let set=setTimeout(() => {
-          showBadgeNotification.value='oui'
+          showBadgeNotification.value='oui';
+          localStorage.setItem('token', true)
+          localStorage.setItem("user", JSON.stringify({
+            username: pseudo.value ,
+          }))
           route.push({
               name:'Acceuil',
               params:{user:pseudo.value}
@@ -66,6 +69,13 @@ function login() {
     }
 }
 
+
+function authState() {
+  const status=JSON.parse(localStorage.getItem('state'));
+  if (status==='true') {
+    
+  }
+}
 
 //fonction d'inscription
 function inscription(){

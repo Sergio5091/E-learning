@@ -1,19 +1,19 @@
 <script setup>
-const connecter=ref(false)
-const route=useRoute()
-if (route.params.user){
-    connecter.value=true;
+const connecter=ref(localStorage.getItem("token"));
+const utilisateur=ref(localStorage.getItem("user"));
+const admin=ref(false);
+if (utilisateur.username==="moodolion"){
+    admin.value=true;
 }else{
-    connecter.value=true;
+    admin.value=false;
 }
+// if (route.params.user){
+//     connecter.value=true;
+// }else{
+//     connecter.value=true;
+// }
 
 
-const admin=ref(false)
-if (route.params.user==="moodolion"){
-    connecter.value=true;
-}else{
-   connecter.value=false;
-}
 </script>
 
 <template>

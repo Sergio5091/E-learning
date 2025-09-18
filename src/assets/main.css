@@ -15,4 +15,5 @@
   --color-para2Color: #171A1FFF;
   --color-adminBg: #F2F2FDFF;
 }
-
+@custom-variant dark (&:where(.dark, .dark *));
+/* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */ 

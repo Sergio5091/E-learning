@@ -23,9 +23,11 @@ const filteredCourses = computed(() => {
 
 
 <template>
-    <div class="flex">
+    <div class="flex flex-col lg:flex-row w-full min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
         <SideBarFilterComponent :tabCourses="courses" @update:category="selectedCategory = $event" />
-        <CoursesListComponent :tabCourses="filteredCourses" @show-details="emit('show-details', $event)"/>
+        <div class="flex-1">
+            <CoursesListComponent :tabCourses="filteredCourses" @show-details="emit('show-details', $event)"/>
+        </div>
     </div>
 
 

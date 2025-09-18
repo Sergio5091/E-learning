@@ -52,11 +52,11 @@ const routes= [
       name: 'Admin',
       component: AdminView,
     },
-    // {
-    //   path: '/',
-    //   name: 'auth',
-    //   component: () => import('../layouts/AuthLayout.vue'),
-    // },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: () => import('../layouts/AuthLayout.vue'),
+    },
     // {
     //   path: '/',
     //   name: '',
@@ -75,6 +75,19 @@ const routes= [
   linkActiveClass : "lien-actif", //spécifie la classe CSS a appliquer aux liens actifs dans la barre de navigation.Lorsqu’un lien est actif, il recevra cette classe CSS.
   })
   
+  router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  const user = JSON.parse(localStorage.getItem('user') || "null")
+  const isAuthenticated = token === 'true' && user !== null
+  // Si l'utilisateur est déjà connecté, inutile d'aller sur la page Auth
+  if (to.name === 'auth' && isAuthenticated) {
+    next(false) // redirige par exemple vers la page d'accueil
+  } 
+  else {
+    next()
+  }
+})
+
 
 
 export default router

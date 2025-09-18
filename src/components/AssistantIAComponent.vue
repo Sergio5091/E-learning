@@ -45,6 +45,8 @@ async function send() {
     // Construire le tableau messages pour l'API
     const apiMessages = [
       {
+        // expliquer le contexte a l'ia
+        // limiter la porter des reponses(ethique, texte long)
         role: 'system',
         content: `Voici un résumé de cours disponibles : ${JSON.stringify(courseSummary, null, 2)}`
       },
