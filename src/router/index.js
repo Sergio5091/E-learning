@@ -11,12 +11,6 @@ const routes= [
       name: 'Acceuil',
       component: MainLayout,
     },
-    {
-    path: '/:user',
-      name: 'home',
-      component: MainLayout,
-      id:'',
-    },
      {
       path: '/lessons/:id',
       name: 'lessons',
@@ -28,11 +22,6 @@ const routes= [
       component: () => import('@/views/ProductLessonsViews.vue')
     },
     {
-     path:'/product/:id',
-      name:'product',
-      component: () => import('@/views/ProductDetailView.vue')
-    },
-    {
      path:'/product/:id/:user',
       name:'products',
       component: () => import('@/views/ProductDetailView.vue')
@@ -40,11 +29,6 @@ const routes= [
     {
       path: '/a-propos',
       name: 'About',
-      component: AboutUsView,
-    },
-    {
-      path: '/a-propos/:user',
-      name: 'Abouts',
       component: AboutUsView,
     },
     {
