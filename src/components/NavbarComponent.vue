@@ -4,7 +4,23 @@ import { useAlertesStore } from '@/store'
 
 import { ref, onMounted, onUnmounted } from 'vue'
 
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
+
+const connecter=ref(false)
+const route=useRoute()
+if (route.params.user){
+    connecter.value=true;
+}else{
+    connecter.value=true;
+}
+ 
+ 
+const admin=ref(false)
+if (route.params.user==="moodolion"){
+    connecter.value=true;
+}else{
+   connecter.value=false;
+}
 
 const store = useAlertesStore()
 
@@ -25,7 +41,13 @@ onMounted(() => {
   }
 
 })
-
+function redirection(){
+  if (connecter===false) {
+    store.toggleMenu()
+  } else {
+    route.push('/auth')
+  }
+}
 function toggleDarkMode() {
 
   const html = document.documentElement
@@ -88,10 +110,12 @@ onUnmounted(() => {
 
     <!-- Liens de navigation -->
     <div class="hidden md:flex space-x-6">
-      <RouterLink to="/" class="hover:text-blue-500">Accueil</RouterLink>
+      <RouterLink v-if="!admin" to="/" class="hover:text-blue-500">Accueil</RouterLink>
+      <RouterLink v-if="admin" to="/:user" class="hover:text-blue-500">Accueil</RouterLink>
       <!-- <RouterLink to="/lessons/:id" class="hover:text-blue-500">Cours</RouterLink> -->
-      <RouterLink to="/a-propos" class="hover:text-blue-500">À propos</RouterLink>
-      <RouterLink to="/admin" class="hover:text-blue-500">Admin</RouterLink>
+      <RouterLink v-if="admin" to="/a-propos:user" class="hover:text-blue-500">À propos</RouterLink>
+      <RouterLink v-if="!admin" to="/a-propos" class="hover:text-blue-500">À propos</RouterLink>
+      <RouterLink v-if="admin" to="/admin" class="hover:text-blue-500">Admin</RouterLink>
     </div>
 
     <!-- Zone droite : recherche, dark mode, profil -->
@@ -118,7 +142,7 @@ onUnmounted(() => {
 
       <!-- Menu Profil déroulant -->
       <div class="relative">
-        <button @click="store.toggleMenu"
+        <button @click="redirection"
           class="flex items-center gap-2 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
           <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
             <i class="fas fa-user"></i>

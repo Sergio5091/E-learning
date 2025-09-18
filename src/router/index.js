@@ -10,11 +10,21 @@ const routes= [
     path: '/',
       name: 'Acceuil',
       component: MainLayout,
+    },
+    {
+    path: '/:user',
+      name: 'home',
+      component: MainLayout,
       id:'',
     },
      {
       path: '/lessons/:id',
       name: 'lessons',
+      component: () => import('@/views/ProductLessonsViews.vue')
+    },
+     {
+      path: '/lessons/:id/:user',
+      name: 'lesson',
       component: () => import('@/views/ProductLessonsViews.vue')
     },
     {
@@ -23,8 +33,18 @@ const routes= [
       component: () => import('@/views/ProductDetailView.vue')
     },
     {
+     path:'/product/:id/:user',
+      name:'products',
+      component: () => import('@/views/ProductDetailView.vue')
+    },
+    {
       path: '/a-propos',
       name: 'About',
+      component: AboutUsView,
+    },
+    {
+      path: '/a-propos/:user',
+      name: 'Abouts',
       component: AboutUsView,
     },
     {
@@ -32,6 +52,11 @@ const routes= [
       name: 'Admin',
       component: AdminView,
     },
+    // {
+    //   path: '/',
+    //   name: 'auth',
+    //   component: () => import('../layouts/AuthLayout.vue'),
+    // },
     // {
     //   path: '/',
     //   name: '',
