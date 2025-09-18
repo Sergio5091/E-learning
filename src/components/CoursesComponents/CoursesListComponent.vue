@@ -30,7 +30,7 @@ onUnmounted(() => {
     window.removeEventListener('storage', updateAuthState);
 });
  
-// Redirection manuelle (si besoin)
+
 function redirection() {
     router.push("/auth");
 }
