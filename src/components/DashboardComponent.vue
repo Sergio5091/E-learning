@@ -214,7 +214,7 @@ const totalLearningHours = computed(() => {
                 <!-- Statistiques -->
                 <h2 class="font-bold text-[20px] my-5">Statistiques d'apprentissage</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 text-center">
-                    <div class="p-4 rounded-lg bg-white shadow-md flex flex-col justify-center items-center h-[152px]">
+                    <div class="p-4 hover:scale-95 transition duration-3000 ease-in-out rounded-lg bg- shadow-[0_0_5px_rgba(0,0,0,0.3)]  flex flex-col justify-center items-center h-[152px]">
                         <div class="flex justify-center items-center ">
                             <svg class="text-blueColor text-center" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
@@ -223,9 +223,9 @@ const totalLearningHours = computed(() => {
                             </svg>
                         </div>
                         <span class="text-blueColor">{{ completedCoursesCount }}</span>
-                        <span class="text-para1Color text-xs uppercase">COURS TERMINÉS</span>
+                        <span class="text-para1Color text-xs uppercase font-medium">COURS TERMINÉS</span>
                     </div>
-                    <div class="p-4 rounded-lg bg-white shadow-md flex flex-col justify-center items-center h-[152px]">
+                    <div class="p-4 hover:scale-110 transition duration-3000 ease-in-out rounded-lg bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)]  flex flex-col justify-center items-center h-[152px]">
                         <div class="flex justify-center items-center ">
                             <svg class="text-blueColor flex-col" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="currentColor">
@@ -234,9 +234,9 @@ const totalLearningHours = computed(() => {
                             </svg>
                         </div>
                         <span class="text-blueColor">{{ totalLearningHours }}</span>
-                        <span class="text-para1Color text-xs uppercase">Heures d'apprentissage</span>
+                        <span class="text-para1Color text-xs uppercase font-medium">Heures d'apprentissage</span>
                     </div>
-                    <div class="p-4 rounded-lg bg-white shadow-md flex flex-col justify-center items-center h-[152px]">
+                    <div class="p-4  hover:scale-101  duration-3000     rounded-lg bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] flex flex-col justify-center items-center h-[152px]">
                         <div class="flex justify-center items-center ">
                             <svg class="text-blueColor" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="currentColor">
@@ -245,7 +245,7 @@ const totalLearningHours = computed(() => {
                             </svg>
                         </div>
                         <span class="text-blueColor">{{ earnedBadges.length }}</span>
-                        <span class="text-para1Color text-xs uppercase">Badges obtenus</span>
+                        <span class="text-para1Color text-xs uppercase font-medium">Badges obtenus</span>
                     </div>
                 </div>
             </div>
