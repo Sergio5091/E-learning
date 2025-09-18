@@ -1,8 +1,24 @@
 <script setup>
+import { useAlertesStore } from '@/store';
+import { computed } from 'vue';
+
 const props = defineProps({
     tabCourses: Array
 })
 const emit = defineEmits(['show-details'])
+
+
+const store = useAlertesStore()
+const filteredCourses = computed(() => {
+    if (!store.searchTerm) return store.courses
+
+    return store.courses.filter(course =>
+        course.title.toLowerCase().includes(store.searchTerm.toLowerCase()) ||
+        course.category.toLowerCase().includes(store.searchTerm.toLowerCase()) ||
+        course.level.toLowerCase().includes(store.searchTerm.toLowerCase()) ||
+        course.instructor.toLowerCase().includes(store.searchTerm.toLowerCase())
+    )
+})
 
 </script>
 
@@ -10,8 +26,9 @@ const emit = defineEmits(['show-details'])
 <template>
     <!-- <div class="grid grid-cols-1 "> -->
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-            <div v-for="cours in tabCourses" :key="cours.id"
+    <div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4" v-if="filteredCourses.length > 0">
+            <div v-for="cours in filteredCourses" :key="cours.id"
                 class="rounded-lg shadow-sm hover:shadow-md transition w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700">
                 <!-- Image -->
                 <img :src="cours.thumbnail" alt="Image cours"
@@ -28,10 +45,12 @@ const emit = defineEmits(['show-details'])
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ cours.title }}</h3>
 
                     <!-- Niveau -->
-                    <p class="text-sm text-gray-600 dark:text-gray-300"><span class="font-semibold">Niveau :</span> {{ cours.level }}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-300"><span class="font-semibold">Niveau :</span> {{
+                        cours.level }}</p>
 
                     <!-- Auteur -->
-                    <p class="text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Auteur :</span> {{ cours.instructor }}
+                    <p class="text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Auteur :</span> {{
+                        cours.instructor }}
                     </p>
 
                     <!-- <p v-if="cours.price === 0" class="text-green-600 text-xl font-semibold">Gratuit</p>
@@ -51,6 +70,11 @@ const emit = defineEmits(['show-details'])
                 </div>
             </div>
         </div>
+        <div v-else
+            class="flex justify-center items-center h-64 text-center text-2xl font-bold text-gray-700 dark:text-gray-300">
+            Aucun cours trouvé
+        </div>
+    </div>
     <!-- </div> -->
 
 
