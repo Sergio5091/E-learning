@@ -1,63 +1,76 @@
 <script setup>
+import { useRouter } from "vue-router";
+import { ref, onMounted, onUnmounted } from "vue";
+import { useAuthStore } from '@/store';
+ const auth=useAuthStore()
 const props = defineProps({
     tabCourses: Array
-})
-const emit = defineEmits(['show-details'])
-
+});
+const router = useRouter();
+const emit = defineEmits(['show-details']);
+ 
+const connecter = ref(false);
+const utilisateur = ref(null);
+const admin = ref(false);
+ 
+function updateAuthState() {
+    connecter.value = !!localStorage.getItem("token");
+    const userStr = localStorage.getItem("user");
+    utilisateur.value = userStr ? JSON.parse(userStr) : null;
+    admin.value = utilisateur.value?.username === "moodolion";
+}
+ 
+// Initialisation au montage
+onMounted(() => {
+    updateAuthState();
+    window.addEventListener('storage', updateAuthState);
+});
+// Nettoyage à la destruction
+onUnmounted(() => {
+    window.removeEventListener('storage', updateAuthState);
+});
+ 
+// Redirection manuelle (si besoin)
+function redirection() {
+    router.push("/auth");
+}
+ 
 </script>
-
-
+ 
 <template>
-    <!-- <div class="grid grid-cols-1 "> -->
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-            <div v-for="cours in tabCourses" :key="cours.id"
-                class="rounded-lg shadow-sm hover:shadow-md transition w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700">
-                <!-- Image -->
-                <img :src="cours.thumbnail" alt="Image cours"
-                    class="rounded-lg object-cover w-full h-48 sm:h-56 md:h-64 lg:h-72 max-w-full" />
-
-                <div class="p-4 space-y-2">
-                    <!-- Badge catégorie -->
-                    <span
-                        class="inline-block bg-pink-200 dark:bg-pink-700 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                        {{ cours.category }}
-                    </span>
-
-                    <!-- Titre -->
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ cours.title }}</h3>
-
-                    <!-- Niveau -->
-                    <p class="text-sm text-gray-600 dark:text-gray-300"><span class="font-semibold">Niveau :</span> {{ cours.level }}</p>
-
-                    <!-- Auteur -->
-                    <p class="text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Auteur :</span> {{ cours.instructor }}
-                    </p>
-
-                    <!-- <p v-if="cours.price === 0" class="text-green-600 text-xl font-semibold">Gratuit</p>
-                <p v-else class="text-green-700 text-2xl font-medium">{{ cours.price }} €</p> -->
-
-                    <!-- Bouton détails -->
-                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-5">
-                        <button @click="emit('show-details', cours.id)" type="button"
-                            class="mt-3 text-center border border-blue-500 dark:border-pink-700 text-indigo-600 dark:text-pink-300 rounded-md p-2 text-sm font-medium hover:bg-pink-200 dark:hover:bg-pink-700 hover:border-pink-200 dark:hover:border-pink-700 hover:text-white transition">
-                            Détails du cours
-                        </button>
-                        <router-link :to="`/lessons/${cours.id}`"
-                            class="mt-3 text-center border border-indigo-600 dark:border-blue-400 text-indigo-600 dark:text-blue-300 rounded-md p-2 text-sm font-medium hover:bg-blue-500 dark:hover:bg-blue-400 hover:text-white transition">
-                            Commencer
-                        </router-link>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <!-- </div> -->
-
-
-
-
-
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+<div v-for="cours in tabCourses" :key="cours.id"
+            class="rounded-lg shadow-sm hover:shadow-md transition w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700">
+<img :src="cours.thumbnail" alt="Image cours"
+                class="rounded-lg object-cover w-full h-48 sm:h-56 md:h-64 lg:h-72 max-w-full" />
+ 
+            <div class="p-4 space-y-2">
+<span
+                    class="inline-block bg-pink-200 dark:bg-pink-700 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                    {{ cours.category }}
+</span>
+<h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ cours.title }}</h3>
+<p class="text-sm text-gray-600 dark:text-gray-300"><span class="font-semibold">Niveau :</span> {{ cours.level }}</p>
+<p class="text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Auteur :</span> {{ cours.instructor }}</p>
+<div class="flex flex-col sm:flex-row gap-3 sm:gap-5">
+<button @click="emit('show-details', cours.id)" type="button"
+                        class="mt-3 text-center border border-blue-500 dark:border-pink-700 text-indigo-600 dark:text-pink-300 rounded-md p-2 text-sm font-medium hover:bg-pink-200 dark:hover:bg-pink-700 hover:border-pink-200 dark:hover:border-pink-700 hover:text-white transition">
+                        Détails du cours
+</button>
+<router-link v-if="auth.isAuthentificated"
+                        :to="`/lessons/${cours.id}`"
+                        class="mt-3 text-center border border-indigo-600 dark:border-blue-400 text-indigo-600 dark:text-blue-300 rounded-md p-2 text-sm font-medium hover:bg-blue-500 dark:hover:bg-blue-400 hover:text-white transition">
+                        Commencer
+</router-link>
+<router-link v-else 
+                        :to="{name:'auth'}"
+                        class="mt-3 text-center border border-indigo-600 dark:border-blue-400 text-indigo-600 dark:text-blue-300 rounded-md p-2 text-sm font-medium hover:bg-blue-500 dark:hover:bg-blue-400 hover:text-white transition">
+                        Commencer
+</router-link>
+</div>
+</div>
+</div>
+</div>
 </template>
-
-
+ 
 <style scoped></style>

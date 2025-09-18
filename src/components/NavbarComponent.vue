@@ -1,122 +1,83 @@
 <script setup>
-
 import { useAlertesStore } from '@/store'
-
-import { ref, onMounted, onUnmounted } from 'vue'
-
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRouter, useRoute } from 'vue-router'
-
-const route=useRoute();
-const router=useRouter();
-const connecter=ref(false)
-if (route.params.user){
-    connecter.value=true;
-}else{
-    connecter.value=false;
-}
  
- 
-const admin=ref(false)
-if (route.params.user==="moodolion"){
-    connecter.value=true;
-}else{
-   connecter.value=false;
-}
-
 const store = useAlertesStore()
-
-const isDark = ref(false)
-
-const isOpenSearch = ref(false) // pour la recherche
-
-// Charger le thème initial depuis localStorage
-
+const router = useRouter()
+ 
+// Etat de connexion et utilisateur
+const connecter = ref(false)
+const utilisateur = ref(null)
+function updateAuthState() {
+  connecter.value = !!localStorage.getItem("token")
+  const userStr = localStorage.getItem("user")
+  utilisateur.value = userStr ? JSON.parse(userStr) : null
+}
+ 
+// Initialisation au montage
 onMounted(() => {
-
+  updateAuthState()
   if (localStorage.getItem("theme") === "dark") {
-
     document.documentElement.classList.add("dark")
-
     isDark.value = true
-
   }
-
+  window.addEventListener("keydown", search)
 })
-
-function redirection(){
-  if (connecter===false) {
+ 
+// Etat admin
+const admin = computed(() => utilisateur.value?.username === "moodolion")
+ console.log(admin.value);
+ 
+// Gestion du thème
+const isDark = ref(false)
+function toggleDarkMode() {
+  isDark.value = !isDark.value
+  localStorage.setItem("theme", isDark.value ? "dark" : "light")
+  document.documentElement.classList.toggle(
+    "dark",
+    localStorage.theme === "dark" ||
+      (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
+  )
+}
+ 
+// Redirection quand on clique sur le profil
+function redirection() {
+  updateAuthState()
+  if (connecter.value) {
     store.toggleMenu()
   } else {
-    router.push('/auth')
+    router.push({ name: 'auth' })
   }
 }
-
-
-// // document.documentElement.classList.toggle(
-// //   "dark",
-// //   localStorage.theme === "dark" ||
-// //     (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
-// // );
-// // // Whenever the user explicitly chooses light mode
-// // localStorage.theme = "light";
-// // // Whenever the user explicitly chooses dark mode
-// // localStorage.theme = "dark";
-// // // Whenever the user explicitly chooses to respect the OS preference
-// // localStorage.removeItem("theme");
-
-// >>>>>>> 31b7165e8781dcc3dd072798ac034dc34d618c02
-function toggleDarkMode() {
-
-
-  isDark.value = !isDark.value
-
-  if (isDark.value) {
-
-    localStorage.setItem("theme", "dark")
-
-  } else {
-    localStorage.setItem("theme", "light")
-
-  }
-
-  document.documentElement.classList.toggle(
-  "dark",
-  localStorage.theme === "dark" ||
-    (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
-);
-
-
+ 
+// Déconnexion
+function disconnect() {
+  localStorage.removeItem('token')
+  localStorage.removeItem('user')
+  updateAuthState()
+  store.isOpen = false // fermer le menu s'il est ouvert
+  router.push({ name: 'Acceuil' }) // redirection vers la page de login
 }
-
-// Raccourci clavier Ctrl+K pour ouvrir recherche
-
+ 
+// Recherche (Ctrl+K)
+const isOpenSearch = ref(false)
 function search(e) {
-
   if ((e.ctrlKey || e.metaKey) && e.key === "k") {
-
     e.preventDefault()
-
     isOpenSearch.value = !isOpenSearch.value
-
   }
-
 }
-
-onMounted(() => {
-
-  window.addEventListener("keydown", search)
-
-})
-
 onUnmounted(() => {
-
   window.removeEventListener("keydown", search)
-
 })
+ 
 </script>
 
 <template>
-  <nav class="flex items-center justify-between p-4 bg-white dark:bg-gray-900 shadow-md sticky top-0 border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
+
+  <nav
+    class="flex items-center justify-between p-4 bg-white dark:bg-gray-900 shadow-md sticky top-0 z-[100] border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
     <!-- Logo -->
     <div class="flex items-center space-x-2">
       <i class="fas fa-graduation-cap text-blue-500 dark:text-blue-400 text-2xl"></i>
@@ -127,16 +88,17 @@ onUnmounted(() => {
 
     <!-- Liens de navigation -->
     <div class="hidden md:flex space-x-6">
-      <RouterLink v-if="admin" to="/" class="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">Accueil</RouterLink>
-      <RouterLink v-if="!admin" to="/:user" class="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">Accueil</RouterLink>
+      <RouterLink to="/" class="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">Accueil
+      </RouterLink>
       <!-- <RouterLink to="/lessons/:id" class="hover:text-blue-500">Cours</RouterLink> -->
-      <RouterLink v-if="admin" to="/a-propos:user" class="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">À propos</RouterLink>
-      <RouterLink v-if="!admin" to="/a-propos" class="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">À propos</RouterLink>
-      <RouterLink to="/admin" class="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">Admin</RouterLink>
+      <RouterLink to="/a-propos" class="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">À
+        propos</RouterLink>
+      <RouterLink v-if="admin!==false" to="/admin" class="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">
+        Admin</RouterLink>
     </div>
 
     <!-- Zone droite : recherche, dark mode, profil -->
-  <div class="flex items-center justify-end space-x-4 w-[400px]">
+    <div class="flex items-center justify-end space-x-4 w-[400px]">
 
       <!-- Recherche -->
       <div class="flex items-center relative">
@@ -145,7 +107,8 @@ onUnmounted(() => {
           <input type="text" placeholder="Rechercher..."
             class="bg-transparent outline-none text-sm text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 w-32 transition-colors duration-300" />
         </div>
-        <button class="ml-2 text-gray-500 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" @click="isOpenSearch = !isOpenSearch">
+        <button class="ml-2 text-gray-500 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+          @click="isOpenSearch = !isOpenSearch">
           <i class="fas fa-search transition-colors duration-300"></i>
         </button>
       </div>
@@ -165,6 +128,7 @@ onUnmounted(() => {
 
         <!-- <button @click="store.toggleMenu"
           class="flex items-center gap-2 p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
+<<<<<<< HEAD
           <div class="w-8 h-8 rounded-full bg-blue-500 dark:bg-blue-400 flex items-center justify-center text-white dark:text-gray-900"> -->
 
             <i class="fas fa-user"></i>
@@ -177,17 +141,23 @@ onUnmounted(() => {
           class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg transition-colors duration-300">
           <ul class="py-2">
             <li>
-              <RouterLink to="/profil" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800" @click="store.toggleMenu">
+              <RouterLink to="/profil"
+                class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                @click="store.toggleMenu">
                 Mon compte
               </RouterLink>
             </li>
             <li>
-              <RouterLink to="/parametres" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800" @click="store.toggleMenu">
+              <RouterLink to="/parametres"
+                class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                @click="store.toggleMenu">
                 Paramètres
               </RouterLink>
             </li>
             <li>
-              <RouterLink to="/logout" class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800" @click="store.toggleMenu">
+              <RouterLink to='/'
+                class="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                @click="disconnect">
                 Déconnexion
               </RouterLink>
             </li>
@@ -198,3 +168,4 @@ onUnmounted(() => {
     </div>
   </nav>
 </template>
+<style scoped></style>

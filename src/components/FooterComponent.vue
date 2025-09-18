@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 py-6 transition-colors duration-300">
+  <footer class="bg-white border-t py-6 z-[100] relative">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-6">
       <!-- Menu -->
       <nav class="flex space-x-6 mb-4 md:mb-0">
