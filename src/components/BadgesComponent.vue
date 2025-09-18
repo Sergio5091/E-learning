@@ -21,7 +21,7 @@ const gadgesDiv = "gadgesDiv";
                 <p class="dark:text-gray-300">{{ badge.description }}</p>
             </div>
         </div>
-        <div v-else class="text-center p-10 text-gray-500 dark:text-gray-300 bg-gray-100 dark:bg-[#23272f] rounded-lg">
+        <div v-else class="text-center p-10 text-gray-500 dark:text-gray-300 bg-gray-100 dark:bg-[#65676b80] rounded-lg">
             <p>Vous n'avez pas encore obtenu de badges. Terminez des cours pour en débloquer !</p>
         </div>
     </div>
