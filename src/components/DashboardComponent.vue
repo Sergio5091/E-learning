@@ -9,7 +9,7 @@ const profileImag = ref("https://cdn-icons-png.flaticon.com/512/1946/1946429.png
 
 const Apear = ref(false)
 const DisApear = ref(true)
-
+/**Functin pour afficher le formulaire de modification */
 function DisApeared() {
     DisApear.value = false
     Apear.value = true
