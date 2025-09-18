@@ -48,18 +48,18 @@ const deleteComment = (commentId) => {
 </script>
 
 <template>
-  <div class="bg-white shadow-md rounded-lg mt-8 px-[5px]">
-    <h3 class="text-xl font-semibold text-gray-800 p-4 border-b border-gray-300">Commentaires</h3>
+  <div class="bg-white dark:bg-[#23272f] shadow-md rounded-lg mt-8 px-[5px] transition-colors duration-300">
+    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 p-4 border-b border-gray-300 dark:border-gray-700">Commentaires</h3>
 
     <!-- Add Comment Form -->
-    <div class="p-4 border-b">
+    <div class="p-4 border-b dark:border-gray-700">
       <div class="flex items-start space-x-4">
         <img :src="currentUser.avatar" alt="Votre avatar" class="w-10 h-10 rounded-full">
         <div class="flex-1">
           <textarea
             v-model="newCommentText"
             rows="3"
-            class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            class="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-[#2c3140] dark:text-gray-100"
             placeholder="Ajoutez votre commentaire..."
           ></textarea>
           <button
@@ -73,7 +73,7 @@ const deleteComment = (commentId) => {
     </div>
 
     <!-- Comments List -->
-    <ul v-if="localComments.length > 0" class="divide-y divide-gray-200">
+    <ul v-if="localComments.length > 0" class="divide-y divide-gray-200 dark:divide-gray-700">
       <li v-for="comment in localComments" :key="comment.id" class="p-4">
         <div class="flex items-start space-x-4">
           <img :src="comment.avatar" :alt="comment.author" class="w-10 h-10 rounded-full">

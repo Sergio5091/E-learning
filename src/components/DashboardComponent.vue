@@ -165,12 +165,12 @@ const totalLearningHours = computed(() => {
 </script>
 
 <template>
-    <div class="mb-20 mt-5 px-10">
+    <div class="px-2 sm:px-6 md:px-10 bg-white dark:bg-[#23272f] min-h-screen transition-colors duration-300">
 
         <div>
-            <h1 class="font-bold text-[30px] pt-5 ">Mon profil</h1>
+            <h1 class="font-bold text-[30px] pt-5 dark:text-gray-100">Mon profil</h1>
             <!-- <p class="font-bold text-[20px]" >Détails de l'utilisateur</p> -->
-            <div class="flex gap-6 items-center px-10 my-10 border-para1Color/opacity-20 py-2 shadow   rounded-[20px]">
+            <div class="flex flex-col md:flex-row gap-6 items-center md:px-10 my-10 border-para1Color/opacity-20 py-2 shadow rounded-[20px] bg-white dark:bg-[#2c3140] transition-colors duration-300">
                 <div class="flex gap-6 items-center">
                     <!-- <img class="w-22 h-22 rounded-[50px]" :src="ImageDashboard" alt="ImageDashboard"> -->
                     
@@ -186,43 +186,43 @@ const totalLearningHours = computed(() => {
 
                 </div>
                 <div>
-                    <h2 class="font-bold text-[20px] mb-1">Alexandre Dubois</h2>
+                    <h2 class="font-bold text-[20px] mb-1 dark:text-gray-100">Alexandre Dubois</h2>
                     <div>
-                        <small class="text-para1Color ">alexandre.dubois@edumaster.com</small>
+                        <small class="text-para1Color dark:text-gray-400">alexandre.dubois@edumaster.com</small>
                     </div>
                     <!-- <div class="border-b-[1px] border-para1Color/20 pt-1 pb-2"></div> -->
                     <button
-                        class="border-[1px] border-[#DEE1E6FF] font-medium text-[12px] px-[15px] py-[8px] my-[5px] rounded-[5px] mt-[10px] cursor-pointer"
+                        class="border-[1px] border-[#DEE1E6FF] dark:border-gray-700 font-medium text-[12px] px-[15px] py-[8px] my-[5px] rounded-[5px] mt-[10px] cursor-pointer dark:bg-[#23272f] dark:text-gray-100"
                         v-if="DisApear" @click="DisApeared">Modifier le profil</button>
                 </div>
-                <form class="w-[325px] grid gap-5 my-[20px] relative pb-6" v-if="Apear">
+                <form class="w-full max-w-md grid gap-5 my-[20px] relative pb-6" v-if="Apear">
                     <div class="flex justify-between items-center">
-                        <label for="name" class="font-medium">Nom:</label>
+                        <label for="name" class="font-medium dark:text-gray-100">Nom:</label>
                         <input
-                            class="border-[1px] w-[230px] outline-none rounded border-gray/10 px-[5px] py-[4px] border-para1Color/20"
+                            class="border-[1px] w-[230px] outline-none rounded border-gray/10 px-[5px] py-[4px] border-para1Color/20 dark:bg-[#23272f] dark:text-gray-100 dark:border-gray-700"
                             type="text" name="" id="name ">
                     </div>
                     <div class="flex justify-between">
 
-                        <label for="name" class="font-medium">Prenom:</label>
+                        <label for="name" class="font-medium dark:text-gray-100">Prenom:</label>
                         <input
-                            class="border-[1px] w-[230px] border-para1Color/20 rounded outline-none px-[5px] py-[4px] items-center"
+                            class="border-[1px] w-[230px] border-para1Color/20 rounded outline-none px-[5px] py-[4px] items-center dark:bg-[#23272f] dark:text-gray-100 dark:border-gray-700"
                             type="text" name="" id="name">
                     </div>
                     <div
-                        class="w-[100px] text-center flex justify-center px-5 py-[3px] absolute bottom-[-20px] right-0 bg-blue-500/8 border-[1px] rounded-[10px] border-para1Color/10 shadow ">
+                        class="w-[100px] text-center flex justify-center px-5 py-[3px] absolute bottom-[-20px] right-0 bg-blue-500/8 border-[1px] rounded-[10px] border-para1Color/10 shadow dark:bg-[#2c3140] dark:border-gray-700">
 
-                        <input type="submit" class="text-center font-medium" value="Enregister">
+                        <input type="submit" class="text-center font-medium dark:text-gray-100" value="Enregister">
                     </div>
                 </form>
                 
             </div>
             <div>
                 <!-- Statistiques -->
-                <h2 class="font-bold text-[20px] my-5">Statistiques d'apprentissage</h2>
-                <div class="flex-wrap   flex   text-center items-center gap-5 ">
+                <h2 class="font-bold text-[20px] my-5 dark:text-gray-100">Statistiques d'apprentissage</h2>
+                <div class="flex flex-col md:flex-row flex-wrap text-center items-center gap-5 ">
                     <div
-                        class=" px-[60px] rounded-[8px] border-para1Color py-[15px] w-[320px] bg-[#FFFFFFFF] shadow shadow-black/35 h-[152px]">
+                        class="px-4 sm:px-8 md:px-[60px] rounded-[8px] border-para1Color py-4 sm:py-[15px] w-full sm:w-[320px] bg-[#FFFFFFFF] dark:bg-[#23272f] shadow shadow-black/35 h-[152px] transition-colors duration-300">
                         <div class="flex justify-center items-center ">
                             <svg class="text-blueColor text-center" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
@@ -230,11 +230,11 @@ const totalLearningHours = computed(() => {
                                     d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q8 0 15 1.5t14 4.5l-74 74H200v560h560v-266l80-80v346q0 33-23.5 56.5T760-120H200Zm261-160L235-506l56-56 170 170 367-367 57 55-424 424Z" />
                             </svg>
                         </div>
-                        <span class="text-blueColor">{{ completedCoursesCount }}</span><span
-                            class="text-para1Color text-[12px]">COURS TERMINÉS</span>
+                        <span class="text-blueColor dark:text-blue-400">{{ completedCoursesCount }}</span><span
+                            class="text-para1Color text-[12px] dark:text-gray-400">COURS TERMINÉS</span>
                     </div>
                     <div
-                        class=" px-[60px] rounded-[8px]  py-[15px] w-[320px] h-[152px] bg-[#FFFFFFFF] shadow shadow-black/35 ">
+                        class="px-4 sm:px-8 md:px-[60px] rounded-[8px] py-4 sm:py-[15px] w-full sm:w-[320px] h-[152px] bg-[#FFFFFFFF] dark:bg-[#23272f] shadow shadow-black/35 transition-colors duration-300 ">
                         <div class="flex justify-center items-center ">
 
                             <svg class="text-blueColor flex-col" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -243,11 +243,11 @@ const totalLearningHours = computed(() => {
                                     d="M320-160h320v-120q0-66-47-113t-113-47q-66 0-113 47t-47 113v120Zm160-360q66 0 113-47t47-113v-120H320v120q0 66 47 113t113 47ZM160-80v-80h80v-120q0-61 28.5-114.5T348-480q-51-32-79.5-85.5T240-680v-120h-80v-80h640v80h-80v120q0 61-28.5 114.5T612-480q51 32 79.5 85.5T720-280v120h80v80H160Z" />
                             </svg>
                         </div>
-                        <span class="text-blueColor">{{ totalLearningHours }}</span>
-                        <span class="text-para1Color text-[12px]">Heures d'apprentissage</span>
+                        <span class="text-blueColor dark:text-blue-400">{{ totalLearningHours }}</span>
+                        <span class="text-para1Color text-[12px] dark:text-gray-400">Heures d'apprentissage</span>
                     </div>
                     <div
-                        class=" px-[60px] rounded-[8px] shadow shadow-black/35 py-[15px] w-[320px] h-[152px] bg-[#FFFFFFFF]">
+                        class="px-4 sm:px-8 md:px-[60px] rounded-[8px] shadow shadow-black/35 py-4 sm:py-[15px] w-full sm:w-[320px] h-[152px] bg-[#FFFFFFFF] dark:bg-[#23272f] transition-colors duration-300">
                         <div class="flex justify-center items-center ">
 
                             <svg class="text-blueColor" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -256,8 +256,8 @@ const totalLearningHours = computed(() => {
                                     d="M480-440q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35ZM240-40v-309q-38-42-59-96t-21-115q0-134 93-227t227-93q134 0 227 93t93 227q0 61-21 115t-59 96v309l-240-80-240 80Zm240-280q100 0 170-70t70-170q0-100-70-170t-170-70q-100 0-170 70t-70 170q0 100 70 170t170 70ZM320-159l160-41 160 41v-124q-35 20-75.5 31.5T480-240q-44 0-84.5-11.5T320-283v124Zm160-62Z" />
                             </svg>
                         </div>
-                        <span class="text-blueColor">{{ earnedBadges.length }}</span>
-                        <span class="text-para1Color text-[12px]">Badges obtenus</span>
+                        <span class="text-blueColor dark:text-blue-400">{{ earnedBadges.length }}</span>
+                        <span class="text-para1Color text-[12px] dark:text-gray-400">Badges obtenus</span>
                     </div>
                 </div>
             </div>

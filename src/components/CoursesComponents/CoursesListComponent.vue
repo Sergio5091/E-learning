@@ -12,7 +12,7 @@ const emit = defineEmits(['show-details'])
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
             <div v-for="cours in tabCourses" :key="cours.id"
-                class="rounded-lg shadow-sm hover:shadow-md transition w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700">
+                class="rounded-lg shadow-sm hover:shadow-md transition w-full bg-white dark:bg-[#2c3140] border border-blue-100 dark:border-[#3a4152]">
                 <!-- Image -->
                 <img :src="cours.thumbnail" alt="Image cours"
                     class="rounded-lg object-cover w-full h-48 sm:h-56 md:h-64 lg:h-72 max-w-full" />
@@ -25,7 +25,7 @@ const emit = defineEmits(['show-details'])
                     </span>
 
                     <!-- Titre -->
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ cours.title }}</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-blue-100">{{ cours.title }}</h3>
 
                     <!-- Niveau -->
                     <p class="text-sm text-gray-600 dark:text-gray-300"><span class="font-semibold">Niveau :</span> {{ cours.level }}</p>
@@ -33,9 +33,6 @@ const emit = defineEmits(['show-details'])
                     <!-- Auteur -->
                     <p class="text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Auteur :</span> {{ cours.instructor }}
                     </p>
-
-                    <!-- <p v-if="cours.price === 0" class="text-green-600 text-xl font-semibold">Gratuit</p>
-                <p v-else class="text-green-700 text-2xl font-medium">{{ cours.price }} €</p> -->
 
                     <!-- Bouton détails -->
                     <div class="flex flex-col sm:flex-row gap-3 sm:gap-5">
