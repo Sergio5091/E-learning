@@ -11,16 +11,16 @@ const { courses } = useAlertesStore()
 <template>
     <!-- <pre>{{   courses  }}</pre> -->
     
-<div class="bg-adminBg rounded-[10px] pb-[50px] pt-4 px-4">
-    <h1 class="font-archivo text-[30px] font-extrabold py-[2]">
+<div class="bg-adminBg dark:bg-neutral-600 pb-[50px] pt-4 px-4 transition-colors duration-300">
+    <h1 class="font-archivo text-[30px] font-extrabold py-[2] dark:text-blue-100">
         Bienvenue, Administrateur!
     </h1>
-    <p class="w-[1056px] font-inter text-[16px] leading-[24px] font-normal text-para2Color ">
+    <p class="w-[1056px] font-inter text-[16px] leading-[24px] font-normal text-para2Color dark:text-gray-300 ">
         Utilisez cette interface pour gérer le catalogue de cours d'EduMaster. Vous pouvez ajouter, <br/>modifier ou supprimer des cours en toute simplicité.
     </p>
 </div>
 
-    <div class="pb-[100px]">
+    <div>
         <GestionCoursComponent :tabCourses="courses"/>
     </div>
 </template>

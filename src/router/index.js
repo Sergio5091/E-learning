@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '@/layouts/MainLayout.vue'
 import AdminView from '@/views/AdminView.vue'
 import DashboardComponent from '@/components/DashboardComponent.vue'
+import MailConfirm from '@/views/mailConfirmView.vue'
 
 import AboutUsView from '@/views/AboutUsView.vue'
 
@@ -50,6 +51,11 @@ const routes= [
       path: '/profil',
       name: 'profil',
       component: DashboardComponent,
+    },
+    {
+      path: '/confirm/:user',
+      name: 'confirm',
+      component: MailConfirm,
     },
   ]
   

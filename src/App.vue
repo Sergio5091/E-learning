@@ -9,7 +9,7 @@ import FooterComponent from './components/FooterComponent.vue';
 
 
 <template>
-  <div class="flex flex-col min-h-screen">
+  <div class="flex flex-col min-h-screen relative">
     <header class="sticky top-0 z-[100000000]">
       <NavbarComponent />
     </header>
@@ -17,7 +17,7 @@ import FooterComponent from './components/FooterComponent.vue';
       <RouterView />
       <AssistantIA />
     </main>
-    <footer class="sticky bottom-0 z-[100000000]">
+    <footer class=" z-[100000000]">
       <FooterComponent />
     </footer>
   </div>

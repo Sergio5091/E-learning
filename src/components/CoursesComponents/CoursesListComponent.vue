@@ -1,7 +1,7 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { ref, onMounted, onUnmounted } from "vue";
-import { useAuthStore } from '@/store';
+import { ref, onMounted, onUnmounted, computed } from "vue";
+import { useAuthStore, useAlertesStore } from '@/store';
  const auth=useAuthStore()
 const props = defineProps({
     tabCourses: Array
@@ -31,14 +31,26 @@ onUnmounted(() => {
 });
  
 
-function redirection() {
-    router.push("/auth");
-}
- 
+
+// function redirection() {
+//     router.push("/auth");
+// }
+
+const store = useAlertesStore()
+const filteredCourses = computed(() => {
+    if (!store.searchTerm) return store.courses
+
+    return store.courses.filter(course =>
+        course.title.toLowerCase().includes(store.searchTerm.toLowerCase()) ||
+        course.category.toLowerCase().includes(store.searchTerm.toLowerCase()) ||
+        course.level.toLowerCase().includes(store.searchTerm.toLowerCase()) ||
+        course.instructor.toLowerCase().includes(store.searchTerm.toLowerCase())
+    )
+})
 </script>
  
 <template>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 w-full" v-if="filteredCourses.length > 0">
 <div v-for="cours in tabCourses" :key="cours.id"
             class="rounded-lg shadow-sm hover:shadow-md transition w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700">
 <img :src="cours.thumbnail" alt="Image cours"
@@ -46,7 +58,7 @@ function redirection() {
  
             <div class="p-4 space-y-2">
 <span
-                    class="inline-block bg-pink-200 dark:bg-pink-700 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                    class="inline-block bg-pink-600 dark:bg-pink-700 text-white text-xs font-semibold px-2 py-1 rounded-full">
                     {{ cours.category }}
 </span>
 <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ cours.title }}</h3>
@@ -54,9 +66,9 @@ function redirection() {
 <p class="text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Auteur :</span> {{ cours.instructor }}</p>
 <div class="flex flex-col sm:flex-row gap-3 sm:gap-5">
 <button @click="emit('show-details', cours.id)" type="button"
-                        class="mt-3 text-center border border-blue-500 dark:border-pink-700 text-indigo-600 dark:text-pink-300 rounded-md p-2 text-sm font-medium hover:bg-pink-200 dark:hover:bg-pink-700 hover:border-pink-200 dark:hover:border-pink-700 hover:text-white transition">
-                        Détails du cours
-</button>
+                            class="mt-3 text-center border border-blue-500 dark:border-pink-700 text-indigo-600 dark:text-pink-300 rounded-md p-2 text-sm font-medium hover:bg-pink-200 dark:hover:bg-pink-700 hover:border-pink-200 dark:hover:border-pink-700 hover:text-white transition">
+                            Détails du cours
+                        </button>
 <router-link v-if="auth.isAuthentificated"
                         :to="`/lessons/${cours.id}`"
                         class="mt-3 text-center border border-indigo-600 dark:border-blue-400 text-indigo-600 dark:text-blue-300 rounded-md p-2 text-sm font-medium hover:bg-blue-500 dark:hover:bg-blue-400 hover:text-white transition">
@@ -71,6 +83,11 @@ function redirection() {
 </div>
 </div>
 </div>
+<div v-else
+            class="flex justify-center items-center h-64 text-center text-2xl font-bold text-gray-700 dark:text-gray-300 w-[100%]">
+            Aucun cours trouvé
+        </div>
+
 </template>
  
 <style scoped></style>

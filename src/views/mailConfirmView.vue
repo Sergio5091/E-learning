@@ -46,7 +46,7 @@ function verification() {
     if (codege.value===code.value) {
         alert('cooooooool')
         route.push({
-            name:'authentification'
+            name:'auth'
         })
     } else {
         alert('Mauvais code')

@@ -110,7 +110,7 @@ function inscription(){
                     let set=setTimeout(() => {
                       showBadgeNotification.value='oui'
                       route.push({
-                          name:'confirmMail',
+                          name:'confirm',
                           params:{user:pseudoI.value}
                       })
                     },3000);
