@@ -12,53 +12,74 @@ onMounted(() => {
 </script>
 
 <template>
-<div class="my-[60px] w-full ">
+   <div class="my-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 rounded">
+    <h2 class="text-2xl font-bold mb-5">Historique des cours</h2>
+    <!-- Vue pour mobile et tablette -->
+    <div v-if="cours.length > 0" class="lg:hidden space-y-4">
+      <div v-for="c in cours" :key="c.titre" class="bg-white p-4 rounded-lg shadow">
+        <h3 class="font-bold text-lg mb-2">{{ c.titre }}</h3>
+        <p class="text-sm text-para1Color mb-2">Formateur: {{ c.formateur }}</p>
+        <div class="mb-2">
+          <p class="text-sm text-gray-600 mb-1">Progression</p>
+          <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-indigo-600 h-2 rounded-full" :style="{ width: c.progression + '%' }"></div>
+          </div>
+        </div>
+        <div class="flex justify-between items-center text-sm">
+          <p class="text-gray-500">Dernier accès: {{ c.date }}</p>
+          <span :class="[
+            'text-xs px-2 py-1 rounded-full',
+            c.statut === 'En cours' ? 'bg-pink-500 text-white' :
+            c.statut === 'Terminé' ? 'bg-indigo-600 text-white' :
+            'bg-gray-400 text-white'
+          ]">
+            {{ c.statut }}
+          </span>
+        </div>
+      </div>
+    </div>
 
-    <table v-if="cours.length> 0" class="w-full overflow-scroll border-1 border-collapse border-para1Color/20 rounded-[100px]">
-      <thead class="text-left text-[#171A1FFF] font-medium">
-          <th class="py-5 pl-5 text-[#171A1FFF] font-medium">Titre du cours </th>
-          <th class="text-[#171A1FFF] font-medium">Formateur </th>
-          <th class="text-[#171A1FFF] font-medium">Progression </th>
-          <th class="text-[#171A1FFF] font-medium">Dernier accès</th>
-          <th class="text-[#171A1FFF] font-medium">Statut</th>
-          <!-- <th class="text-[#171A1FFF] font-medium">Actions</th> -->
-      </thead>
-      <tbody>
-        <tr v-for="c in cours" :key="c.titre" class="border-1 border-para1Color/20">
-          <td class="p-5 text-[#171A1FFF] font-medium">{{ c.titre }}</td>
-          <td class=" text-para1Color">{{ c.formateur }}</td>
-          <td>
-            <div class="w-32 bg-gray-200 rounded-full h-2">
-              <div class="bg-indigo-600 h-2 rounded-full" :style="{ width: c.progression + '%' }"></div>
-            </div>
-          </td>
-          <td class="text-[#565D6DFF] border-para1Color/20">{{ c.date }}</td>
-          <td class="">
-            <span  :class="[
-              'text-xs px-2 py-[2px] rounded-full',
-              c.statut === 'En cours' ? 'bg-pink-500 text-white' :
-              c.statut === 'Terminé' ? 'bg-indigo-600 font-bold w-2 h-1 text-white' :
-              'bg-gray-400 text-white'
-            ]" >
-              {{ c.statut }}
-            </span>
-          </td>
-          <td >
-            <!-- <div>
-                <button class="bg-sidebarColor border-1 border-para1Color/10 cursor-pointer bg-para1Color/90 text-para1Color px-4 py-1 rounded-md">
-                  <router-link :to="`/lessons/${course.id}`" class="bg-blueColor text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 text-lg transition-colors">
-            Voir le cours
-          </router-link>
-                </button>
-            </div> -->
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Vue pour desktop -->
+    <div v-if="cours.length > 0" class="hidden lg:block overflow-x-auto">
+      <table class="w-full border-collapse">
+        <thead class="text-left text-[#171A1FFF] font-medium bg-gray-50">
+          <tr>
+            <th class="p-4">Titre du cours</th>
+            <th class="p-4">Formateur</th>
+            <th class="p-4">Progression</th>
+            <th class="p-4">Dernier accès</th>
+            <th class="p-4">Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="c in cours" :key="c.titre" class="border-b border-para1Color/20">
+            <td class="p-4 font-medium">{{ c.titre }}</td>
+            <td class="p-4 text-para1Color">{{ c.formateur }}</td>
+            <td class="p-4">
+              <div class="w-32 bg-gray-200 rounded-full h-2">
+                <div class="bg-indigo-600 h-2 rounded-full" :style="{ width: c.progression + '%' }"></div>
+              </div>
+            </td>
+            <td class="p-4 text-[#565D6DFF]">{{ c.date }}</td>
+            <td class="p-4">
+              <span :class="[
+                'text-xs px-2 py-1 rounded-full',
+                c.statut === 'En cours' ? 'bg-pink-500 text-white' :
+                c.statut === 'Terminé' ? 'bg-indigo-600 text-white' :
+                'bg-gray-400 text-white'
+              ]">
+                {{ c.statut }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div v-else class="text-center p-10 text-gray-500">
       Vous n'avez pas encore commencé de cours.
     </div>
-</div>
+  </div>
 </template>
 <style scoped>
 
@@ -74,4 +95,6 @@ tr{
 td{
     margin-block: 10px;
 }
+/* Vous pouvez garder des styles spécifiques ici si nécessaire, 
+   mais la plupart des styles sont maintenant gérés par Tailwind CSS. */
 </style>

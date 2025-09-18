@@ -44,8 +44,8 @@ const previewImage = (event) => {
     // Conversion du fichier en base64
   }
 };
-
-
+ 
+ 
 onMounted(() => {
   const savedImage = localStorage.getItem("image");
   if (savedImage) {
@@ -79,33 +79,33 @@ const badgeDefinitions = {
     'Développement Web': {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M323-160q-11 0-20.5-5.5T288-181l-78-139h58l40 80h92v-40h-68l-40-80H188l-57-100q-2-5-3.5-10t-1.5-10q0-4 5-20l57-100h104l40-80h68v-40h-92l-40 80h-58l78-139q5-10 14.5-15.5T323-800h97q17 0 28.5 11.5T460-760v160h-60l-40 40h100v120h-88l-40-80h-92l-40 40h108l40 80h112v200q0 17-11.5 28.5T420-160h-97Zm217 0q-17 0-28.5-11.5T500-200v-200h112l40-80h108l-40-40h-92l-40 80h-88v-120h100l-40-40h-60v-160q0-17 11.5-28.5T540-800h97q11 0 20.5 5.5T672-779l78 139h-58l-40-80h-92v40h68l40 80h104l57 100q2 5 3.5 10t1.5 10q0 4-5 20l-57 100H668l-40 80h-68v40h92l40-80h58l-78 139q-5 10-14.5 15.5T637-160h-97Z"/></svg>`,
         levels: [
-            { required: 5, name: 'Maître du Code', description: 'Terminez 5+ cours de Développement Web' },
-            { required: 3, name: 'Artisan du Web', description: 'Terminez 3 cours de Développement Web' },
-            { required: 2, name: 'Apprenti du Web', description: 'Terminez 2 cours de Développement Web' }
+            { required: 5, name: 'Maître du Code', description: 'Vous aviez Terminez 5+ cours de Développement Web' },
+            { required: 3, name: 'Artisan du Web', description: 'Vous aviez Terminez 3 cours de Développement Web' },
+            { required: 2, name: 'Apprenti du Web', description: 'Vous aviez Terminez 2 cours de Développement Web' }
         ]
     },
     'Programmation': {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M800-80H560q-17 0-28.5-11.5T520-120v-240q0-17 11.5-28.5T560-400h240q17 0 28.5 11.5T840-360v80l80-80v240l-80-80v80q0 17-11.5 28.5T800-80ZM480-480Zm2-140q-58 0-99 41t-41 99q0 48 27 84t71 50v-90q-8-8-13-20.5t-5-23.5q0-25 17.5-42.5T482-540q25 0 42 17.5t17 42.5h81q0-58-41-99t-99-41ZM370-80l-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v13.5h-80q-1-19-3-33.5t-6-27.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q24 25 54 42t65 22v184h-70Z"/></svg>`,
         levels: [
-            { required: 5, name: 'Architecte Logiciel', description: 'Terminez 5+ cours de Programmation' },
-            { required: 3, name: 'Développeur Confirmé', description: 'Terminez 3 cours de Programmation' },
-            { required: 2, name: 'Apprenti Développeur', description: 'Terminez 2 cours de Programmation' }
+            { required: 5, name: 'Architecte Logiciel', description: 'Vous aviez Terminez 5+ cours de Programmation' },
+            { required: 3, name: 'Développeur Confirmé', description: 'Vous aviez Terminez 3 cours de Programmation' },
+            { required: 2, name: 'Apprenti Développeur', description: 'Vous aviez Terminez 2 cours de Programmation' }
         ]
     },
     'Data & IA': {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480v320q0 33-23.5 56.5T800-80H480Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 23 3 45t9 43l148-148 132 111 131-131h-63v-80h200v200h-80v-63L456-320 325-432 207-314q42 69 113.5 111.5T480-160Zm300 20q17 0 28.5-11.5T820-180q0-17-11.5-28.5T780-220q-17 0-28.5 11.5T740-180q0 17 11.5 28.5T780-140ZM455-480Z"/></svg>`,
         levels: [
-            { required: 5, name: 'Star de l\'IA', description: 'Terminez 5+ cours de Data & IA' },
-            { required: 3, name: 'Analyste de Données', description: 'Terminez 3 cours de Data & IA' },
-            { required: 2, name: 'Explorateur de Données', description: 'Terminez 2 cours de Data & IA' }
+            { required: 5, name: 'Star de l\'IA', description: 'Vous aviez Terminez 5+ cours de Data & IA' },
+            { required: 3, name: 'Analyste de Données', description: 'Vous aviez Terminez 3 cours de Data & IA' },
+            { required: 2, name: 'Explorateur de Données', description: 'Vous aviez Terminez 2 cours de Data & IA' }
         ]
     },
     'Design': {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-160q-48-38-104-59t-116-21q-42 0-82.5 11T100-198q-21 11-40.5-1T40-234v-482q0-11 5.5-21T62-752q46-24 96-36t102-12q58 0 113.5 15T480-740v484q51-32 107-48t113-16q36 0 70.5 6t69.5 18v-480q15 5 29.5 10.5T898-752q11 5 16.5 15t5.5 21v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700-240q-60 0-116 21t-104 59Zm80-200v-380l200-200v400L560-360Zm-160 65v-396q-33-14-68.5-21.5T260-720q-37 0-72 7t-68 21v397q35-13 69.5-19t70.5-6q36 0 70.5 6t69.5 19Zm0 0v-396 396Z"/></svg>`,
         levels: [
-            { required: 5, name: 'Maître du Design', description: 'Terminez 5+ cours de Design' },
-            { required: 3, name: 'Designer Aguerri', description: 'Terminez 3 cours de Design' },
-            { required: 2, name: 'Créatif en Herbe', description: 'Terminez 2 cours de Design' }
+            { required: 5, name: 'Maître du Design', description: 'Vous aviez Terminez 5+ cours de Design' },
+            { required: 3, name: 'Designer Aguerri', description: 'Vous aviez Terminez 3 cours de Design' },
+            { required: 2, name: 'Créatif en Herbe', description: 'Vous aviez Terminez 2 cours de Design' }
         ]
     },
 };
@@ -165,64 +165,56 @@ const totalLearningHours = computed(() => {
 </script>
 
 <template>
-    <div class="mb-20 mt-5 px-10">
+    <div class="mb-20 mt-5 px-4 sm:px-6 lg:px-8 m-auto max-w-7xl">
 
         <div>
-            <h1 class="font-bold text-[30px] pt-5 ">Mon profil</h1>
-            <!-- <p class="font-bold text-[20px]" >Détails de l'utilisateur</p> -->
-            <div class="flex gap-6 items-center px-10 my-10 border-para1Color/opacity-20 py-2 shadow   rounded-[20px]">
-                <div class="flex gap-6 items-center">
-                    <!-- <img class="w-22 h-22 rounded-[50px]" :src="ImageDashboard" alt="ImageDashboard"> -->
-                    
-                    <div class="w-28 ">
+            <h1 class="font-bold text-2xl sm:text-3xl pt-5">Mon profil</h1>
+            <div class="flex flex-col md:flex-row gap-6 items-center px-4 sm:px-6 md:px-10 my-10 border-para1Color/opacity-20 py-4 shadow rounded-[20px]">
+                <div class="flex-shrink-0">
+                    <div class="w-28 h-28">
                         <!-- input file caché -->
-                        <input id="upload" type="file" accept="image/jpg,image/jpeg,image/png" class="hidden w-30" @change="previewImage" />
+                        <input id="upload" type="file" accept="image/jpg,image/jpeg,image/png" class="hidden" @change="previewImage" />
 
                         <!-- image cliquable -->
-                        <label for="upload" class="cursor-pointer w-[10px]">
-                            <img :src="profileImag" class="w-22 h-22 rounded-[50px]" />
+                        <label for="upload" class="cursor-pointer">
+                            <img :src="profileImag" class="w-full h-full rounded-full object-cover" alt="Image de profil" />
                         </label>
                     </div>
-
                 </div>
-                <div>
+                <div class="flex-grow w-full">
                     <h2 class="font-bold text-[20px] mb-1">Alexandre Dubois</h2>
                     <div>
-                        <small class="text-para1Color ">alexandre.dubois@edumaster.com</small>
+                        <small class="text-para1Color">alexandre.dubois@edumaster.com</small>
                     </div>
-                    <!-- <div class="border-b-[1px] border-para1Color/20 pt-1 pb-2"></div> -->
                     <button
                         class="border-[1px] border-[#DEE1E6FF] font-medium text-[12px] px-[15px] py-[8px] my-[5px] rounded-[5px] mt-[10px] cursor-pointer"
                         v-if="DisApear" @click="DisApeared">Modifier le profil</button>
+                    <form class="w-full max-w-sm grid gap-4 my-4" v-if="Apear">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                            <label for="name" class="font-medium mb-1 sm:mb-0">Nom:</label>
+                            <input
+                                class="border-[1px] w-full sm:w-[230px] outline-none rounded border-gray/10 px-2 py-1 border-para1Color/20"
+                                type="text" name="name" id="name">
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                            <label for="prenom" class="font-medium mb-1 sm:mb-0">Prénom:</label>
+                            <input
+                                class="border-[1px] w-full sm:w-[230px] border-para1Color/20 rounded outline-none px-2 py-1 items-center"
+                                type="text" name="prenom" id="prenom">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="text-white text-center font-medium px-4 py-2 bg-blue-500/80 rounded-lg shadow hover:bg-blue-600 transition">
+                                Enregistrer
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <form class="w-[325px] grid gap-5 my-[20px] relative pb-6" v-if="Apear">
-                    <div class="flex justify-between items-center">
-                        <label for="name" class="font-medium">Nom:</label>
-                        <input
-                            class="border-[1px] w-[230px] outline-none rounded border-gray/10 px-[5px] py-[4px] border-para1Color/20"
-                            type="text" name="" id="name ">
-                    </div>
-                    <div class="flex justify-between">
-
-                        <label for="name" class="font-medium">Prenom:</label>
-                        <input
-                            class="border-[1px] w-[230px] border-para1Color/20 rounded outline-none px-[5px] py-[4px] items-center"
-                            type="text" name="" id="name">
-                    </div>
-                    <div
-                        class="w-[100px] text-center flex justify-center px-5 py-[3px] absolute bottom-[-20px] right-0 bg-blue-500/8 border-[1px] rounded-[10px] border-para1Color/10 shadow ">
-
-                        <input type="submit" class="text-center font-medium" value="Enregister">
-                    </div>
-                </form>
-                
             </div>
             <div>
                 <!-- Statistiques -->
                 <h2 class="font-bold text-[20px] my-5">Statistiques d'apprentissage</h2>
-                <div class="flex-wrap   flex   text-center items-center gap-5 ">
-                    <div
-                        class=" px-[60px] rounded-[8px] border-para1Color py-[15px] w-[320px] bg-[#FFFFFFFF] shadow shadow-black/35 h-[152px]">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 text-center">
+                    <div class="p-4 rounded-lg bg-white shadow-md flex flex-col justify-center items-center h-[152px]">
                         <div class="flex justify-center items-center ">
                             <svg class="text-blueColor text-center" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
@@ -230,13 +222,11 @@ const totalLearningHours = computed(() => {
                                     d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q8 0 15 1.5t14 4.5l-74 74H200v560h560v-266l80-80v346q0 33-23.5 56.5T760-120H200Zm261-160L235-506l56-56 170 170 367-367 57 55-424 424Z" />
                             </svg>
                         </div>
-                        <span class="text-blueColor">{{ completedCoursesCount }}</span><span
-                            class="text-para1Color text-[12px]">COURS TERMINÉS</span>
+                        <span class="text-blueColor">{{ completedCoursesCount }}</span>
+                        <span class="text-para1Color text-xs uppercase">COURS TERMINÉS</span>
                     </div>
-                    <div
-                        class=" px-[60px] rounded-[8px]  py-[15px] w-[320px] h-[152px] bg-[#FFFFFFFF] shadow shadow-black/35 ">
+                    <div class="p-4 rounded-lg bg-white shadow-md flex flex-col justify-center items-center h-[152px]">
                         <div class="flex justify-center items-center ">
-
                             <svg class="text-blueColor flex-col" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="currentColor">
                                 <path
@@ -244,12 +234,10 @@ const totalLearningHours = computed(() => {
                             </svg>
                         </div>
                         <span class="text-blueColor">{{ totalLearningHours }}</span>
-                        <span class="text-para1Color text-[12px]">Heures d'apprentissage</span>
+                        <span class="text-para1Color text-xs uppercase">Heures d'apprentissage</span>
                     </div>
-                    <div
-                        class=" px-[60px] rounded-[8px] shadow shadow-black/35 py-[15px] w-[320px] h-[152px] bg-[#FFFFFFFF]">
+                    <div class="p-4 rounded-lg bg-white shadow-md flex flex-col justify-center items-center h-[152px]">
                         <div class="flex justify-center items-center ">
-
                             <svg class="text-blueColor" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="currentColor">
                                 <path
@@ -257,7 +245,7 @@ const totalLearningHours = computed(() => {
                             </svg>
                         </div>
                         <span class="text-blueColor">{{ earnedBadges.length }}</span>
-                        <span class="text-para1Color text-[12px]">Badges obtenus</span>
+                        <span class="text-para1Color text-xs uppercase">Badges obtenus</span>
                     </div>
                 </div>
             </div>

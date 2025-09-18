@@ -6,21 +6,25 @@ import FooterComponent from './components/FooterComponent.vue';
 
 </script>
 
+
+
 <template>
-  <header class="sticky top-0 z-[100000000]"> <NavbarComponent/> </header>
-  
+  <header class="sticky top-0 z-[100000000]">
+    <NavbarComponent />
+  </header>
+
   <div>
     <RouterView />
-    
-     <AssistantIA />
+
+    <AssistantIA />
   </div>
+
 
   <footer>
     <FooterComponent />
   </footer>
 
+
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -10,6 +10,7 @@ const routes= [
     path: '/',
       name: 'Acceuil',
       component: MainLayout,
+      id:'',
     },
      {
       path: '/lessons/:id',
@@ -31,6 +32,11 @@ const routes= [
       name: 'Admin',
       component: AdminView,
     },
+    // {
+    //   path: '/',
+    //   name: '',
+    //   // component: () => import('../views/AboutView.vue'),
+    // },
     {
       path: '/profil',
       name: 'profil',

@@ -70,7 +70,7 @@ function handleThumbnail(e) {
 <div class="flex justify-between items-center py-5 mx-4 md:mx-10">
 <h2 class="text-xl font-bold">Gestion des Cours</h2>
 <button
-        class="bg-blue-600 text-white px-4 py-2 rounded hover:scale-105 hover:bg-blue-700 transition-transform duration-300"
+        class="bg-blue-600 text-white cursor-pointer px-4 py-2 rounded hover:scale-105 hover:bg-blue-700 transition-transform duration-300"
         @click="openModal()"
 >
         + Ajouter un nouveau cours

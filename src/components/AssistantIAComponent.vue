@@ -33,7 +33,7 @@ async function send() {
   error.value = ''
 
   // Préparer un résumé des cours
-  const courseSummary = coursesData.courses.slice(0, 10).map((c) => ({
+  const courseSummary = coursesData.courses.slice(0, 20).map((c) => ({
     titre: c.title,
     formateur: c.instructor,
     prix: c.price,
@@ -45,6 +45,8 @@ async function send() {
     // Construire le tableau messages pour l'API
     const apiMessages = [
       {
+        // expliquer le contexte a l'ia
+        // limiter la porter des reponses(ethique, texte long)
         role: 'system',
         content: `Voici un résumé de cours disponibles : ${JSON.stringify(courseSummary, null, 2)}`
       },
@@ -72,6 +74,8 @@ async function send() {
     }
 
     const data = await response.json()
+    console.log(data);
+    
     const reply =
       data.choices?.[0]?.message?.content || "Je n'ai pas compris votre question."
     messages.value.push({ role: 'ai', text: reply })
@@ -96,21 +100,21 @@ function newChat() {
   <div>
     <!-- Bouton flottant -->
     <button
-      class="fixed bottom-6 right-6 w-16 h-16 sm:w-14 sm:h-14 xs:w-12 xs:h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-100 via-blue-300 to-blue-700 shadow-2xl hover:bg-neutral-500 transition-colors duration-200 z-50"
+      class="fixed bottom-6 right-6 w-16 h-16 sm:w-14 sm:h-14 xs:w-12 xs:h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-neutral-100 via-blue-100 to-blue-300 shadow-2xl hover:bg-neutral-500 transition-colors duration-200 z-50"
       @click="toggleChat"
     >
-      <img src="/chatbot_14263197.png" alt="" class="w-10 h-10 sm:w-8 sm:h-8 xs:w-7 xs:h-7" />
+      <img src="/chatbot_14263197.png" alt="" width="60"/>
     </button>
 
     <!-- Fenêtre de chat -->
     <div
       v-if="isOpen"
-      class="fixed bottom-28 right-6 w-[370px] max-w-[500px] h-[520px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 border border-neutral-200
+      class="fixed bottom-28 right-6 w-[370px] max-w-[500px] h-[520px] bg-white dark:bg-neutral-300 rounded-2xl shadow-2xl flex flex-col z-50 border border-neutral-200
       md:w-[340px] md:h-[480px] sm:w-[95vw] sm:right-2 sm:bottom-20 sm:h-[70vh] xs:w-[98vw] xs:right-1 xs:bottom-16 xs:h-[65vh]"
     >
       <!-- Header -->
       <div
-        class="flex items-center justify-between px-5 py-4 border-b border-neutral-100 rounded-t-2xl bg-white"
+        class="flex items-center justify-between px-5 py-4 border-b border-neutral-100 rounded-t-2xl"
       >
         <span class="font-semibold text-lg text-neutral-900 tracking-tight">Assistant IA</span>
         <div class="flex items-center gap-2">
@@ -133,7 +137,7 @@ function newChat() {
       </div>
 
       <!-- Messages -->
-      <div class="flex-1 overflow-y-auto px-5 py-4 bg-neutral-50 space-y-4">
+      <div class="flex-1 overflow-y-auto px-5 py-4 bg-neutral-50 dark:bg-neutral-700 space-y-4">
         <div v-if="error" class="text-red-600 text-sm text-center mb-2">{{ error }}</div>
         <div
           v-for="(msg, i) in messages"
@@ -145,7 +149,7 @@ function newChat() {
             :class="[
               'max-w-[80%] px-4 py-3 rounded-2xl text-base',
               msg.role === 'user'
-                ? 'bg-neutral-900 text-white rounded-br-md'
+                ? 'bg-blue-400 text-white rounded-br-md'
                 : 'bg-neutral-200 text-neutral-900 rounded-bl-md',
             ]"
           >
@@ -165,7 +169,7 @@ function newChat() {
 
       <!-- Input -->
       <div
-        class="px-5 py-4 border-t border-neutral-100 bg-white rounded-b-2xl flex items-center gap-3"
+        class="px-5 py-4 border-t border-neutral-100 bg-white dark:bg-neutral-700 rounded-b-2xl flex items-center gap-3"
       >
         <input
           v-model="input"
