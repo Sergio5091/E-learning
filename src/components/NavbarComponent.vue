@@ -81,21 +81,24 @@ onUnmounted(() => {
   <nav
     class="flex items-center justify-between p-4 bg-white dark:bg-[#23272f] shadow-md sticky top-0 z-[100] border-b border-blue-100 dark:border-[#3a4152] transition-colors duration-300">
     <!-- Logo -->
-    <div class="flex items-center space-x-2">
+    <RouterLink to="/">
+      <div class="flex items-center space-x-2">
       <i class="fas fa-graduation-cap text-blue-500 dark:text-blue-500 text-2xl"></i>
       <span class="text-2xl font-extrabold text-blue-500 dark:text-blue-500">
         HighFive <span class="text-gray-800 dark:text-blue-100">Academy</span>
       </span>
     </div>
+    </RouterLink>
 
     <!-- Liens de navigation -->
-    <div class="hidden md:flex space-x-6">
-      <RouterLink to="/" class="text-gray-700 dark:text-blue-100 hover:text-blue-500 dark:hover:text-blue-300 border border-transparent dark:border-[#2c3140]">Accueil
+    <div class="hidden md:flex space-x-6 font-semibold">
+      <RouterLink to="/" class="text-gray-700 dark:text-blue-100
+       dark:hover:text-blue-300 py-2  dark:border-[#2c3140]" active-class="shadow-2xl  px-5 rounded-lg bg-blue-500 text-white ">Accueil
       </RouterLink>
       <!-- <RouterLink to="/lessons/:id" class="hover:text-blue-500">Cours</RouterLink> -->
-      <RouterLink to="/a-propos" class="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">À
+      <RouterLink to="/a-propos" class="text-gray-700 dark:text-blue-100 hover:text-blue-500 dark:hover:text-blue-300 py-2  dark:border-[#2c3140]" active-class="shadow-2xl  px-5 rounded-lg bg-blue-500 text-white " >À
         propos</RouterLink>
-      <RouterLink v-if="admin!==false" to="/admin" class="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400">
+      <RouterLink v-if="admin!==false" to="/admin" class="text-gray-700 dark:text-gray-200 dark:hover:text-blue-400">
 
         Admin</RouterLink>
     </div>

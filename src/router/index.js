@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory} from 'vue-router'
 import MainLayout from '@/layouts/MainLayout.vue'
 import AdminView from '@/views/AdminView.vue'
 import DashboardComponent from '@/components/DashboardComponent.vue'
@@ -57,6 +57,11 @@ const routes= [
       name: 'confirm',
       component: MailConfirm,
     },
+    {
+      path:'/quiz/:id',
+      name:'quiz',
+      component: () => import('@/views/QuizView.vue')
+    }
   ]
   
   const router = createRouter({
@@ -64,16 +69,18 @@ const routes= [
   routes,
   linkActiveClass : "lien-actif", //spécifie la classe CSS a appliquer aux liens actifs dans la barre de navigation.Lorsqu’un lien est actif, il recevra cette classe CSS.
   })
-  
   router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
   const user = JSON.parse(localStorage.getItem('user') || "null")
+  // console.log(rout.params);
+  
   const isAuthenticated = token === 'true' && user !== null
   // Si l'utilisateur est déjà connecté, inutile d'aller sur la page Auth
   if (to.name === 'auth' && isAuthenticated) {
     next(false) // redirige par exemple vers la page d'accueil
-  } 
-  else {
+  }else if(to.name==='Admin' && user.username!=='moodolion'){
+    next(from)
+  } else {
     next()
   }
 })

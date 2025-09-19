@@ -53,10 +53,10 @@ const course = computed(() => {
         </div>
 
         <div class="mb-6">
-            <h2 class="text-2xl font-semibold mb-2">Prérequis</h2>
-            <ul class="list-disc list-inside">
-                <li v-for="(req, index) in course.prerequisites" :key="index">{{ req }}</li>
-            </ul>
+          <h2 class="text-2xl font-semibold mb-2">Prérequis</h2>
+          <ul class="list-disc list-inside">
+            <li v-for="(req, index) in course.prerequisites" :key="index">{{ req }}</li>
+          </ul>
         </div>
 
         <div class="mb-6">
@@ -67,14 +67,16 @@ const course = computed(() => {
         </div>
 
         <div class="mb-6">
-            <h2 class="text-2xl font-semibold mb-2">Tags</h2>
-            <div class="flex flex-wrap gap-2">
-                <span v-for="(tag, index) in course.tags" :key="index" class="bg-gray-200 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">#{{ tag }}</span>
-            </div>
+          <h2 class="text-2xl font-semibold mb-2">Tags</h2>
+          <div class="flex flex-wrap gap-2">
+            <span v-for="(tag, index) in course.tags" :key="index"
+              class="bg-gray-200 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">#{{ tag }}</span>
+          </div>
         </div>
 
         <div class="mt-8">
-          <router-link :to="`/lessons/${course.id}`" @click="emit('close-modal')" class="bg-blueColor text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 text-lg transition-colors">
+          <router-link :to="`/lessons/${course.id}`" @click="emit('close-modal')"
+            class="bg-blueColor text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 text-lg transition-colors">
             Commencer la formation
           </router-link>
         </div>
