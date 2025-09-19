@@ -1,56 +1,56 @@
 <script setup>
 import { ref, inject } from "vue";
-import { useRouter, useRoute} from "vue-router"
+import { useRouter, useRoute } from "vue-router"
 import * as emailjs from '@emailjs/browser';
 emailjs.init("DVu2Au30trEgw5z2u");
-const code=ref('')
-const route=useRouter();
-const maRoute=useRoute();
+const code = ref('')
+const route = useRouter();
+const maRoute = useRoute();
 console.log(maRoute.params.user);
 console.log(JSON.parse(localStorage.getItem('base')));
 
-const baseDd=ref([]);
-baseDd.value=JSON.parse(localStorage.getItem('base'));
+const baseDd = ref([]);
+baseDd.value = JSON.parse(localStorage.getItem('base'));
 
-const user=baseDd.value.find((e)=> e.name=== maRoute.params.user)
+const user = baseDd.value.find((e) => e.name === maRoute.params.user)
 console.log(user);
 
 
-const codege=ref(''); // cet variable va contenir le code générer et sera envoyer par props au composant de vérification
+const codege = ref(''); // cet variable va contenir le code générer et sera envoyer par props au composant de vérification
 // fonction qui génère le code de vérification
 function generateCode() {
-    return Math.random().toString(36).substring(2, 10).toUpperCase();
-  }
+  return Math.random().toString(36).substring(2, 10).toUpperCase();
+}
 
 // fonction d'envois de mail
 function sendVerificationMail() {
-  codege.value= generateCode()
-    const templateParams = {
-      to_email: user.email,            // remplit {{to_email}}
-      userName: user.name,             // remplit {{userName}}
-      confirmation_code: codege.value     // remplit {{confirmation_code}}
-    };
+  codege.value = generateCode()
+  const templateParams = {
+    to_email: user.email,            // remplit {{to_email}}
+    userName: user.name,             // remplit {{userName}}
+    confirmation_code: codege.value     // remplit {{confirmation_code}}
+  };
 
-    emailjs.send("service_w6g1alp", "template_gjdh2dp", templateParams)
-      .then(function(response) {
-         alert("✅ Email envoyé à " + user.email);
-         console.log("SUCCESS", response.status, response.text);
-      }, function(error) {
-         alert("❌ Erreur lors de l'envoi");
-         console.error("FAILED", error);
-      });
+  emailjs.send("service_w6g1alp", "template_gjdh2dp", templateParams)
+    .then(function (response) {
+      alert("✅ Email envoyé à " + user.email);
+      console.log("SUCCESS", response.status, response.text);
+    }, function (error) {
+      alert("❌ Erreur lors de l'envoi");
+      console.error("FAILED", error);
+    });
   return codege
 }
 
 function verification() {
-    if (codege.value===code.value) {
-        alert('cooooooool')
-        route.push({
-            name:'auth'
-        })
-    } else {
-        alert('Mauvais code')
-    }
+  if (codege.value === code.value) {
+    alert('cooooooool')
+    route.push({
+      name: 'auth'
+    })
+  } else {
+    alert('Mauvais code')
+  }
 }
 if (user) sendVerificationMail();
 </script>
@@ -70,33 +70,33 @@ if (user) sendVerificationMail();
   <div class="para">
     <transition name="para">
       <div class="min-w-[400px] bg-[#eaeaeeaf] rounded-2xl p-[15px]">
-      <div class="form">
+        <div class="form">
 
-<!-- Formulaire d'inscription -->
-        <transition name="slide-fade">
+          <!-- Formulaire d'inscription -->
+          <transition name="slide-fade">
             <div class="duration-[1s]">
               <h1 class="text-3xl text-gray-800 ">
                 **
                 Vous y êtes presque
               </h1>
-            <form class="py-[30px]">
-              <div>
-                <p class="text-xl text-gray-500 ">
-                  Veuillez entrer le code de vérification contenu dans le mail que nous avons envoyez à:<br>  *******************@gmail.com
-                </p>
-              </div>
-              <div>
-                <input v-model="code" class="bg-bgColor "  type="text"
-                  placeholder="Tapez le code ici..." required>
-              </div>
-              <button @click.prevent="verification" class="bg-blueColor">Vérifier</button>
-            </form>
-          </div>
-        </transition>
-<!--fin Formulaire d'inscription -->
+              <form class="py-[30px]">
+                <div>
+                  <p class="text-xl text-gray-500 ">
+                    Veuillez entrer le code de vérification contenu dans le mail que nous avons envoyez à:<br>
+                    *******************@gmail.com
+                  </p>
+                </div>
+                <div>
+                  <input v-model="code" class="bg-bgColor " type="text" placeholder="Tapez le code ici..." required>
+                </div>
+                <button @click.prevent="verification" class="bg-blueColor">Vérifier</button>
+              </form>
+            </div>
+          </transition>
+          <!--fin Formulaire d'inscription -->
 
+        </div>
       </div>
-    </div>
     </transition>
   </div>
 </template>
@@ -120,19 +120,21 @@ if (user) sendVerificationMail();
   transform: translateX(20px);
   opacity: 0;
 }
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
-.page{
- display: flex;
- align-items: center;
- flex-direction: column;
- gap: 20px;
- padding-bottom: 20px;
+.page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 20px;
 }
+
 .page>div {
   display: flex;
   align-items: center;
@@ -165,7 +167,8 @@ if (user) sendVerificationMail();
   gap: 20px;
   max-width: 400px;
 }
-h1{
+
+h1 {
   padding-block: 30px;
 }
 

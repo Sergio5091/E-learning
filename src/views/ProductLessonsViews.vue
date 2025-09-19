@@ -1,4 +1,5 @@
 <script setup>
+import { useQuizStore } from '@/quizStore.js';
 import { useRoute } from 'vue-router';
 import { ref, computed, watch, onMounted } from 'vue';
 import coursesData from '@/newCourses.json';
@@ -6,6 +7,7 @@ import CourseComments from '@/components/CourseComments.vue';
 
 const route = useRoute();
 const courseId = ref(route.params.id);
+const quizStore = useQuizStore()
 
 const courseData = coursesData.courses.find(c => c.id == courseId.value);
 // On utilise ref() pour créer une copie réactive et modifiable du cours.
@@ -199,6 +201,11 @@ function selectLesson(index) {
             </div>
           </li>
         </ul>
+      </div>
+      <div v-if="progress === 100 && quizStore.getQuizByCourseId(course.id)"  class="my-5">
+        <RouterLink :to="`/quiz/${course.id}`" class="border p-2 rounded-lg font-semibold text-white bg-green-600 hover:bg-blue-600 transition-all duration-300">
+          Commencer le quiz
+        </RouterLink>
       </div>
 
       <!-- Comments Section -->

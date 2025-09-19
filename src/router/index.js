@@ -57,6 +57,11 @@ const routes= [
       name: 'confirm',
       component: MailConfirm,
     },
+    {
+      path:'/quiz/:id',
+      name:'quiz',
+      component: () => import('@/views/QuizView.vue')
+    }
   ]
   
   const router = createRouter({
@@ -75,10 +80,7 @@ const routes= [
     next(false) // redirige par exemple vers la page d'accueil
   }else if(to.name==='Admin' && user.username!=='moodolion'){
     next(from)
-  }else if((to.name !== 'auth') && (to.name!=='Admin') && !isAuthenticated){
-    next('auth')
-  } 
-  else {
+  } else {
     next()
   }
 })

@@ -6,12 +6,9 @@ import AbtComponent from '../components/AbtComponent.vue';
 
 <template>
 
-<AbtComponent/>
+    <AbtComponent />
 
 </template>
 
 
-<style scoped>
-
-
-</style>
+<style scoped></style>
