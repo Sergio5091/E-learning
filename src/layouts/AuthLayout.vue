@@ -14,7 +14,7 @@ emailjs.init("DVu2Au30trEgw5z2u");
 
 // console.log(localStorage.removeItem('base'));
 const stored = localStorage.getItem('base');
-let baseDD = ref([])
+let baseDD = ref()
 if (stored) {
     try {
       baseDD.value=JSON.parse(stored);

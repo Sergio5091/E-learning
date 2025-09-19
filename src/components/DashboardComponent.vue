@@ -4,6 +4,7 @@ import HistoryWatch from './HistoryWatch.vue';
 import BadgesComponent from './BadgesComponent.vue';
 import { ref, onMounted, computed } from 'vue';
 import allCourses from '@/newCourses.json';
+import { useRoute } from 'vue-router';
 //image reactive avec une ilage par defaut
 const profileImag = ref("https://cdn-icons-png.flaticon.com/512/1946/1946429.png")
 
@@ -14,6 +15,39 @@ function DisApeared() {
     DisApear.value = false
     Apear.value = true
 }
+
+const  saveuser =ref('')
+
+onMounted(() => {
+  const storedUser = localStorage.getItem('base');
+//   const getuser = localStorage.getItem('user');
+  const adduder =((JSON.parse(localStorage.getItem('user'))).username);
+  console.log(adduder);
+  
+  if (storedUser) {
+    try {
+      const users = JSON.parse(storedUser); // tableau d'utilisateurs
+     saveuser.value = users.find(e=>{
+       return adduder===e.name
+        console.log(e);
+
+        
+        
+     }); // prend le premier utilisateur
+    } catch (a) {
+      console.error("Erreur de parsing JSON", a);
+    }
+  }
+});
+
+
+
+
+
+
+
+
+
 
 
 // Une functon pour choisir l'image pour mettre a jr le profilI avec URL
@@ -181,23 +215,28 @@ const totalLearningHours = computed(() => {
                         </label>
                     </div>
                 </div>
-                <div class="flex-grow w-full ">
-                    <h2 class="font-bold text-[20px] mb-1 dark:text-blue-100">Alexandre Dubois</h2>
-                    <div>
-                        <small class="text-para1Color dark:text-gray-400">alexandre.dubois@edumaster.com</small>
+                <div class="flex-grow w-full " >
+                    <div v-if="saveuser">
+
+
+                        <p class="font-semibold">👤 {{ saveuser.name }}</p>
+                        <h2   class="font-bold text-[20px] mb-1 dark:text-blue-100">{{ saveuser.nomEntier }} </h2>
+                        <div>
+                            <small class="text-para1Color dark:text-gray-400">{{ saveuser.email }}{{ saveuser.username }}</small>
+                        </div>
                     </div>
                     <button
                         class="border-[1px] border-[#DEE1E6FF] dark:border-[#3a4152] font-medium text-[12px] px-[15px] py-[8px] my-[5px] rounded-[5px] mt-[10px] cursor-pointer dark:bg-[#23272f] dark:text-blue-100"
                         v-if="DisApear" @click="DisApeared">Modifier le profil</button>
                     <form class="w-full max-w-sm grid gap-4 my-4" v-if="Apear">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                            <label for="name" class="font-medium mb-1 sm:mb-0 dark:text-blue-100">Nom:</label>
+                            <label for="name" class="font-medium mb-1 sm:mb-0 dark:text-blue-100">Nom Complet :</label>
                             <input
                                 class="border-[1px] w-full sm:w-[230px] outline-none rounded border-gray/10 px-2 py-1 border-para1Color/20 dark:bg-[#23272f] dark:text-blue-100 dark:border-[#3a4152]"
                                 type="text" name="name" id="name">
                         </div>
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                            <label for="prenom" class="font-medium mb-1 sm:mb-0 dark:text-blue-100">Prénom:</label>
+                            <label for="prenom" class="font-medium mb-1 sm:mb-0 dark:text-blue-100">Profile D'utilisateur:</label>
                             <input
                                 class="border-[1px] w-full sm:w-[230px] border-para1Color/20 rounded outline-none px-2 py-1 items-center dark:bg-[#23272f] dark:text-blue-100 dark:border-[#3a4152]"
                                 type="text" name="prenom" id="prenom">
