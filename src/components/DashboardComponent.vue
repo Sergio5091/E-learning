@@ -1,6 +1,6 @@
 <script setup>
 import ImageDashboard from '@/assets/image/Dasboard/profil.jpg'
-import HistoryWatch from './HistoryWatch.vue';
+import HistoryWatch from './HistoryWatch.vue'
 import BadgesComponent from './BadgesComponent.vue';
 import { ref, onMounted, computed } from 'vue';
 import allCourses from '@/newCourses.json';
@@ -16,24 +16,25 @@ function DisApeared() {
     Apear.value = true
 }
 
-const  saveuser =ref('')
+const saveuser = ref(null);
+const modifiedUser = ref(null);
 
 onMounted(() => {
   const storedUser = localStorage.getItem('base');
-//   const getuser = localStorage.getItem('user');
-  const adduder =((JSON.parse(localStorage.getItem('user'))).username);
-  console.log(adduder);
+  const currentUser = JSON.parse(localStorage.getItem('user'));
+  console.log(currentUser);
   
-  if (storedUser) {
+  if (storedUser && currentUser) {
     try {
       const users = JSON.parse(storedUser); // tableau d'utilisateurs
-     saveuser.value = users.find(e=>{
-       return adduder===e.name
-        console.log(e);
+      const foundUser = users.find(e => e.name === currentUser.username);
+      //veri
+      if (foundUser) {
+        saveuser.value = { ...foundUser };
+        modifiedUser.value = { ...foundUser }; // Initialise les données pour la modification
+      }
 
-        
-        
-     }); // prend le premier utilisateur
+      // prend le premier utilisateur
     } catch (a) {
       console.error("Erreur de parsing JSON", a);
     }
@@ -42,15 +43,29 @@ onMounted(() => {
 
 
 
+/** Fonction pour enregistrer les modifications du profil */
+function saveProfile() {
+  const storedUsers = localStorage.getItem('base');
+  if (storedUsers && saveuser.value) {
+    try {
+      let users = JSON.parse(storedUsers);
+      const userIndex = users.findIndex(u => u.name === saveuser.value.name);
 
+      if (userIndex !== -1) {
+        // Mettre à jour les informations de l'utilisateur
+        users[userIndex] = { ...users[userIndex], ...modifiedUser.value };
+        localStorage.setItem('base', JSON.stringify(users));
+        saveuser.value = { ...modifiedUser.value }; // Mettre à jour l'affichage
 
-
-
-
-
-
-
-// Une functon pour choisir l'image pour mettre a jr le profilI avec URL
+        // Cacher le formulaire après la sauvegarde
+        Apear.value = false;
+        DisApear.value = true;
+      }
+    } catch (e) {
+      console.error("Erreur lors de la sauvegarde du profil :", e);
+    }
+  }
+}
 // const previewImage = (event) => {
 //   const file = event.target.files[0];
 //   if (file) {
@@ -228,22 +243,22 @@ const totalLearningHours = computed(() => {
                     <button
                         class="border-[1px] border-[#DEE1E6FF] dark:border-[#3a4152] font-medium text-[12px] px-[15px] py-[8px] my-[5px] rounded-[5px] mt-[10px] cursor-pointer dark:bg-[#23272f] dark:text-blue-100"
                         v-if="DisApear" @click="DisApeared">Modifier le profil</button>
-                    <form class="w-full max-w-sm grid gap-4 my-4" v-if="Apear">
+                    <form class="w-full max-w-sm grid gap-4 my-4" v-if="Apear" @submit.prevent="saveProfile">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                             <label for="name" class="font-medium mb-1 sm:mb-0 dark:text-blue-100">Nom Complet :</label>
                             <input
                                 class="border-[1px] w-full sm:w-[230px] outline-none rounded border-gray/10 px-2 py-1 border-para1Color/20 dark:bg-[#23272f] dark:text-blue-100 dark:border-[#3a4152]"
-                                type="text" name="name" id="name">
+                                type="text" name="name" id="name" v-model="modifiedUser.nomEntier">
                         </div>
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                             <label for="prenom" class="font-medium mb-1 sm:mb-0 dark:text-blue-100">Profile D'utilisateur:</label>
                             <input
                                 class="border-[1px] w-full sm:w-[230px] border-para1Color/20 rounded outline-none px-2 py-1 items-center dark:bg-[#23272f] dark:text-blue-100 dark:border-[#3a4152]"
-                                type="text" name="prenom" id="prenom">
+                                type="text" name="prenom" id="prenom" v-model="modifiedUser.name" readonly >
                         </div>
                         <div class="flex justify-end">
                             <button type="submit" class="text-white dark:text-blue-100 text-center font-medium px-4 py-2 bg-blue-500/80 dark:bg-blue-700 rounded-lg shadow hover:bg-blue-600 dark:hover:bg-blue-800 transition">
-                                Enregistrer
+                                Enregistrer les modifications
                             </button>
                         </div>
                     </form>
