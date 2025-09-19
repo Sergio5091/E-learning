@@ -46,7 +46,7 @@ function verification() {
     if (codege.value===code.value) {
         alert('cooooooool')
         route.push({
-            name:'authentification'
+            name:'auth'
         })
     } else {
         alert('Mauvais code')
@@ -64,7 +64,7 @@ if (user) sendVerificationMail();
   </div> -->
   <div class="flex justify-center h-screen w-full border-gray-200">
     <div class="relative left-[120px] top-[-20px] z-[2] rotate-[25deg]">
-      <img src="../assets/image/aunthentication/pocha-removebg-preview.png" alt="">
+      <img src="./assets/image/aunthentication/pocha-removebg-preview.png" alt="">
     </div>
   </div>
   <div class="para">

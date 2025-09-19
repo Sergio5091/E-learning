@@ -12,8 +12,8 @@ onMounted(() => {
 </script>
 
 <template>
-   <div class="my-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 rounded">
-    <h2 class="text-2xl font-bold mb-5">Historique des cours</h2>
+   <div class="py-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 rounded">
+    <h2 class="text-2xl text-black dark:text-white font-bold mb-5">Historique des cours</h2>
     <!-- Vue pour mobile et tablette -->
     <div v-if="cours.length > 0" class="lg:hidden space-y-4">
       <div v-for="c in cours" :key="c.titre" class="bg-white p-4 rounded-lg shadow">

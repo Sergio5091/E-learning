@@ -4,6 +4,7 @@ import HistoryWatch from './HistoryWatch.vue';
 import BadgesComponent from './BadgesComponent.vue';
 import { ref, onMounted, computed } from 'vue';
 import allCourses from '@/newCourses.json';
+import { useRoute } from 'vue-router';
 //image reactive avec une ilage par defaut
 const profileImag = ref("https://cdn-icons-png.flaticon.com/512/1946/1946429.png")
 
@@ -14,6 +15,39 @@ function DisApeared() {
     DisApear.value = false
     Apear.value = true
 }
+
+const  saveuser =ref('')
+
+onMounted(() => {
+  const storedUser = localStorage.getItem('base');
+//   const getuser = localStorage.getItem('user');
+  const adduder =((JSON.parse(localStorage.getItem('user'))).username);
+  console.log(adduder);
+  
+  if (storedUser) {
+    try {
+      const users = JSON.parse(storedUser); // tableau d'utilisateurs
+     saveuser.value = users.find(e=>{
+       return adduder===e.name
+        console.log(e);
+
+        
+        
+     }); // prend le premier utilisateur
+    } catch (a) {
+      console.error("Erreur de parsing JSON", a);
+    }
+  }
+});
+
+
+
+
+
+
+
+
+
 
 
 // Une functon pour choisir l'image pour mettre a jr le profilI avec URL
@@ -165,11 +199,11 @@ const totalLearningHours = computed(() => {
 </script>
 
 <template>
-    <div class="mb-20 mt-5 px-4 sm:px-6 lg:px-8 m-auto max-w-7xl">
+    <div class="px-4 sm:px-6 lg:px-8 m-auto max-w-7xl bg-white dark:bg-[#23272f] transition-colors duration-300">
 
         <div>
-            <h1 class="font-bold text-2xl sm:text-3xl pt-5">Mon profil</h1>
-            <div class="flex flex-col md:flex-row gap-6 items-center px-4 sm:px-6 md:px-10 my-10 border-para1Color/opacity-20 py-4 shadow rounded-[20px]">
+            <h1 class="font-bold text-2xl sm:text-3xl pt-5 dark:text-blue-100">Mon profil</h1>
+            <div class="flex flex-col md:flex-row gap-6 items-center px-4 sm:px-6 md:px-10 my-10 border-para1Color/opacity-20 py-4 shadow rounded-[20px] bg-white dark:bg-[#65676b80] transition-colors duration-300">
                 <div class="flex-shrink-0">
                     <div class="w-28 h-28">
                         <!-- input file caché -->
@@ -181,29 +215,34 @@ const totalLearningHours = computed(() => {
                         </label>
                     </div>
                 </div>
-                <div class="flex-grow w-full">
-                    <h2 class="font-bold text-[20px] mb-1">Alexandre Dubois</h2>
-                    <div>
-                        <small class="text-para1Color">alexandre.dubois@edumaster.com</small>
+                <div class="flex-grow w-full " >
+                    <div v-if="saveuser">
+
+
+                        <p class="font-semibold">👤 {{ saveuser.name }}</p>
+                        <h2   class="font-bold text-[20px] mb-1 dark:text-blue-100">{{ saveuser.nomEntier }} </h2>
+                        <div>
+                            <small class="text-para1Color dark:text-gray-400">{{ saveuser.email }}{{ saveuser.username }}</small>
+                        </div>
                     </div>
                     <button
-                        class="border-[1px] border-[#DEE1E6FF] font-medium text-[12px] px-[15px] py-[8px] my-[5px] rounded-[5px] mt-[10px] cursor-pointer"
+                        class="border-[1px] border-[#DEE1E6FF] dark:border-[#3a4152] font-medium text-[12px] px-[15px] py-[8px] my-[5px] rounded-[5px] mt-[10px] cursor-pointer dark:bg-[#23272f] dark:text-blue-100"
                         v-if="DisApear" @click="DisApeared">Modifier le profil</button>
                     <form class="w-full max-w-sm grid gap-4 my-4" v-if="Apear">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                            <label for="name" class="font-medium mb-1 sm:mb-0">Nom:</label>
+                            <label for="name" class="font-medium mb-1 sm:mb-0 dark:text-blue-100">Nom Complet :</label>
                             <input
-                                class="border-[1px] w-full sm:w-[230px] outline-none rounded border-gray/10 px-2 py-1 border-para1Color/20"
+                                class="border-[1px] w-full sm:w-[230px] outline-none rounded border-gray/10 px-2 py-1 border-para1Color/20 dark:bg-[#23272f] dark:text-blue-100 dark:border-[#3a4152]"
                                 type="text" name="name" id="name">
                         </div>
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                            <label for="prenom" class="font-medium mb-1 sm:mb-0">Prénom:</label>
+                            <label for="prenom" class="font-medium mb-1 sm:mb-0 dark:text-blue-100">Profile D'utilisateur:</label>
                             <input
-                                class="border-[1px] w-full sm:w-[230px] border-para1Color/20 rounded outline-none px-2 py-1 items-center"
+                                class="border-[1px] w-full sm:w-[230px] border-para1Color/20 rounded outline-none px-2 py-1 items-center dark:bg-[#23272f] dark:text-blue-100 dark:border-[#3a4152]"
                                 type="text" name="prenom" id="prenom">
                         </div>
                         <div class="flex justify-end">
-                            <button type="submit" class="text-white text-center font-medium px-4 py-2 bg-blue-500/80 rounded-lg shadow hover:bg-blue-600 transition">
+                            <button type="submit" class="text-white dark:text-blue-100 text-center font-medium px-4 py-2 bg-blue-500/80 dark:bg-blue-700 rounded-lg shadow hover:bg-blue-600 dark:hover:bg-blue-800 transition">
                                 Enregistrer
                             </button>
                         </div>
@@ -212,9 +251,9 @@ const totalLearningHours = computed(() => {
             </div>
             <div>
                 <!-- Statistiques -->
-                <h2 class="font-bold text-[20px] my-5">Statistiques d'apprentissage</h2>
+                <h2 class="font-bold text-[20px] my-5 dark:text-blue-100">Statistiques d'apprentissage</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 text-center">
-                    <div class="p-4 hover:scale-95 transition duration-3000 ease-in-out rounded-lg bg- shadow-[0_0_5px_rgba(0,0,0,0.3)]  flex flex-col justify-center items-center h-[152px]">
+                    <div class="p-4 hover:scale-95 transition duration-3000 ease-in-out rounded-lg bg-white dark:bg-[#2c3140] shadow-[0_0_5px_rgba(0,0,0,0.3)] flex flex-col justify-center items-center h-[152px]">
                         <div class="flex justify-center items-center ">
                             <svg class="text-blueColor text-center" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
@@ -222,10 +261,10 @@ const totalLearningHours = computed(() => {
                                     d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q8 0 15 1.5t14 4.5l-74 74H200v560h560v-266l80-80v346q0 33-23.5 56.5T760-120H200Zm261-160L235-506l56-56 170 170 367-367 57 55-424 424Z" />
                             </svg>
                         </div>
-                        <span class="text-blueColor">{{ completedCoursesCount }}</span>
-                        <span class="text-para1Color text-xs uppercase font-medium">COURS TERMINÉS</span>
+                        <span class="text-blueColor dark:text-blue-300">{{ completedCoursesCount }}</span>
+                        <span class="text-para1Color dark:text-gray-400 text-xs uppercase font-medium">COURS TERMINÉS</span>
                     </div>
-                    <div class="p-4 hover:scale-110 transition duration-3000 ease-in-out rounded-lg bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)]  flex flex-col justify-center items-center h-[152px]">
+                    <div class="p-4 hover:scale-110 transition duration-3000 ease-in-out rounded-lg bg-white dark:bg-[#2c3140] shadow-[0_0_5px_rgba(0,0,0,0.3)] flex flex-col justify-center items-center h-[152px]">
                         <div class="flex justify-center items-center ">
                             <svg class="text-blueColor flex-col" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="currentColor">
@@ -233,10 +272,10 @@ const totalLearningHours = computed(() => {
                                     d="M320-160h320v-120q0-66-47-113t-113-47q-66 0-113 47t-47 113v120Zm160-360q66 0 113-47t47-113v-120H320v120q0 66 47 113t113 47ZM160-80v-80h80v-120q0-61 28.5-114.5T348-480q-51-32-79.5-85.5T240-680v-120h-80v-80h640v80h-80v120q0 61-28.5 114.5T612-480q51 32 79.5 85.5T720-280v120h80v80H160Z" />
                             </svg>
                         </div>
-                        <span class="text-blueColor">{{ totalLearningHours }}</span>
-                        <span class="text-para1Color text-xs uppercase font-medium">Heures d'apprentissage</span>
+                        <span class="text-blueColor dark:text-blue-300">{{ totalLearningHours }}</span>
+                        <span class="text-para1Color dark:text-gray-400 text-xs uppercase font-medium">Heures d'apprentissage</span>
                     </div>
-                    <div class="p-4  hover:scale-101  duration-3000     rounded-lg bg-white shadow-[0_0_5px_rgba(0,0,0,0.3)] flex flex-col justify-center items-center h-[152px]">
+                    <div class="p-4 hover:scale-101 duration-3000 rounded-lg bg-white dark:bg-[#2c3140] shadow-[0_0_5px_rgba(0,0,0,0.3)] flex flex-col justify-center items-center h-[152px]">
                         <div class="flex justify-center items-center ">
                             <svg class="text-blueColor" xmlns="http://www.w3.org/2000/svg" height="24px"
                                 viewBox="0 -960 960 960" width="24px" fill="currentColor">
@@ -244,8 +283,8 @@ const totalLearningHours = computed(() => {
                                     d="M480-440q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35ZM240-40v-309q-38-42-59-96t-21-115q0-134 93-227t227-93q134 0 227 93t93 227q0 61-21 115t-59 96v309l-240-80-240 80Zm240-280q100 0 170-70t70-170q0-100-70-170t-170-70q-100 0-170 70t-70 170q0 100 70 170t170 70ZM320-159l160-41 160 41v-124q-35 20-75.5 31.5T480-240q-44 0-84.5-11.5T320-283v124Zm160-62Z" />
                             </svg>
                         </div>
-                        <span class="text-blueColor">{{ earnedBadges.length }}</span>
-                        <span class="text-para1Color text-xs uppercase font-medium">Badges obtenus</span>
+                        <span class="text-blueColor dark:text-blue-300">{{ earnedBadges.length }}</span>
+                        <span class="text-para1Color dark:text-gray-400 text-xs uppercase font-medium">Badges obtenus</span>
                     </div>
                 </div>
             </div>

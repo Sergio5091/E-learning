@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '@/layouts/MainLayout.vue'
 import AdminView from '@/views/AdminView.vue'
 import DashboardComponent from '@/components/DashboardComponent.vue'
+import MailConfirm from '@/views/mailConfirmView.vue'
 
 import AboutUsView from '@/views/AboutUsView.vue'
 
@@ -10,16 +11,20 @@ const routes= [
     path: '/',
       name: 'Acceuil',
       component: MainLayout,
-      id:'',
     },
      {
       path: '/lessons/:id',
       name: 'lessons',
       component: () => import('@/views/ProductLessonsViews.vue')
     },
+     {
+      path: '/lessons/:id/:user',
+      name: 'lesson',
+      component: () => import('@/views/ProductLessonsViews.vue')
+    },
     {
-     path:'/product/:id',
-      name:'product',
+     path:'/product/:id/:user',
+      name:'products',
       component: () => import('@/views/ProductDetailView.vue')
     },
     {
@@ -32,6 +37,11 @@ const routes= [
       name: 'Admin',
       component: AdminView,
     },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: () => import('../layouts/AuthLayout.vue'),
+    },
     // {
     //   path: '/',
     //   name: '',
@@ -42,6 +52,11 @@ const routes= [
       name: 'profil',
       component: DashboardComponent,
     },
+    {
+      path: '/confirm/:user',
+      name: 'confirm',
+      component: MailConfirm,
+    },
   ]
   
   const router = createRouter({
@@ -50,6 +65,19 @@ const routes= [
   linkActiveClass : "lien-actif", //spécifie la classe CSS a appliquer aux liens actifs dans la barre de navigation.Lorsqu’un lien est actif, il recevra cette classe CSS.
   })
   
+  router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  const user = JSON.parse(localStorage.getItem('user') || "null")
+  const isAuthenticated = token === 'true' && user !== null
+  // Si l'utilisateur est déjà connecté, inutile d'aller sur la page Auth
+  if (to.name === 'auth' && isAuthenticated) {
+    next(false) // redirige par exemple vers la page d'accueil
+  } 
+  else {
+    next()
+  }
+})
+
 
 
 export default router

@@ -14,7 +14,7 @@ emailjs.init("DVu2Au30trEgw5z2u");
 
 // console.log(localStorage.removeItem('base'));
 const stored = localStorage.getItem('base');
-let baseDD = ref([])
+let baseDD = ref()
 if (stored) {
     try {
       baseDD.value=JSON.parse(stored);
@@ -45,9 +45,8 @@ const mdp2=ref();
 //variable de notification
 const showBadgeNotification=ref('oui')
 
-
+// localStorage.removeItem('token', true)
 function login() {
-    localStorage.setItem('token', true)
     const index=baseDD.value.findIndex((e)=>e.name===pseudo.value && e.mot===mdp.value);
     if (index<=-1) {
         showBadgeNotification.value='j'
@@ -57,15 +56,27 @@ function login() {
     } else {
         showBadgeNotification.value='r'
         let set=setTimeout(() => {
-          showBadgeNotification.value='oui'
+          showBadgeNotification.value='oui';
+          localStorage.setItem('token', true)
+          localStorage.setItem("user", JSON.stringify({
+            username: pseudo.value ,
+          }))
           route.push({
               name:'Acceuil',
               params:{user:pseudo.value}
           })
+
         },3000);
     }
 }
 
+
+function authState() {
+  const status=JSON.parse(localStorage.getItem('state'));
+  if (status==='true') {
+    
+  }
+}
 
 //fonction d'inscription
 function inscription(){
@@ -99,7 +110,7 @@ function inscription(){
                     let set=setTimeout(() => {
                       showBadgeNotification.value='oui'
                       route.push({
-                          name:'confirmMail',
+                          name:'confirm',
                           params:{user:pseudoI.value}
                       })
                     },3000);
@@ -274,12 +285,12 @@ function inscription(){
 
 
 
-  <div class="flex justify-center h-screen w-full border-gray-200 page">
+  <div class="flex justify-center h-screen w-full border-gray-200 page dark:bg-[#23272f]">
     <div>
-      <div>
+      <div class="dark:bg-[#23272f]">
         <img src="../assets/image/aunthentication/st1removebg-preview.png" alt="">
       </div>
-      <div>
+      <div class="dark:bg-[#23272f]">
         <img src="../assets/image/aunthentication/st2removebg-preview.png" alt="">
       </div>
     </div>
@@ -289,7 +300,7 @@ function inscription(){
       <div class="min-w-[400px] flex justify-center rounded-4xl bg-[#eaeaeeaf]">
       <div class="form">
         <div
-          class="flex h-[50px] w-[50px] text-center text-2xl p-[60px] bg-blueColor text-white rounded-b-3xl shadow-[1px_5px_50px_rgba(0,0,0,0.25)]">
+          class="flex h-[50px] w-[50px] text-center text-2xl p-[60px] bg-blue-500 dark:bg-blue-600 text-white rounded-b-3xl shadow-[1px_5px_50px_rgba(0,0,0,0.25)]">
         </div>
 <!-- Formulaire de connexion -->
         <transition name="slide-fadeI">
@@ -304,9 +315,9 @@ function inscription(){
                 </div>
                 <div style="display:flex; justify-content: space-between;">
                   <p><a>Mot de passe oublié</a></p>
-                  <div @click="formState = 'disconnect'" class="text-[#1717eeee]">S'inscrire?</div>
+                  <div @click="formState = 'disconnect'" class="text-blue-500 dark:text-blue-600">S'inscrire?</div>
                 </div>
-                <button type="submit" class="bg-blueColor">Se connecter</button>
+                <button type="submit" class="bg-blue-500 dark:bg-blue-600">Se connecter</button>
               </form>
             </div>
         </transition>
@@ -334,8 +345,8 @@ function inscription(){
                 <input class="bg-bgColor " v-model="mdp2" name="mdp2" type="password"
                   placeholder="Confirmez le mot de passe" required>
               </div>
-              <div @click="formState = 'connect'" class="self-end mr-[50px] text-[#1717eeee]" :id="Insid">Connexion</div>
-              <button type="submit"  class="bg-blueColor">Inscription</button>
+              <div @click="formState = 'connect'" class="self-end mr-[50px] text-blue-500 dark:text-blue-400" :id="Insid">Connexion</div>
+              <button type="submit"  class="bg-blue-500 dark:bg-blue-600">Inscription</button>
             </form>
           </div>
         </transition>
