@@ -6,6 +6,7 @@ import { useAuthStore, useAlertesStore } from '@/store';
 const props = defineProps({
     tabCourses: Array
 });
+
 const router = useRouter();
 const emit = defineEmits(['show-details']);
  
@@ -51,7 +52,7 @@ const filteredCourses = computed(() => {
  
 <template>
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 w-full" v-if="filteredCourses.length > 0">
-<div v-for="cours in tabCourses" :key="cours.id"
+<div v-for="cours in filteredCourses" :key="cours.id"
             class="rounded-lg shadow-sm hover:shadow-md transition w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700">
 <img :src="cours.thumbnail" alt="Image cours"
                 class="rounded-lg object-cover w-full h-48 sm:h-56 md:h-64 lg:h-72 max-w-full" />
@@ -69,7 +70,7 @@ const filteredCourses = computed(() => {
                             class="mt-3 text-center border border-blue-500 dark:border-pink-700 text-indigo-600 dark:text-pink-300 rounded-md p-2 text-sm font-medium hover:bg-pink-200 dark:hover:bg-pink-700 hover:border-pink-200 dark:hover:border-pink-700 hover:text-white transition">
                             Détails du cours
                         </button>
-<router-link v-if="auth.isAuthentificated"
+<router-link v-if="auth.isAuthenticated"
                         :to="`/lessons/${cours.id}`"
                         class="mt-3 text-center border border-indigo-600 dark:border-blue-400 text-indigo-600 dark:text-blue-300 rounded-md p-2 text-sm font-medium hover:bg-blue-500 dark:hover:bg-blue-400 hover:text-white transition">
                         Commencer
