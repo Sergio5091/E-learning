@@ -96,7 +96,7 @@ onUnmounted(() => {
        dark:hover:text-blue-300 py-2  dark:border-[#2c3140]" active-class="shadow-2xl  px-5 rounded-lg bg-blue-500 text-white ">Accueil
       </RouterLink>
       <!-- <RouterLink to="/lessons/:id" class="hover:text-blue-500">Cours</RouterLink> -->
-      <RouterLink to="/a-propos" class="text-gray-700 dark:text-blue-100 hover:text-blue-500 dark:hover:text-blue-300 py-2  dark:border-[#2c3140]" active-class="shadow-2xl  px-5 rounded-lg bg-blue-500 text-white " >À
+      <RouterLink to="/a-propos" class="text-gray-700 dark:text-blue-100 dark:hover:text-blue-300 py-2  dark:border-[#2c3140]" active-class="shadow-2xl  px-5 rounded-lg bg-blue-500 text-white " >À
         propos</RouterLink>
       <RouterLink v-if="admin!==false" to="/admin" class="text-gray-700 dark:text-gray-200 dark:hover:text-blue-400">
 
