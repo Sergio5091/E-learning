@@ -1,6 +1,6 @@
+import quiz from '@/quizzes.json'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import quiz from '@/quizzes.json'
 
 export const useQuizStore = defineStore('quiz' , () => {
     const quizzes = ref([...quiz.quizzes])
