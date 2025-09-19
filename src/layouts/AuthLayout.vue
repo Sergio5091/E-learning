@@ -10,23 +10,27 @@ import mailConfirm from "../views/mailConfirmView.vue"
 // initialise EmailJS avec ta clé publique
 emailjs.init("DVu2Au30trEgw5z2u");
 
-// console.log(JSON.parse(localStorage.getItem('base'))); 
+let baseDD = ref([]);
 
-// console.log(localStorage.removeItem('base'));
-const stored = localStorage.getItem('base');
-let baseDD = ref([])
-if (stored) {
+function loadUsers() {
+  const stored = localStorage.getItem('base');
+  if (stored) {
     try {
-      baseDD.value=JSON.parse(stored);
+      baseDD.value = JSON.parse(stored);
     } catch (e) {
       console.error("❌ Erreur JSON.parse :", e);
       // réinitialise si jamais c’est corrompu
       localStorage.removeItem('base');
-      baseDD.value= bd.Users;
+      baseDD.value = bd.Users;
+      localStorage.setItem('base', JSON.stringify(baseDD.value));
     }
   } else {
     baseDD.value= bd.Users;
+    localStorage.setItem('base', JSON.stringify(baseDD.value));
   }
+}
+
+loadUsers();
 
 const code=ref(''); // cet variable va contenir le code générer et sera envoyer par props au composant de vérification
 const route=useRouter();
@@ -47,6 +51,7 @@ const showBadgeNotification=ref('oui')
 
 // localStorage.removeItem('token', true)
 function login() {
+    loadUsers(); // Recharger les utilisateurs pour avoir les dernières infos
     const index=baseDD.value.findIndex((e)=>e.name===pseudo.value && e.mot===mdp.value);
     if (index<=-1) {
         showBadgeNotification.value='j'
@@ -80,6 +85,7 @@ function authState() {
 
 //fonction d'inscription
 function inscription(){
+        loadUsers(); // Recharger les utilisateurs pour s'assurer que la vérification est à jour
         if ((pseudoI.value!=="") && (entireName.value!=="") && (mail.value!=="") && (mdp1.value!=="") && (mdp2.value!=="")) {
             if (mdp1.value===mdp2.value) {
                 const existingPseudo=baseDD.value.findIndex((e)=>e.name===pseudoI.value);
