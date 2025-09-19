@@ -39,9 +39,9 @@ onUnmounted(() => {
 
 const store = useAlertesStore()
 const filteredCourses = computed(() => {
-    if (!store.searchTerm) return store.courses
+    if (!store.searchTerm) return props.tabCourses
 
-    return store.courses.filter(course =>
+    return props.tabCourses.filter(course =>
         course.title.toLowerCase().includes(store.searchTerm.toLowerCase()) ||
         course.category.toLowerCase().includes(store.searchTerm.toLowerCase()) ||
         course.level.toLowerCase().includes(store.searchTerm.toLowerCase()) ||

@@ -73,15 +73,15 @@ const passed = computed(() => getScore() >= quiz.minimum_score)
                 <h2 class="text-lg font-bold mb-4">Votre score : {{ getScore() }} / {{ quiz.questions.length }}</h2>
                 <p v-if="passed">{{ quiz.success_message }}</p>
                 <p v-else>{{ quiz.failure_message }}</p>
+                
                 <div class="my-5">
                     <router-link :to="`/lessons/${courseId}`" class=" p-2 text-white font-semibold rounded-lg my-5 bg-blue-500">
                         Retour au cours
                     </router-link>
-
+        
                 </div>
                 
-
-
+                
             </div>
         </div>
         <div v-else>
