@@ -62,12 +62,12 @@ if (user) sendVerificationMail();
     <div class="bg-redColor text-blueColor p-4">Couleur brand light</div>
     <div class="bg-[#FAFAFBFF]">Couleur brand dark</div>
   </div> -->
-  <div class="flex justify-center h-screen w-full border-gray-200">
+  <div class="fixed inset-0 flex justify-center items-center w-full h-full overflow-hidden bg-[#f7f8fa] dark:bg-[#23272f]">
     <div class="relative left-[120px] top-[-20px] z-[2] rotate-[25deg]">
       <img src="./assets/image/aunthentication/pocha-removebg-preview.png" alt="">
     </div>
   </div>
-  <div class="para">
+  <div class="para absolute inset-0 flex justify-center items-center overflow-hidden">
     <transition name="para">
       <div class="min-w-[400px] bg-[#eaeaeeaf] rounded-2xl p-[15px]">
         <div class="form">
@@ -148,9 +148,9 @@ if (user) sendVerificationMail();
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: -1px;
-  /* background-color: rgba(0, 0, 0, 0.13); */
-
+  top: 0;
+  left: 0;
+  overflow: hidden;
 }
 
 .layout {

@@ -1,6 +1,6 @@
 <script setup>
 import { useQuizStore } from '@/quizStore';
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { RouterLink } from 'vue-router';
 import coursesData from '@/newCourses.json';
@@ -42,6 +42,21 @@ function getScore() {
 
 const passed = computed(() => getScore() >= quiz.minimum_score)
 
+function restartQuiz() {
+  quizStore.startQuiz(courseId)
+  userAnswer.value = null
+}
+
+onMounted(() => {
+    quizStore.startQuiz(courseId)
+    userAnswer.value = null
+})
+
+watch(() => route.params.id, (newId) => {
+    quizStore.startQuiz(Number(newId))
+    userAnswer.value = null
+})
+
 </script>
 
 
@@ -74,11 +89,13 @@ const passed = computed(() => getScore() >= quiz.minimum_score)
                 <p v-if="passed">{{ quiz.success_message }}</p>
                 <p v-else>{{ quiz.failure_message }}</p>
                 
-                <div class="my-5">
-                    <router-link :to="`/lessons/${courseId}`" class=" p-2 text-white font-semibold rounded-lg my-5 bg-blue-500">
+                <div class="my-5 flex flex-col items-center gap-3">
+                    <router-link :to="`/lessons/${courseId}`" class="p-2 text-white font-semibold rounded-lg bg-blue-500">
                         Retour au cours
                     </router-link>
-        
+                    <button @click="restartQuiz" class="p-2 text-white font-semibold rounded-lg bg-green-500 hover:bg-blue-600 transition-all duration-300">
+                        Recommencer le quiz
+                    </button>
                 </div>
                 
                 

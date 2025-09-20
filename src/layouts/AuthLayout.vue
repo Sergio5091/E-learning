@@ -291,77 +291,78 @@ function inscription(){
 
 
 
-  <div class="flex justify-center h-screen w-full border-gray-200 page dark:bg-[#23272f]">
-    <div>
-      <div class="dark:bg-[#23272f]">
-        <img src="../assets/image/aunthentication/st1removebg-preview.png" alt="">
+  <div class="fixed inset-0 flex items-center justify-center bg-[#f7f8fa] dark:bg-[#23272f]">
+    <div class="flex flex-row items-center justify-center w-full max-w-3xl mx-auto">
+      <div class="flex-shrink-0 flex items-center justify-center h-full">
+        <img src="../assets/image/aunthentication/st1removebg-preview.png" alt="" style="max-width:220px; height:auto;" />
       </div>
-      <div class="dark:bg-[#23272f]">
-        <img src="../assets/image/aunthentication/st2removebg-preview.png" alt="">
-      </div>
-    </div>
-  </div>
-  <div class="para">
-    <transition name="para">
-      <div class="min-w-[400px] flex justify-center rounded-4xl bg-[#eaeaeeaf]">
-      <div class="form">
-        <div
-          class="flex h-[50px] w-[50px] text-center text-2xl p-[60px] bg-blue-500 dark:bg-blue-600 text-white rounded-b-3xl shadow-[1px_5px_50px_rgba(0,0,0,0.25)]">
-        </div>
+      <div class="para flex items-center justify-center mx-4">
+        <transition name="para">
+          <div class="flex justify-center items-center rounded-4xl bg-[#eaeaeeaf]">
+            <div class="form">
+              <div
+                class="flex h-[50px] w-[50px] text-center text-2xl p-[60px] bg-blue-500 dark:bg-blue-600 text-white rounded-b-3xl shadow-[1px_5px_50px_rgba(0,0,0,0.25)]">
+              </div>
 <!-- Formulaire de connexion -->
-        <transition name="slide-fadeI">
-              <div class="duration-[1s]" v-if="formState === 'connect'">
-              <form  @submit.prevent="login">
-                <div>
-                  <input class="bg-bgColor " v-model="pseudo" name="pseudo" type="text" placeholder="Nom d'utilisateur"
-                    required>
-                </div>
-                <div>
-                  <input class="bg-bgColor " v-model="mdp" name="mdp" type="password" placeholder="Mot de passe" required>
-                </div>
-                <div style="display:flex; justify-content: space-between;">
-                  <p><a>Mot de passe oublié</a></p>
-                  <div @click="formState = 'disconnect'" class="text-blue-500 dark:text-blue-600">S'inscrire?</div>
-                </div>
-                <button type="submit" class="bg-blue-500 dark:bg-blue-600">Se connecter</button>
-              </form>
-            </div>
-        </transition>
+                <transition name="slide-fadeI">
+                      <div class="duration-[1s]" v-if="formState === 'connect'">
+                      <form  @submit.prevent="login">
+                        <div>
+                          <input class="bg-bgColor " v-model="pseudo" name="pseudo" type="text" placeholder="Nom d'utilisateur"
+                            required>
+                        </div>
+                        <div>
+                          <input class="bg-bgColor " v-model="mdp" name="mdp" type="password" placeholder="Mot de passe" required>
+                        </div>
+                        <div style="display:flex; justify-content: space-between;">
+                          <p><a>Mot de passe oublié</a></p>
+                          <div @click="formState = 'disconnect'" class="text-blue-500 dark:text-blue-600">S'inscrire?</div>
+                        </div>
+                        <button type="submit" class="bg-blue-500 dark:bg-blue-600">Se connecter</button>
+                      </form>
+                    </div>
+                </transition>
 <!--fin Formulaire de connexion -->
 
 <!-- Formulaire d'inscription -->
-        <transition name="slide-fade">
-            <div class="duration-[1s]" v-if="formState === 'disconnect'">
-            <form @submit.prevent="inscription">
-              <div>
-                <input class="bg-bgColor " v-model="pseudoI" name="pseudo" type="text" placeholder="Nom d'utilisateur"
-                  required>
-              </div>
-              <div>
-                <input class="bg-bgColor " v-model="entireName" name="name" type="text" placeholder="Nom complet"
-                  required>
-              </div>
-              <div>
-                <input class="bg-bgColor " v-model="mail" name="mdp" type="email" placeholder="Mail" required>
-              </div>
-              <div>
-                <input class="bg-bgColor " v-model="mdp1" name="mdp" type="password" placeholder="Mot de passe" required>
-              </div>
-              <div>
-                <input class="bg-bgColor " v-model="mdp2" name="mdp2" type="password"
-                  placeholder="Confirmez le mot de passe" required>
-              </div>
-              <div @click="formState = 'connect'" class="self-end mr-[50px] text-blue-500 dark:text-blue-400" :id="Insid">Connexion</div>
-              <button type="submit"  class="bg-blue-500 dark:bg-blue-600">Inscription</button>
-            </form>
-          </div>
-        </transition>
+                <transition name="slide-fade">
+                    <div class="duration-[1s]" v-if="formState === 'disconnect'">
+                    <form @submit.prevent="inscription">
+                      <div>
+                        <input class="bg-bgColor " v-model="pseudoI" name="pseudo" type="text" placeholder="Nom d'utilisateur"
+                          required>
+                      </div>
+                      <div>
+                        <input class="bg-bgColor " v-model="entireName" name="name" type="text" placeholder="Nom complet"
+                          required>
+                      </div>
+                      <div>
+                        <input class="bg-bgColor " v-model="mail" name="mdp" type="email" placeholder="Mail" required>
+                      </div>
+                      <div>
+                        <input class="bg-bgColor " v-model="mdp1" name="mdp" type="password" placeholder="Mot de passe" required>
+                      </div>
+                      <div>
+                        <input class="bg-bgColor " v-model="mdp2" name="mdp2" type="password"
+                          placeholder="Confirmez le mot de passe" required>
+                      </div>
+                      <div @click="formState = 'connect'" class="self-end mr-[50px] text-blue-500 dark:text-blue-400" :id="Insid">Connexion</div>
+                      <button type="submit"  class="bg-blue-500 dark:bg-blue-600">Inscription</button>
+                    </form>
+                  </div>
+                </transition>
 <!--fin Formulaire d'inscription -->
 
+              </div>
+            </div>
+          </transition>
+          </div>
+      </div>
+      <div class="flex-shrink-0 flex items-center justify-center h-full">
+        <img src="../assets/image/aunthentication/st2removebg-preview.png" alt="" style="max-width:200px; height:auto;" />
       </div>
     </div>
-    </transition>
-  </div>
+
 </template>
 
 
@@ -419,15 +420,12 @@ function inscription(){
 }
 
 .para {
-  height: 100vh;
-  width: 100vw;
+  min-width: 350px;
+  min-height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: -1px;
-  /* background-color: rgba(0, 0, 0, 0.13); */
-
+  background: none;
 }
 
 .layout {
@@ -443,6 +441,7 @@ form {
   flex-direction: column;
   gap: 20px;
   width: 350px;
+  padding: 20px;
 }
 
 form input {
