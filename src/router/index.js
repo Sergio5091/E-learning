@@ -61,6 +61,17 @@ const routes= [
       path:'/quiz/:id',
       name:'quiz',
       component: () => import('@/views/QuizView.vue')
+    },
+    
+    {
+      path:'/quiz-section',
+      name:'quiz-section',
+      component: () => import('@/views/QuizSectionView.vue')
+    },
+    {
+      path:'/admin-quiz-manager',
+      name:'admin-quiz-manager',
+      component: () => import('@/views/AdminQuizManager.vue')
     }
   ]
   

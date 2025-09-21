@@ -1,25 +1,22 @@
 <script setup>
-import { useAlertesStore } from '@/store'
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useAlertesStore, useAuthStore } from '@/store'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { RouterLink, useRouter, useRoute } from 'vue-router'
  
 const store = useAlertesStore()
 
+const auth = useAuthStore()
+
 const router = useRouter()
  
-// Etat de connexion et utilisateur
-const connecter = ref(false)
-const utilisateur = ref(null)
-function updateAuthState() {
-  connecter.value = !!localStorage.getItem("token")
-  const userStr = localStorage.getItem("user")
-  utilisateur.value = userStr ? JSON.parse(userStr) : null
-}
+
+const connecter = computed(() => auth.isAuthenticated)
+const utilisateur = computed(() => auth.user)
+
 
 
 
 onMounted(() => {
-  updateAuthState()
   if (localStorage.getItem("theme") === "dark") {
     document.documentElement.classList.add("dark")
     isDark.value = true
@@ -45,7 +42,6 @@ function toggleDarkMode() {
  
 // Redirection quand on clique sur le profil
 function redirection() {
-  updateAuthState()
   if (connecter.value) {
     store.toggleMenu()
   } else {
@@ -55,9 +51,7 @@ function redirection() {
  
 // Déconnexion
 function disconnect() {
-  localStorage.removeItem('token')
-  localStorage.removeItem('user')
-  updateAuthState()
+  auth.logout()
   store.isOpen = false // fermer le menu s'il est ouvert
   router.push({ name: 'Acceuil' }) // redirection vers la page de login
 }
@@ -91,17 +85,13 @@ onUnmounted(() => {
     </RouterLink>
 
     <!-- Liens de navigation -->
-    <div class="hidden md:flex space-x-6 font-semibold">
-      <RouterLink to="/" class="text-gray-700 dark:text-blue-100
-       dark:hover:text-blue-300 py-2  dark:border-[#2c3140]" active-class="shadow-2xl  px-5 rounded-lg bg-blue-500 text-white ">Accueil
-      </RouterLink>
-      <!-- <RouterLink to="/lessons/:id" class="hover:text-blue-500">Cours</RouterLink> -->
-      <RouterLink to="/a-propos" class="text-gray-700 dark:text-blue-100 dark:hover:text-blue-300 py-2  dark:border-[#2c3140]" active-class="shadow-2xl  px-5 rounded-lg bg-blue-500 text-white " >À
-        propos</RouterLink>
-      <RouterLink v-if="admin!==false" to="/admin" class="text-gray-700 dark:text-gray-200 dark:hover:text-blue-400">
-
-        Admin</RouterLink>
+    <div class="hidden md:flex justify-center items-center gap-6 font-semibold flex-1">
+      <RouterLink to="/" class="nav-btn" active-class="nav-btn-active">Accueil</RouterLink>
+      <RouterLink to="/a-propos" class="nav-btn" active-class="nav-btn-active">À propos</RouterLink>
+      <RouterLink v-if="admin!==false" to="/admin" class="nav-btn" active-class="nav-btn-active">Admin</RouterLink>
+      <RouterLink to="/quiz-section" class="nav-btn" active-class="nav-btn-active">Quiz Section</RouterLink>
     </div>
+
 
     <!-- Zone droite : recherche, dark mode, profil -->
   <div class="flex items-center justify-end space-x-4 w-[400px]">
@@ -181,4 +171,23 @@ onUnmounted(() => {
     </div>
   </nav>
 </template>
-<style scoped></style>
+<style scoped>
+/* Boutons de navigation centrés et style actif bleu */
+.nav-btn {
+  color: #374151;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+  transition: background 0.2s, color 0.2s;
+  font-weight: 600;
+  display: inline-block;
+}
+.nav-btn:hover {
+  background: #e0e7ff;
+  color: #2563eb;
+}
+.nav-btn-active {
+  background: #2563eb;
+  color: #fff !important;
+  box-shadow: 0 2px 8px #2563eb33;
+}
+</style>

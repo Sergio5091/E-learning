@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, provide } from "vue";
-import { defineStore } from 'pinia';
+import { useAuthStore } from '@/store';
 import { useRouter } from 'vue-router';
 
 import bd from "../../Users.json";
@@ -53,6 +53,7 @@ const showBadgeNotification=ref('oui')
 function login() {
     loadUsers(); // Recharger les utilisateurs pour avoir les dernières infos
     const index=baseDD.value.findIndex((e)=>e.name===pseudo.value && e.mot===mdp.value);
+    const auth = useAuthStore();
     if (index<=-1) {
         showBadgeNotification.value='j'
         let set=setTimeout(() => {
@@ -62,15 +63,11 @@ function login() {
         showBadgeNotification.value='r'
         let set=setTimeout(() => {
           showBadgeNotification.value='oui';
-          localStorage.setItem('token', true)
-          localStorage.setItem("user", JSON.stringify({
-            username: pseudo.value ,
-          }))
+          auth.login(true, { username: pseudo.value })
           route.push({
               name:'Acceuil',
               params:{user:pseudo.value}
           })
-
         },3000);
     }
 }
